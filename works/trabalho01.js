@@ -53,6 +53,10 @@ var key = false;
 
 
 
+
+
+
+
 // Aviao
 var sphereGeometry = new THREE.SphereGeometry(0.2, 32, 32);
 var sphereMaterial = new THREE.MeshPhongMaterial( {color:'rgb(180,180,255)'} );
@@ -197,7 +201,7 @@ function render()
   stats.update(); // Update FPS 
   movHelice();
   keyboardUpdate();
-  nivelar();
+  //nivelar();
   requestAnimationFrame(render); // Show events
   renderer.render(scene, camera) // Render scene
 }
