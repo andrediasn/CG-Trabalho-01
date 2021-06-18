@@ -243,13 +243,13 @@ var posZ = 0
 var angX = 0 // Ainda sem uso
 var angY = 0
 var angZ = 0
-var rotZ = new THREE.Vector3(0,0,1); // Auxiliares na rotacao
-var rotY = new THREE.Vector3(0,1,0);
-var rotX = new THREE.Vector3(1,0,0);
-var angle = degreesToRadians(0.5);
-var angle2 = degreesToRadians(0.1);
-var auxRotVertical = 0;
-var auxRotHorizontal = 0;
+var rotZ = new THREE.Vector3(0,0,1) // Auxiliares na rotacao
+var rotY = new THREE.Vector3(0,1,0)
+var rotX = new THREE.Vector3(1,0,0)
+var angle = degreesToRadians(0.5)
+var angle2 = degreesToRadians(0.1)
+var auxRotVertical = 0
+var auxRotHorizontal = 0
 
 // Movimento de aceleracao
 function aceleracao() {
@@ -279,14 +279,18 @@ function desacelera() { //Analogamente ao acelera()
 
 // Movimento direcao
 function esquerda() {
-  esferaMov.rotateOnAxis(rotZ, -angle ) // Rotaciona o aviao para os lados
+  if ((auxRotHorizontal < 150)){
+    esferaMov.rotateOnAxis(rotZ, -angle ) // Rotaciona o aviao para os lados
+    auxRotHorizontal ++ // Utilizado para nivelamento
+  }
   esferaHelice.rotateOnAxis(rotY, angle2 ) // Movimenta para os lados
-  auxRotHorizontal ++ // Utilizado para nivelamento
 }
 function direita() {
-  esferaMov.rotateOnAxis(rotZ, angle );
+  if ((auxRotHorizontal > -150)){
+    esferaMov.rotateOnAxis(rotZ, angle );
+    auxRotHorizontal --
+  }
   esferaHelice.rotateOnAxis(rotY, -angle2 )
-  auxRotHorizontal --
 }
 function cima() {
   esferaHelice.rotateOnAxis(rotX, angle2) // Movimenta para cima com a rotação
@@ -352,7 +356,7 @@ var trackballControls = new TrackballControls( clear, renderer.domElement )
 var modoCam = true // Auxilia na selecao da camera
 
 esferaCam.add(camera)
-//Funcao para a troca do modo de camera
+//asdasdasdFuncao para a troca do modo de camera
 switchCam()
 function switchCam(){
   if(modoCam){
@@ -374,7 +378,6 @@ function switchCam(){
     esferaHelice.position.set(0,0,25) // Posiciona aviao no centro
     modoCam = true
   }
-
 }
 
 // Nivelamento da Camera
@@ -398,20 +401,16 @@ function keyboardUpdate() {
       if (auxRotVertical > -400)      
         cima()
     }
-    else if (auxRotVertical < 0)      
+    else if (auxRotVertical < 0)  
       nivCima()
 
-    if ( keyboard.pressed("left") )  {
-      //if (auxRotHorizontal < 150) 
-        esquerda()
-    }
+    if ( keyboard.pressed("left") )
+      esquerda()
     else if (auxRotHorizontal > 0)    
       nivEsq()
 
-    if ( keyboard.pressed("right") )  {
-      //if (auxRotHorizontal > -150) 
+    if ( keyboard.pressed("right") ) 
         direita()
-    }
     else if (auxRotHorizontal < 0)   
       nivDir()
     
