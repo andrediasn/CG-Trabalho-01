@@ -236,24 +236,26 @@ sCabine2.matrix.multiply(mat4.makeTranslation(0.0, 2.1 * c, 0.0))
 
 // ------------------------------ Movimento ---------------------------------
 // Variaveis auxiliares
-var speed = 0
-var posX = 0
+var speed = 0 // Velocidade
+var posX = 0 // Armazena a posicao
 var posY = 10
 var posZ = 0
-var angX = 0
+var angX = 0 // Ainda sem uso
 var angY = 0
 var angZ = 0
-var rotZ = new THREE.Vector3(0,0,1);
+var rotZ = new THREE.Vector3(0,0,1); // Auxiliares na rotacao
 var rotY = new THREE.Vector3(0,1,0);
 var rotX = new THREE.Vector3(1,0,0);
 var angle = degreesToRadians(0.5);
 var angle2 = degreesToRadians(0.1);
+var auxRotVertical = 0;
+var auxRotHorizontal = 0;
 
 // Movimento de aceleracao
 function aceleracao() {
   if(!modoCam) { // Depende do modo da camera
     if (speed > 0){
-      esferaHelice.translateZ( speed )
+      esferaHelice.translateZ( speed ) // Movimento para frente
       cylHelice.matrix.multiply(mat4.makeRotationZ(speed/3)) // Rotação da helice
     }
   }
@@ -266,8 +268,8 @@ function acelera() {
     }
   }
 }
-function desacelera() {
-  if(!modoCam) { //Previne continuação de movimento na troca de camera
+function desacelera() { //Analogamente ao acelera()
+  if(!modoCam) { 
       if(speed > 0) {
       speed -= 0.01
       setTimeout(desacelera, 300)
@@ -277,9 +279,9 @@ function desacelera() {
 
 // Movimento direcao
 function esquerda() {
-  esferaMov.rotateOnAxis(rotZ, -angle )
-  esferaHelice.rotateOnAxis(rotY, angle2 )
-  auxRotHorizontal ++
+  esferaMov.rotateOnAxis(rotZ, -angle ) // Rotaciona o aviao para os lados
+  esferaHelice.rotateOnAxis(rotY, angle2 ) // Movimenta para os lados
+  auxRotHorizontal ++ // Utilizado para nivelamento
 }
 function direita() {
   esferaMov.rotateOnAxis(rotZ, angle );
@@ -287,8 +289,8 @@ function direita() {
   auxRotHorizontal --
 }
 function cima() {
-  esferaHelice.rotateOnAxis(rotX, angle2)
-  esferaCam.rotateOnAxis(rotX, -angle2)
+  esferaHelice.rotateOnAxis(rotX, angle2) // Movimenta para cima com a rotação
+  esferaCam.rotateOnAxis(rotX, -angle2) // Nivela a camera
   auxRotVertical --
 }
 function baixo(){
@@ -305,8 +307,6 @@ function getPosition() {
 }
 
 // Movimente de nivelamento do aviao
-var auxRotVertical = 0;
-var auxRotHorizontal = 0;
 function nivBaixo() {
   if (auxRotVertical > 0) {
     esferaHelice.rotateOnAxis(rotX, angle2)
@@ -402,14 +402,14 @@ function keyboardUpdate() {
       nivCima()
 
     if ( keyboard.pressed("left") )  {
-      if (auxRotHorizontal < 150) 
+      //if (auxRotHorizontal < 150) 
         esquerda()
     }
     else if (auxRotHorizontal > 0)    
       nivEsq()
 
     if ( keyboard.pressed("right") )  {
-      if (auxRotHorizontal > -150) 
+      //if (auxRotHorizontal > -150) 
         direita()
     }
     else if (auxRotHorizontal < 0)   
