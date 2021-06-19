@@ -528,7 +528,9 @@ esferaHelice.add(esferaCam)
 esferaCam.translateX(0).translateY(0).translateZ(-20)
 
 var axesHelper = new THREE.AxesHelper(12)
-var camera = initCamera(new THREE.Vector3(0, 20, -120))
+var cameraSimulation = initCamera(new THREE.Vector3(0, 20, -120))
+var cameraInspection = initCamera(new THREE.Vector3(0, 10, 35))
+var camera = cameraSimulation
 var clear = initCamera(new THREE.Vector3(0, 0, 0)) // Usada apenas para limpar o trackball
 var trackballControls = new TrackballControls(clear, renderer.domElement)
 var modoCam = true // Auxilia na selecao da camera
@@ -540,18 +542,26 @@ function switchCam() {
   if (modoCam) {
     scene.add(plane)
     scene.remove(axesHelper)
+    camera = cameraSimulation
     trackballControls = new TrackballControls(clear, renderer.domElement) // Remove o trackball
     esferaHelice.position.set(posX, posY, posZ) // Posiciona na posicao anterior salva
-    camera.position.set(posX, posY + 20, posZ - 120) // Reposiciona camera
     //Falta arrumar angulo da camera
     modoCam = false // Auxilia modo da camera
   } else {
+    while (auxRotHorizontal > 0) nivEsq()
+
+    while (auxRotHorizontal < 0) nivDir()
+
+    while (auxRotVertical > 0) nivBaixo()
+
+    while (auxRotVertical < 0) nivCima()
     getPosition() // Salva a posicao
     speed = 0 // Interrompe o movimento
     scene.add(axesHelper)
     scene.remove(plane)
+    camera = cameraInspection
     trackballControls = new TrackballControls(camera, renderer.domElement) // Add trackball
-    esferaHelice.position.set(0, 0, 25) // Posiciona aviao no centro
+    esferaHelice.position.set(0, 0, 24) // Posiciona aviao no centro
     modoCam = true
   }
 }
@@ -619,4 +629,5 @@ function render() {
   requestAnimationFrame(render)
   renderer.render(scene, camera) // Render scene
 }
+
 
