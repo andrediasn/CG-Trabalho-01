@@ -253,6 +253,16 @@ var auxRotHorizontal = 0                 // Auxiliares na rotacao
 var auxAce = 0                           // Auxiliares na recursividade da aceleracao
 var auxDes = 0 
 
+var auxEsq = 0
+var auxDir = 0
+var auxCima = 0
+var auxBaixo = 0
+
+var auxNivEsq = 0
+var auxNivDir = 0
+var auxNivCima = 0
+var auxNivBaixo = 0
+
 
 
 // Movimento de aceleracao
@@ -354,6 +364,12 @@ function nivDir() {                               // Analogamente ao nivBaixo()
 
 // ----------------- Camera ----------------- //
 //Objeto que carregara a camera
+
+/*
+var euler = new THREE.Euler();
+  euler.setFromRotationMatrix(holder.matrix);
+*/
+
 var esferaCamGeo = new THREE.SphereGeometry(1, 1, 1)
 var esferaCam = new THREE.Mesh(esferaCamGeo, esferaHeliceMat)
 esferaHelice.add(esferaCam)
@@ -429,7 +445,7 @@ function keyboardUpdate() {
       desacelera()
         
   }
-  if ( keyboard.pressed("space") )  switchCam()
+  if ( keyboard.down("space") )  switchCam()
 }
 
 // Informacoes na tela
