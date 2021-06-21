@@ -500,8 +500,12 @@ function esquerda() {
       esferaMov.rotateOnAxis(rotZ, -angleRotHori )   // Rotaciona o aviao para os lados
       auxRotHorizontal ++                     // Auxiliar para nivelamento
     }
-    esferaHelice.rotateOnAxis(rotY, angleHori )  // Movimenta para os lados
-    auxEsq = setTimeout(esquerda, 40)         // Recursividade
+    if(auxRotVertical == 0)
+      esferaHelice.rotateOnAxis(rotY, angleHori )  // Movimenta para os lados
+    else
+      esferaHelice.rotateOnAxis(rotY, angleHori/2 )
+    auxEsq = setTimeout(esquerda, 40)           // Recursividade
+    
   }  
 }
 function direita() {                          // Analogamente ao esquerda()
@@ -511,7 +515,10 @@ function direita() {                          // Analogamente ao esquerda()
       esferaMov.rotateOnAxis(rotZ, angleRotHori );
       auxRotHorizontal --
     }
-    esferaHelice.rotateOnAxis(rotY, -angleHori )
+    if(auxRotVertical == 0)
+      esferaHelice.rotateOnAxis(rotY, -angleHori )
+    else
+      esferaHelice.rotateOnAxis(rotY, -angleHori/2 )
     auxDir = setTimeout(direita, 40)
   }
 }
