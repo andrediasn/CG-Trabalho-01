@@ -406,7 +406,7 @@ function rotatePlaneComponents() {
 // Variaveis de posicao
 var speed = 0                            
 var posX = 0                             
-var posY = 10
+var posY = 20
 var posZ = -850
 var position = new THREE.Vector3()       
 // Auxiliares na rotacao:
@@ -442,10 +442,8 @@ function getPosition() {
 // Movimento de aceleracao
 function aceleracao() {
   if(!modoCam) {                                                  // Depende do modo da camera
-    if (speed > 0){ 
+    if (speed > 0) 
       esferaHelice.translateZ( speed )                            // Movimento para frente
-      //cylHelice.matrix.multiply(mat4.makeRotationZ(speed/3))      // Rotação da helice
-    }
   }
 }
 
@@ -469,12 +467,11 @@ function desacelera() {         //Analogamente ao acelera()
   }
 }
 
-
 // Movimento direcional
 function esquerda() {
   if(speed > 0) {                             // Movimento somente se houver aceleracao
     clearTimeout(auxNivEsq)                   // Interrompe Nivelamento
-    if ((auxRotHorizontal < 40)){             // Limite rotacional
+    if ((auxRotHorizontal < 35)){             // Limite rotacional
       esferaMov.rotateOnAxis(rotZ, -angleRotHori )   // Rotaciona o aviao para os lados
       auxRotHorizontal ++                     // Auxiliar para nivelamento
     }
@@ -485,7 +482,7 @@ function esquerda() {
 function direita() {                          // Analogamente ao esquerda()
   if(speed > 0) {
     clearTimeout(auxNivDir)
-    if ((auxRotHorizontal > -40)){
+    if ((auxRotHorizontal > -35)){
       esferaMov.rotateOnAxis(rotZ, angleRotHori );
       auxRotHorizontal --
     }
@@ -496,6 +493,7 @@ function direita() {                          // Analogamente ao esquerda()
 function cima() {
   if(speed > 0) {                                // Verica se ha aceleracao
     clearTimeout(auxNivCima)                     // Iterrompe nivelaento
+    breakMov()
     if (auxRotVertical > -40) {                  // Limite rotacional
       esferaHelice.rotateOnAxis(rotX, angleVert)    // Movimenta para cima com a rotação
       esferaCam.rotateOnAxis(rotX, -angleVert)      // Nivela a camera
@@ -507,6 +505,7 @@ function cima() {
 function baixo(){                                 // Analogamente ao cima()
   if(speed > 0) { 
     clearTimeout(auxNivBaixo)
+    breakMov()
     if (auxRotVertical < 40) {
       esferaHelice.rotateOnAxis(rotX, -angleVert)
       esferaCam.rotateOnAxis(rotX, angleVert)
@@ -515,14 +514,18 @@ function baixo(){                                 // Analogamente ao cima()
     }
   }
 }
+function breakMov() {                              // Esta funcao interrompe o movimento horizontal, para diminuir
+  clearTimeout(auxDir)                             // bugs quando muitas teclas sao apertadas ao mesmo tempo
+  clearTimeout(auxEsq)
+}
 
 // Movimente de nivelamento do aviao
 function nivEsq() {                              
   if (auxRotHorizontal > 0) {                      // Verifica se precisa ser nivelado
     clearTimeout(auxEsq)                           // Interrompe movimento
-    esferaMov.rotateOnAxis(rotZ, angleRotHori)            // Nivela aviao
+    esferaMov.rotateOnAxis(rotZ, angleRotHori)     // Nivela aviao
     auxRotHorizontal --                            // Diminui contador
-    auxNivEsq = setTimeout(nivEsq, 40)             // Recursividade
+    auxNivEsq = setTimeout(nivEsq, 30)             // Recursividade
   }
 }
 function nivDir() {                                // Analogamente ao nivEsq()
@@ -530,7 +533,7 @@ function nivDir() {                                // Analogamente ao nivEsq()
     clearTimeout(auxDir)
     esferaMov.rotateOnAxis(rotZ, -angleRotHori)
     auxRotHorizontal ++
-    auxNivDir = setTimeout(nivDir, 40)
+    auxNivDir = setTimeout(nivDir, 30)
   }
 }
 function nivCima() {                               // Analogamente ao nivEsq()
@@ -552,8 +555,6 @@ function nivBaixo() {                              // Analogamente ao nivCima()
   }
 }
 
-
-
 // ----------------- Camera ----------------- //
 
 /*
@@ -567,7 +568,7 @@ var esferaCam = new THREE.Mesh(esferaMovGeo, heliceMat)               // Objeto 
 esferaHelice.add(esferaCam)
 esferaCam.translateX(0).translateY(0).translateZ(-20)                 // Posiciona obejeto no centro do aviao
 
-var cameraSimulation = initCamera(new THREE.Vector3(0, 20, -120))     // Camera para o modo Simulacao
+var cameraSimulation = initCamera(new THREE.Vector3(0, 30, -120))     // Camera para o modo Simulacao
 var cameraInspection = initCamera(new THREE.Vector3(0, 20, 60))       // Camera para o modo de Inspecao
 var camera = cameraSimulation
 var clear = initCamera(new THREE.Vector3(0,0,0))                      // Usada apenas para limpar o trackball
@@ -606,7 +607,7 @@ var keyboard = new KeyboardState();
 
 function keyboardUpdate() {
   keyboard.update()
-  if(!modoCam){                                       //Apenas no modo simulacao
+  if(!modoCam) {                                      //Apenas no modo simulacao
     if ( keyboard.down("down") )     baixo()          // Chama movimento
     if ( keyboard.up("down") )       nivBaixo()       // Chama nivelamento
 
@@ -619,11 +620,11 @@ function keyboardUpdate() {
     if ( keyboard.down("right") )    direita()
     if ( keyboard.up("right") )      nivDir()
     
-    if ( keyboard.down("Q") )        acelera()     
+    if ( keyboard.down("Q") )        acelera()
     if ( keyboard.down("A") )        desacelera()
         
   }
-  if ( keyboard.down("space") )  switchCam()
+  if ( keyboard.down("space") )      switchCam()
 }
 
 // Informacoes na tela
