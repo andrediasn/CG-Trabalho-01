@@ -433,7 +433,7 @@ var speed = 0
 var auxSpeed = 0               
 var posX = 0                             
 var posY = 20
-var posZ = -1850
+var posZ = -1900
 var position = new THREE.Vector3()       
 // Auxiliares na rotacao:
 var rotZ = new THREE.Vector3(0,0,1)      
@@ -476,7 +476,7 @@ function aceleracao() {
 function acelera() {
   clearTimeout(auxDes)                      // Interrompe desaceleracao
   if(!modoCam) {                            // Previne continuacao de movimento na troca de camera
-    if(speed < 1) {                         // Velocidade maxima
+    if(speed < 1.5) {                         // Velocidade maxima
       speed += 0.05                         // Valor da aceleracao
       auxAce = setTimeout(acelera, 120)     // Recursividade para simular aceleracao
     }
