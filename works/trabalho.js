@@ -19,7 +19,7 @@ var mat4 = new THREE.Matrix4()
 const c = 0.6 // Constante para modificar o tamanho do avião
 
 // Plano e iluminação
-var plane = createGroundPlaneWired(2000, 2000, 50, 50)
+var plane = createGroundPlaneWired(4000, 4000, 100, 100)
 //plane.rotateX(degreesToRadians(-90));
 initDefaultBasicLight(scene)
 
@@ -404,10 +404,11 @@ function rotatePlaneComponents() {
 
 // ------------------------------ Movimento ---------------------------------
 // Variaveis de posicao
-var speed = 0                            
+var speed = 0
+var auxSpeed = 0               
 var posX = 0                             
 var posY = 20
-var posZ = -850
+var posZ = -1850
 var position = new THREE.Vector3()       
 // Auxiliares na rotacao:
 var rotZ = new THREE.Vector3(0,0,1)      
@@ -429,6 +430,7 @@ var auxNivEsq
 var auxNivDir
 var auxNivCima
 var auxNivBaixo
+var auxForceNiv
 
 // Funcao para salvar posicao
 function getPosition() {
@@ -554,6 +556,54 @@ function nivBaixo() {                              // Analogamente ao nivCima()
     auxNivBaixo = setTimeout(nivBaixo, 40)                      
   }
 }
+function forceNiv() {                                // Funcao para forcar nivelamento instantaneo no modo Inspecao
+  clearTimeout(auxNivEsq)
+  clearTimeout(auxNivDir)
+  clearTimeout(auxNivCima)
+  clearTimeout(auxNivBaixo)
+  if (auxRotHorizontal > 0) {                                               
+    auxForceNiv = auxRotHorizontal * angleRotHori
+    esferaMov.rotateOnAxis(rotZ, auxForceNiv)                                            
+  }
+  else if (auxRotHorizontal < 0) {                                               
+    auxForceNiv = auxRotHorizontal * angleRotHori
+    esferaMov.rotateOnAxis(rotZ, auxForceNiv)                                           
+  }
+  if (auxRotVertical < 0) {
+    auxForceNiv = auxRotVertical * angleVert
+    esferaHelice.rotateOnAxis(rotX, -auxForceNiv) 
+    esferaCam.rotateOnAxis(rotX, auxForceNiv)           
+  }
+  else if (auxRotVertical > 0) {
+    auxForceNiv = auxRotVertical * angleVert
+    esferaHelice.rotateOnAxis(rotX, auxForceNiv)       
+    esferaCam.rotateOnAxis(rotX, -auxForceNiv)         
+  }
+}
+function restoreNiv() {                            // Restaura angulos de nivelamento ao voltar para modo simulacao
+  if (auxRotHorizontal > 0) {                                               
+    auxForceNiv = auxRotHorizontal * angleRotHori
+    esferaMov.rotateOnAxis(rotZ, -auxForceNiv)
+    nivEsq()                                       
+  }
+  else if (auxRotHorizontal < 0) {                                               
+    auxForceNiv = auxRotHorizontal * angleRotHori
+    esferaMov.rotateOnAxis(rotZ, -auxForceNiv)                                           
+    nivDir()
+  }
+  if (auxRotVertical < 0) {
+    auxForceNiv = auxRotVertical * angleVert
+    esferaHelice.rotateOnAxis(rotX, auxForceNiv) 
+    esferaCam.rotateOnAxis(rotX, -auxForceNiv)
+    nivCima()      
+  }
+  else if (auxRotVertical > 0) {
+    auxForceNiv = auxRotVertical * angleVert
+    esferaHelice.rotateOnAxis(rotX, -auxForceNiv)       
+    esferaCam.rotateOnAxis(rotX, auxForceNiv)  
+    nivBaixo()
+  }
+}
 
 // ----------------- Camera ----------------- //
 
@@ -584,16 +634,20 @@ function switchCam(){
     scene.add(plane)
     scene.remove(axesHelper)
     trackballControls = new TrackballControls( clear, renderer.domElement )     // Remove o trackball
-    camera = cameraSimulation
+    camera = cameraSimulation                                                   // Retorna camera para modo simulacao
     esferaHelice.position.set(posX, posY, posZ)                                 // Posiciona na posicao anterior salva
+    speed = auxSpeed                                                            // Restaura velocidade
+    restoreNiv()                                                                // Restaura angulos de inclinacao
     modoCam = false                                                             // Auxilia modo da camera
   }
   else {
     getPosition()                                                               // Salva a posicao
+    auxSpeed = speed                                                            // Salva velocidade
     speed = 0                                                                   // Interrompe o movimento
     scene.add(axesHelper)
     scene.remove(plane)
-    camera = cameraInspection
+    forceNiv()                                                                   // Forca nivelamento instantaneo
+    camera = cameraInspection                                                    // Troca camera
     trackballControls = new TrackballControls( camera, renderer.domElement )     // Add trackball
     esferaHelice.position.set(0,0,0)                                             // Posiciona aviao no centro do mundo
     esferaHelice.translateZ(25)
