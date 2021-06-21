@@ -41,14 +41,6 @@ var esferaHelice = new THREE.Mesh(esferaHeliceGeo, heliceMat)
 var coneHeliceGeo = new THREE.CylinderGeometry(0.1 * c, 1.3 * c, 1.5 * c, 70)
 var coneHelice = new THREE.Mesh(coneHeliceGeo, heliceMat)
 
-// Cilindro que rotaciona na hélice
-var cylHeliceGeo = new THREE.CylinderGeometry(0.3 * c, 0.3 * c, 8 * c, 10)
-var cylHeliceMat = new THREE.MeshPhongMaterial({
-  color: 0xffffff,
-  specular: 0xbababa,
-})
-var cylHelice = new THREE.Mesh(cylHeliceGeo, cylHeliceMat)
-
 // Cilindros do corpo do avião
 var cylCorpoMat = new THREE.MeshPhongMaterial({
   color: 0x888888,
@@ -77,14 +69,25 @@ var cyl7corpoGeo = new THREE.CylinderGeometry(3 * c, 2.2 * c, 7 * c, 18)
 var cyl7corpo = new THREE.Mesh(cyl7corpoGeo, cylCorpoMat)
 
 // Asas
-var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
 var asaMat = new THREE.MeshPhongMaterial({
   color: 0x999999,
   specular: 0x989898,
 })
 
+var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
+
 var asa1 = new THREE.Mesh(asaGeo, asaMat)
 var asa2 = new THREE.Mesh(asaGeo, asaMat)
+
+// Winglet da asa (estrutura na extremidade da asa)
+var wingletAsaGeo = new THREE.BoxGeometry(3 * c, 9.55 * c, 1.2 * c)
+var wingletAsa1 = new THREE.Mesh(wingletAsaGeo, asaMat)
+var wingletAsa2 = new THREE.Mesh(wingletAsaGeo, asaMat)
+
+// Componente auxiliar do winglet
+var auxWingletGeo = new THREE.BoxGeometry(2 * c, 9.5 * c, 0.3 * c)
+var auxWinglet1 = new THREE.Mesh(auxWingletGeo, asaMat)
+var auxWinglet2 = new THREE.Mesh(auxWingletGeo, asaMat)
 
 // Turbinas
 var turbinaMat = new THREE.MeshPhongMaterial({
@@ -193,12 +196,6 @@ coneHelice.matrix.identity()
 coneHelice.matrix.multiply(mat4.makeRotationX(degreesToRadians(90)))
 coneHelice.matrix.multiply(mat4.makeTranslation(0.0, 2 * c, 0.0))
 
-// Hélice rotacionando
-esferaHelice.add(cylHelice)
-cylHelice.matrixAutoUpdate = false
-cylHelice.matrix.identity()
-cylHelice.matrix.multiply(mat4.makeTranslation(0.0, 0.0, 1.0 * c))
-
 // Cilindro 1 do corpo do aviao
 esferaMov.add(cyl1corpo)
 cyl1corpo.matrixAutoUpdate = false
@@ -248,17 +245,47 @@ cyl4corpo.add(asa2)
 
 asa1.matrixAutoUpdate = false
 asa1.matrix.identity()
-asa1.matrix.multiply(mat4.makeTranslation(12.8 * c, -0.8 * c, 2.5 * c))
+asa1.matrix.multiply(mat4.makeTranslation(15 * c, -0.8 * c, 2.5 * c))
 asa1.matrix.multiply(mat4.makeRotationX(degreesToRadians(5)))
 asa1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(-10)))
 
 asa2.matrixAutoUpdate = false
 asa2.matrix.identity()
-asa2.matrix.multiply(mat4.makeTranslation(-12.8 * c, -0.8 * c, 2.5 * c))
+asa2.matrix.multiply(mat4.makeTranslation(-15 * c, -0.8 * c, 2.5 * c))
 asa2.matrix.multiply(mat4.makeRotationX(degreesToRadians(5)))
 asa2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(10)))
 
-// Turbina
+// Winglet da asa (estrutura na extremidade da asa)
+asa1.add(wingletAsa1)
+asa2.add(wingletAsa2)
+
+wingletAsa1.matrixAutoUpdate = false
+wingletAsa1.matrix.identity()
+wingletAsa1.matrix.multiply(mat4.makeTranslation(15 * c, 0, 0))
+wingletAsa1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(17.5)))
+
+wingletAsa2.matrixAutoUpdate = false
+wingletAsa2.matrix.identity()
+wingletAsa2.matrix.multiply(mat4.makeTranslation(-15 * c, 0, 0))
+wingletAsa2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(-17.5)))
+
+// Componente auxiliar do winglet
+wingletAsa1.add(auxWinglet1)
+wingletAsa2.add(auxWinglet2)
+
+auxWinglet1.matrixAutoUpdate = false
+auxWinglet1.matrix.identity()
+auxWinglet1.matrix.multiply(mat4.makeTranslation(1.35 * c, 0.05 * c, -1.0 * c))
+auxWinglet1.matrix.multiply(mat4.makeRotationY(degreesToRadians(90)))
+auxWinglet1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(6)))
+
+auxWinglet2.matrixAutoUpdate = false
+auxWinglet2.matrix.identity()
+auxWinglet2.matrix.multiply(mat4.makeTranslation(-1.35 * c, 0.05 * c, -1.0 * c))
+auxWinglet2.matrix.multiply(mat4.makeRotationY(degreesToRadians(90)))
+auxWinglet2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(6)))
+
+// Turbinas
 asa1.add(cylTurbina1)
 asa1.add(esferaTurbina1)
 asa2.add(cylTurbina2)
@@ -392,8 +419,6 @@ janelas5dir.map((janela, index) => {
 
 // Função para rotacionar determinadas partes do aviao
 function rotatePlaneComponents() {
-  cylHelice.matrixAutoUpdate = false
-  cylHelice.matrix.multiply(mat4.makeRotationZ(0.2 + speed / 4))
   laminasTurbinaDir.map((lamina) => {
     lamina.matrixAutoUpdate = false
     lamina.matrix.multiply(mat4.makeRotationY(degreesToRadians(-3 + speed / 4)))
@@ -405,23 +430,42 @@ function rotatePlaneComponents() {
 }
 
 // ------------------------------ Movimento ---------------------------------
-// Variaveis auxiliares
-var speed = 0 // Velocidade
-var posX = 0 // Armazena a posicao
+// Variaveis de posicao
+var speed = 0
+var posX = 0
 var posY = 10
-var posZ = 0
-var angX = 0 // Ainda sem uso
-var angY = 0
-var angZ = 0
-var rotZ = new THREE.Vector3(0, 0, 1) // Auxiliares na rotacao
+var posZ = -850
+var position = new THREE.Vector3()
+// Auxiliares na rotacao:
+var rotZ = new THREE.Vector3(0, 0, 1)
 var rotY = new THREE.Vector3(0, 1, 0)
 var rotX = new THREE.Vector3(1, 0, 0)
-var angle = degreesToRadians(0.5)
-var angle2 = degreesToRadians(0.1)
+var angleRotHori = degreesToRadians(2)
+var angleHori = degreesToRadians(0.8)
+var angleVert = degreesToRadians(1.3)
 var auxRotVertical = 0
 var auxRotHorizontal = 0
-var auxAce = 0
-var auxDes = 0
+// Auxiliares na recursividade:
+var auxAce
+var auxDes
+var auxEsq
+var auxDir
+var auxCima
+var auxBaixo
+var auxNivEsq
+var auxNivDir
+var auxNivCima
+var auxNivBaixo
+
+// Funcao para salvar posicao
+function getPosition() {
+  scene.updateMatrixWorld(true)
+  position.setFromMatrixPosition(esferaHelice.matrixWorld) // Vetor posicao
+  posX = position.x
+  posY = position.y
+  posZ = position.z
+}
+
 // Movimento de aceleracao
 function aceleracao() {
   if (!modoCam) {
@@ -431,145 +475,168 @@ function aceleracao() {
     }
   }
 }
+
 function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) {
-    //Previne continuação de movimento na troca de camera
+    // Previne continuacao de movimento na troca de camera
     if (speed < 1) {
-      speed += 0.01
-      auxAce = setTimeout(acelera, 300) // Aceleracao progressiva de modo recursivo
+      // Velocidade maxima
+      speed += 0.05 // Valor da aceleracao
+      auxAce = setTimeout(acelera, 120) // Recursividade para simular aceleracao
     }
   }
 }
+
 function desacelera() {
   //Analogamente ao acelera()
   clearTimeout(auxAce) //Interrompe aceleracao
   if (!modoCam) {
     if (speed > 0) {
-      speed -= 0.01
-      auxDes = setTimeout(desacelera, 300) // Recursividade
+      speed -= 0.05
+      auxDes = setTimeout(desacelera, 120)
     }
   }
 }
 
-// Movimento direcao
+// Movimento direcional
 function esquerda() {
-  if (auxRotHorizontal < 150) {
-    esferaMov.rotateOnAxis(rotZ, -angle) // Rotaciona o aviao para os lados
-    auxRotHorizontal++ // Utilizado para nivelamento
+  if (speed > 0) {
+    // Movimento somente se houver aceleracao
+    clearTimeout(auxNivEsq) // Interrompe Nivelamento
+    if (auxRotHorizontal < 40) {
+      // Limite rotacional
+      esferaMov.rotateOnAxis(rotZ, -angleRotHori) // Rotaciona o aviao para os lados
+      auxRotHorizontal++ // Auxiliar para nivelamento
+    }
+    esferaHelice.rotateOnAxis(rotY, angleHori) // Movimenta para os lados
+    auxEsq = setTimeout(esquerda, 40) // Recursividade
   }
-  esferaHelice.rotateOnAxis(rotY, angle2) // Movimenta para os lados
 }
 function direita() {
-  if (auxRotHorizontal > -150) {
-    esferaMov.rotateOnAxis(rotZ, angle)
-    auxRotHorizontal--
+  // Analogamente ao esquerda()
+  if (speed > 0) {
+    clearTimeout(auxNivDir)
+    if (auxRotHorizontal > -40) {
+      esferaMov.rotateOnAxis(rotZ, angleRotHori)
+      auxRotHorizontal--
+    }
+    esferaHelice.rotateOnAxis(rotY, -angleHori)
+    auxDir = setTimeout(direita, 40)
   }
-  esferaHelice.rotateOnAxis(rotY, -angle2)
 }
 function cima() {
-  esferaHelice.rotateOnAxis(rotX, angle2) // Movimenta para cima com a rotação
-  esferaCam.rotateOnAxis(rotX, -angle2) // Nivela a camera
-  auxRotVertical--
+  if (speed > 0) {
+    // Verica se ha aceleracao
+    clearTimeout(auxNivCima) // Iterrompe nivelaento
+    if (auxRotVertical > -40) {
+      // Limite rotacional
+      esferaHelice.rotateOnAxis(rotX, angleVert) // Movimenta para cima com a rotação
+      esferaCam.rotateOnAxis(rotX, -angleVert) // Nivela a camera
+      auxRotVertical-- // Auxiliar para nivelamento
+      auxCima = setTimeout(cima, 40) // Recursividade
+    }
+  }
 }
 function baixo() {
-  esferaHelice.rotateOnAxis(rotX, -angle2)
-  esferaCam.rotateOnAxis(rotX, angle2)
-  auxRotVertical++
-}
-
-// Funcao para salvar posicao
-var position = new THREE.Vector3()
-function getPosition() {
-  scene.updateMatrixWorld(true)
-  position.setFromMatrixPosition(esferaHelice.matrixWorld)
-  posX = position.x
-  posY = position.y
-  posZ = position.z
+  // Analogamente ao cima()
+  if (speed > 0) {
+    clearTimeout(auxNivBaixo)
+    if (auxRotVertical < 40) {
+      esferaHelice.rotateOnAxis(rotX, -angleVert)
+      esferaCam.rotateOnAxis(rotX, angleVert)
+      auxRotVertical++
+      auxBaixo = setTimeout(baixo, 40)
+    }
+  }
 }
 
 // Movimente de nivelamento do aviao
-function nivBaixo() {
-  if (auxRotVertical > 0) {
-    esferaHelice.rotateOnAxis(rotX, angle2)
-    esferaCam.rotateOnAxis(rotX, -angle2)
-    auxRotVertical--
-    setTimeout(nivBaixo, 200)
-  }
-}
-function nivCima() {
-  if (auxRotVertical < 0) {
-    esferaHelice.rotateOnAxis(rotX, -angle2)
-    esferaCam.rotateOnAxis(rotX, angle2)
-    auxRotVertical++
-    setTimeout(nivCima, 200)
-  }
-}
 function nivEsq() {
   if (auxRotHorizontal > 0) {
-    esferaMov.rotateOnAxis(rotZ, angle)
-    auxRotHorizontal--
-    setTimeout(nivEsq, 200)
+    // Verifica se precisa ser nivelado
+    clearTimeout(auxEsq) // Interrompe movimento
+    esferaMov.rotateOnAxis(rotZ, angleRotHori) // Nivela aviao
+    auxRotHorizontal-- // Diminui contador
+    auxNivEsq = setTimeout(nivEsq, 40) // Recursividade
   }
 }
 function nivDir() {
+  // Analogamente ao nivEsq()
   if (auxRotHorizontal < 0) {
-    esferaMov.rotateOnAxis(rotZ, -angle)
+    clearTimeout(auxDir)
+    esferaMov.rotateOnAxis(rotZ, -angleRotHori)
     auxRotHorizontal++
-    setTimeout(nivDir, 200)
+    auxNivDir = setTimeout(nivDir, 40)
+  }
+}
+function nivCima() {
+  // Analogamente ao nivEsq()
+  if (auxRotVertical < 0) {
+    clearTimeout(auxCima)
+    esferaHelice.rotateOnAxis(rotX, -angleVert) // Nivela aviao
+    esferaCam.rotateOnAxis(rotX, angleVert) // Nivela camera
+    auxRotVertical++
+    auxNivCima = setTimeout(nivCima, 40)
+  }
+}
+function nivBaixo() {
+  // Analogamente ao nivCima()
+  if (auxRotVertical > 0) {
+    clearTimeout(auxBaixo)
+    esferaHelice.rotateOnAxis(rotX, angleVert)
+    esferaCam.rotateOnAxis(rotX, -angleVert)
+    auxRotVertical--
+    auxNivBaixo = setTimeout(nivBaixo, 40)
   }
 }
 
 // ----------------- Camera ----------------- //
-//Objeto que carregara a camera
-var esferaCamGeo = new THREE.SphereGeometry(1, 1, 1)
-var esferaCam = new THREE.Mesh(esferaCamGeo, heliceMat)
-esferaHelice.add(esferaCam)
-esferaCam.translateX(0).translateY(0).translateZ(-20)
+
+/*
+Talvez usar:
+var euler = new THREE.Euler();
+  euler.setFromRotationMatrix(holder.matrix);
+*/
 
 var axesHelper = new THREE.AxesHelper(12)
-var cameraSimulation = initCamera(new THREE.Vector3(0, 20, -120))
-var cameraInspection = initCamera(new THREE.Vector3(0, 10, 35))
+var esferaCam = new THREE.Mesh(esferaMovGeo, heliceMat) // Objeto que carrega a cammera
+esferaHelice.add(esferaCam)
+esferaCam.translateX(0).translateY(0).translateZ(-20) // Posiciona obejeto no centro do aviao
+
+var cameraSimulation = initCamera(new THREE.Vector3(0, 20, -120)) // Camera para o modo Simulacao
+var cameraInspection = initCamera(new THREE.Vector3(0, 20, 60)) // Camera para o modo de Inspecao
 var camera = cameraSimulation
 var clear = initCamera(new THREE.Vector3(0, 0, 0)) // Usada apenas para limpar o trackball
 var trackballControls = new TrackballControls(clear, renderer.domElement)
 var modoCam = true // Auxilia na selecao da camera
 
 esferaCam.add(camera)
-//asdasdasdFuncao para a troca do modo de camera
 switchCam()
+
+//Funcao para a troca do modo de camera
 function switchCam() {
   if (modoCam) {
     scene.add(plane)
     scene.remove(axesHelper)
-    camera = cameraSimulation
     trackballControls = new TrackballControls(clear, renderer.domElement) // Remove o trackball
+    camera = cameraSimulation
     esferaHelice.position.set(posX, posY, posZ) // Posiciona na posicao anterior salva
-    //Falta arrumar angulo da camera
     modoCam = false // Auxilia modo da camera
   } else {
-    while (auxRotHorizontal > 0) nivEsq()
-
-    while (auxRotHorizontal < 0) nivDir()
-
-    while (auxRotVertical > 0) nivBaixo()
-
-    while (auxRotVertical < 0) nivCima()
     getPosition() // Salva a posicao
     speed = 0 // Interrompe o movimento
     scene.add(axesHelper)
     scene.remove(plane)
     camera = cameraInspection
     trackballControls = new TrackballControls(camera, renderer.domElement) // Add trackball
-    esferaHelice.position.set(0, 0, 24) // Posiciona aviao no centro
+    esferaHelice.position.set(0, 0, 0) // Posiciona aviao no centro do mundo
+    esferaHelice.translateZ(25)
     modoCam = true
   }
 }
 
-// Nivelamento da Camera
-//camera.rotateX(degreesToRadians(10));
-
-// --------------------------- Keybord---------------------------------- //
+// --------------------------- Keyboard---------------------------------- //
 
 var keyboard = new KeyboardState()
 
@@ -577,27 +644,25 @@ function keyboardUpdate() {
   keyboard.update()
   if (!modoCam) {
     //Apenas no modo simulacao
-    if (keyboard.pressed('down')) {
-      if (auxRotVertical < 400) baixo()
-    } else if (auxRotVertical > 0) nivBaixo()
+    if (keyboard.down('down')) baixo() // Chama movimento
+    if (keyboard.up('down')) nivBaixo() // Chama nivelamento
 
-    if (keyboard.pressed('up')) {
-      if (auxRotVertical > -400) cima()
-    } else if (auxRotVertical < 0) nivCima()
+    if (keyboard.down('up')) cima()
+    if (keyboard.up('up')) nivCima()
 
-    if (keyboard.pressed('left')) esquerda()
-    else if (auxRotHorizontal > 0) nivEsq()
+    if (keyboard.down('left')) esquerda()
+    if (keyboard.up('left')) nivEsq()
 
-    if (keyboard.pressed('right')) direita()
-    else if (auxRotHorizontal < 0) nivDir()
+    if (keyboard.down('right')) direita()
+    if (keyboard.up('right')) nivDir()
 
-    if (keyboard.pressed('Q')) acelera()
-    if (keyboard.pressed('A')) desacelera()
+    if (keyboard.down('Q')) acelera()
+    if (keyboard.down('A')) desacelera()
   }
-  if (keyboard.up('space')) switchCam()
+  if (keyboard.down('space')) switchCam()
 }
 
-// Use this to show information onscreen
+// Informacoes na tela
 var controls = new InfoBox()
 controls.add('Use SPACE para mudar o modo')
 controls.addParagraph()
@@ -623,11 +688,9 @@ render()
 function render() {
   stats.update()
   trackballControls.update()
-  rotatePlaneComponents()
   keyboardUpdate()
   aceleracao()
+  rotatePlaneComponents()
   requestAnimationFrame(render)
   renderer.render(scene, camera) // Render scene
 }
-
-
