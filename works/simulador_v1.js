@@ -500,11 +500,11 @@ function esquerda() {
       esferaMov.rotateOnAxis(rotZ, -angleRotHori )   // Rotaciona o aviao para os lados
       auxRotHorizontal ++                     // Auxiliar para nivelamento
     }
-    if(auxRotVertical == 0)
-      esferaHelice.rotateOnAxis(rotY, angleHori )  // Movimenta para os lados
+    if(auxRotVertical == 0)                   // Movimenta para os lados
+      esferaHelice.rotateOnAxis(rotY, angleHori )  
     else
-      esferaHelice.rotateOnAxis(rotY, angleHori/2 )
-    auxEsq = setTimeout(esquerda, 40)           // Recursividade
+      esferaHelice.rotateOnAxis(rotY, angleHori/2 )   // Move menos se ja houver movimento vertical
+    auxEsq = setTimeout(esquerda, 40)         // Recursividade
     
   }  
 }
@@ -525,7 +525,7 @@ function direita() {                          // Analogamente ao esquerda()
 function cima() {
   if(speed > 0) {                                // Verica se ha aceleracao
     clearTimeout(auxNivCima)                     // Iterrompe nivelaento
-    breakMov()
+    breakMov()                                   // Impede movimento contrario
     if (auxRotVertical > -20) {                  // Limite rotacional
       esferaHelice.rotateOnAxis(rotX, angleVert)    // Movimenta para cima com a rotação
       esferaCam.rotateOnAxis(rotX, -angleVert)      // Nivela a camera
