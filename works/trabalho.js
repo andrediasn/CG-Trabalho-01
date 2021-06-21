@@ -39,14 +39,6 @@ var esferaHelice = new THREE.Mesh(esferaHeliceGeo, heliceMat)
 var coneHeliceGeo = new THREE.CylinderGeometry(0.1 * c, 1.3 * c, 1.5 * c, 70)
 var coneHelice = new THREE.Mesh(coneHeliceGeo, heliceMat)
 
-// Cilindro que rotaciona na hélice
-var cylHeliceGeo = new THREE.CylinderGeometry(0.3 * c, 0.3 * c, 8 * c, 10)
-var cylHeliceMat = new THREE.MeshPhongMaterial({
-  color: 0xffffff,
-  specular: 0xbababa,
-})
-var cylHelice = new THREE.Mesh(cylHeliceGeo, cylHeliceMat)
-
 // Cilindros do corpo do avião
 var cylCorpoMat = new THREE.MeshPhongMaterial({
   color: 0x888888,
@@ -75,14 +67,25 @@ var cyl7corpoGeo = new THREE.CylinderGeometry(3 * c, 2.2 * c, 7 * c, 18)
 var cyl7corpo = new THREE.Mesh(cyl7corpoGeo, cylCorpoMat)
 
 // Asas
-var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
 var asaMat = new THREE.MeshPhongMaterial({
   color: 0x999999,
   specular: 0x989898,
 })
 
+var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
+
 var asa1 = new THREE.Mesh(asaGeo, asaMat)
 var asa2 = new THREE.Mesh(asaGeo, asaMat)
+
+// Winglet da asa (estrutura na extremidade da asa)
+var wingletAsaGeo = new THREE.BoxGeometry(3 * c, 9.55 * c, 1.2 * c)
+var wingletAsa1 = new THREE.Mesh(wingletAsaGeo, asaMat)
+var wingletAsa2 = new THREE.Mesh(wingletAsaGeo, asaMat)
+
+// Componente auxiliar do winglet
+var auxWingletGeo = new THREE.BoxGeometry(2 * c, 9.5 * c, 0.3 * c)
+var auxWinglet1 = new THREE.Mesh(auxWingletGeo, asaMat)
+var auxWinglet2 = new THREE.Mesh(auxWingletGeo, asaMat)
 
 // Turbinas
 var turbinaMat = new THREE.MeshPhongMaterial({
@@ -191,12 +194,6 @@ coneHelice.matrix.identity()
 coneHelice.matrix.multiply(mat4.makeRotationX(degreesToRadians(90)))
 coneHelice.matrix.multiply(mat4.makeTranslation(0.0, 2 * c, 0.0))
 
-// Hélice rotacionando
-esferaHelice.add(cylHelice)
-cylHelice.matrixAutoUpdate = false
-cylHelice.matrix.identity()
-cylHelice.matrix.multiply(mat4.makeTranslation(0.0, 0.0, 1.0 * c))
-
 // Cilindro 1 do corpo do aviao
 esferaMov.add(cyl1corpo)
 cyl1corpo.matrixAutoUpdate = false
@@ -246,17 +243,47 @@ cyl4corpo.add(asa2)
 
 asa1.matrixAutoUpdate = false
 asa1.matrix.identity()
-asa1.matrix.multiply(mat4.makeTranslation(12.8 * c, -0.8 * c, 2.5 * c))
+asa1.matrix.multiply(mat4.makeTranslation(15 * c, -0.8 * c, 2.5 * c))
 asa1.matrix.multiply(mat4.makeRotationX(degreesToRadians(5)))
 asa1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(-10)))
 
 asa2.matrixAutoUpdate = false
 asa2.matrix.identity()
-asa2.matrix.multiply(mat4.makeTranslation(-12.8 * c, -0.8 * c, 2.5 * c))
+asa2.matrix.multiply(mat4.makeTranslation(-15 * c, -0.8 * c, 2.5 * c))
 asa2.matrix.multiply(mat4.makeRotationX(degreesToRadians(5)))
 asa2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(10)))
 
-// Turbina
+// Winglet da asa (estrutura na extremidade da asa)
+asa1.add(wingletAsa1)
+asa2.add(wingletAsa2)
+
+wingletAsa1.matrixAutoUpdate = false
+wingletAsa1.matrix.identity()
+wingletAsa1.matrix.multiply(mat4.makeTranslation(15 * c, 0, 0))
+wingletAsa1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(17.5)))
+
+wingletAsa2.matrixAutoUpdate = false
+wingletAsa2.matrix.identity()
+wingletAsa2.matrix.multiply(mat4.makeTranslation(-15 * c, 0, 0))
+wingletAsa2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(-17.5)))
+
+// Componente auxiliar do winglet
+wingletAsa1.add(auxWinglet1)
+wingletAsa2.add(auxWinglet2)
+
+auxWinglet1.matrixAutoUpdate = false
+auxWinglet1.matrix.identity()
+auxWinglet1.matrix.multiply(mat4.makeTranslation(1.35 * c, 0.05 * c, -1.0 * c))
+auxWinglet1.matrix.multiply(mat4.makeRotationY(degreesToRadians(90)))
+auxWinglet1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(6)))
+
+auxWinglet2.matrixAutoUpdate = false
+auxWinglet2.matrix.identity()
+auxWinglet2.matrix.multiply(mat4.makeTranslation(-1.35 * c, 0.05 * c, -1.0 * c))
+auxWinglet2.matrix.multiply(mat4.makeRotationY(degreesToRadians(90)))
+auxWinglet2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(6)))
+
+// Turbinas
 asa1.add(cylTurbina1)
 asa1.add(esferaTurbina1)
 asa2.add(cylTurbina2)
@@ -390,8 +417,6 @@ janelas5dir.map((janela, index) => {
 
 // Função para rotacionar determinadas partes do aviao
 function rotatePlaneComponents() {
-  cylHelice.matrixAutoUpdate = false
-  cylHelice.matrix.multiply(mat4.makeRotationZ(0.2 + speed / 4))
   laminasTurbinaDir.map((lamina) => {
     lamina.matrixAutoUpdate = false
     lamina.matrix.multiply(mat4.makeRotationY(degreesToRadians(-3 + speed / 4)))
@@ -448,7 +473,6 @@ function aceleracao() {
       esferaHelice.translateZ( speed )                            // Movimento para frente
   }
 }
-
 function acelera() {
   clearTimeout(auxDes)                      // Interrompe desaceleracao
   if(!modoCam) {                            // Previne continuacao de movimento na troca de camera
@@ -458,7 +482,6 @@ function acelera() {
     }
   }
 }
-
 function desacelera() {         //Analogamente ao acelera()
   clearTimeout(auxAce)          //Interrompe aceleracao
   if(!modoCam) { 
