@@ -441,23 +441,18 @@ var position = new THREE.Vector3()
 var rotZ = new THREE.Vector3(0, 0, 1)
 var rotY = new THREE.Vector3(0, 1, 0)
 var rotX = new THREE.Vector3(1, 0, 0)
-var angleRotHori = degreesToRadians(1)
-var angleHori = degreesToRadians(0.2)
-var angleVert = degreesToRadians(0.05)
+var angleRotHori = degreesToRadians(1.4)
+var angleHori = degreesToRadians(0.3)
+var angleVert = degreesToRadians(0.7)
 var auxRotVertical = 0
 var auxRotHorizontal = 0
-// Auxiliares na recursividade:
-var auxAce
-var auxDes
-var auxEsq
-var auxDir
-var auxCima
-var auxBaixo
-var auxNivEsq
-var auxNivDir
-var auxNivCima
-var auxNivBaixo
+// Auxiliar troca de camera de inspecao para simulacao
 var auxForceNiv
+// Auxiliares na recursividade:
+var nivUp = false
+var nivDown = false
+var nivRight = false
+var nivLeft = false
 
 // Funcao para salvar posicao
 function getPosition() {
@@ -476,131 +471,122 @@ function aceleracao() {
   }
 }
 function acelera() {
-  clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) {
     // Previne continuacao de movimento na troca de camera
-    if (speed < 1.5) {
+    if (speed < 2.5) {
       // Velocidade maxima
-      speed += 0.05 // Valor da aceleracao
-      auxAce = setTimeout(acelera, 120) // Recursividade para simular aceleracao
+      speed += 0.015 // Valor da aceleracao
     }
   }
 }
 function desacelera() {
   //Analogamente ao acelera()
-  clearTimeout(auxAce) //Interrompe aceleracao
+
   if (!modoCam) {
     if (speed > 0) {
-      speed -= 0.05
-      auxDes = setTimeout(desacelera, 120)
+      speed -= 0.025
     }
   }
 }
 
 // Movimento direcional
+// O movimento para os lados so ocorre se nao estiver nivelando para a direcao oposta e se vel > 0
 function esquerda() {
-  if (speed > 0) {
+  if (speed > 0 && !nivRight) {
+    nivLeft = false // Nivelamento = falso
     // Movimento somente se houver aceleracao
-    clearTimeout(auxNivEsq) // Interrompe Nivelamento
-    if (auxRotHorizontal < 50) {
+    if (auxRotHorizontal < 35) {
       // Limite rotacional
       esferaMov.rotateOnAxis(rotZ, -angleRotHori) // Rotaciona o aviao para os lados
       auxRotHorizontal++ // Auxiliar para nivelamento
     }
-    esferaHelice.rotateOnAxis(rotY, angleHori) // Movimenta para os lados
-    auxEsq = setTimeout(esquerda, 40) // Recursividade
+    if (auxRotVertical == 0)
+      // Movimenta para os lados
+      esferaHelice.rotateOnAxis(rotY, angleHori)
+    else esferaHelice.rotateOnAxis(rotY, angleHori / 2) // Move menos se ja houver movimento vertical
   }
 }
 function direita() {
   // Analogamente ao esquerda()
-  if (speed > 0) {
-    clearTimeout(auxNivDir)
-    if (auxRotHorizontal > -50) {
+  if (speed > 0 && !nivLeft) {
+    nivRight = false
+    if (auxRotHorizontal > -35) {
       esferaMov.rotateOnAxis(rotZ, angleRotHori)
       auxRotHorizontal--
     }
-    esferaHelice.rotateOnAxis(rotY, -angleHori)
-    auxDir = setTimeout(direita, 40)
+    if (auxRotVertical == 0) esferaHelice.rotateOnAxis(rotY, -angleHori)
+    else esferaHelice.rotateOnAxis(rotY, -angleHori / 2)
   }
 }
 function cima() {
-  if (speed > 0) {
+  if (speed > 0 && !nivDown) {
+    nivUp = false
     // Verica se ha aceleracao
-    clearTimeout(auxNivCima) // Iterrompe nivelaento
-    breakMov()
-    if (auxRotVertical > -800) {
+    if (auxRotVertical > -30) {
       // Limite rotacional
       esferaHelice.rotateOnAxis(rotX, angleVert) // Movimenta para cima com a rotação
       esferaCam.rotateOnAxis(rotX, -angleVert) // Nivela a camera
       auxRotVertical-- // Auxiliar para nivelamento
-      auxCima = setTimeout(cima, 40) // Recursividade
     }
   }
 }
 function baixo() {
   // Analogamente ao cima()
-  if (speed > 0) {
-    clearTimeout(auxNivBaixo)
-    breakMov()
-    if (auxRotVertical < 800) {
+  if (speed > 0 && !nivUp) {
+    nivDown = false
+    if (auxRotVertical < 30) {
       esferaHelice.rotateOnAxis(rotX, -angleVert)
       esferaCam.rotateOnAxis(rotX, angleVert)
       auxRotVertical++
-      auxBaixo = setTimeout(baixo, 40)
     }
   }
-}
-function breakMov() {
-  // Esta funcao interrompe o movimento horizontal, para diminuir
-  clearTimeout(auxDir) // bugs quando muitas teclas sao apertadas ao mesmo tempo
-  clearTimeout(auxEsq)
 }
 
 // Movimente de nivelamento do aviao
 function nivEsq() {
   if (auxRotHorizontal > 0) {
     // Verifica se precisa ser nivelado
-    clearTimeout(auxEsq) // Interrompe movimento
+    nivLeft = true // Nivelamento = true
     esferaMov.rotateOnAxis(rotZ, angleRotHori) // Nivela aviao
     auxRotHorizontal-- // Diminui contador
-    auxNivEsq = setTimeout(nivEsq, 500) // Recursividade
+  } else {
+    nivLeft = false
   }
 }
 function nivDir() {
   // Analogamente ao nivEsq()
   if (auxRotHorizontal < 0) {
-    clearTimeout(auxDir)
+    nivRight = true
     esferaMov.rotateOnAxis(rotZ, -angleRotHori)
     auxRotHorizontal++
-    auxNivDir = setTimeout(nivDir, 500)
+  } else {
+    nivRight = false
   }
 }
 function nivCima() {
   // Analogamente ao nivEsq()
   if (auxRotVertical < 0) {
-    clearTimeout(auxCima)
+    nivUp = true
     esferaHelice.rotateOnAxis(rotX, -angleVert) // Nivela aviao
     esferaCam.rotateOnAxis(rotX, angleVert) // Nivela camera
     auxRotVertical++
-    auxNivCima = setTimeout(nivCima, 40)
+  } else {
+    nivUp = false
   }
 }
 function nivBaixo() {
   // Analogamente ao nivCima()
   if (auxRotVertical > 0) {
-    clearTimeout(auxBaixo)
+    nivDown = true
     esferaHelice.rotateOnAxis(rotX, angleVert)
     esferaCam.rotateOnAxis(rotX, -angleVert)
     auxRotVertical--
-    auxNivBaixo = setTimeout(nivBaixo, 40)
+  } else {
+    nivDown = false
   }
 }
 function forceNiv() {
   // Funcao para forcar nivelamento instantaneo no modo Inspecao
-  clearTimeout(auxNivEsq)
-  clearTimeout(auxNivDir)
-  clearTimeout(auxNivCima)
-  clearTimeout(auxNivBaixo)
   if (auxRotHorizontal > 0) {
     auxForceNiv = auxRotHorizontal * angleRotHori
     esferaMov.rotateOnAxis(rotZ, auxForceNiv)
@@ -655,8 +641,26 @@ var esferaCam = new THREE.Mesh(esferaMovGeo, heliceMat) // Objeto que carrega a 
 esferaHelice.add(esferaCam)
 esferaCam.translateX(0).translateY(0).translateZ(-20) // Posiciona obejeto no centro do aviao
 
-var cameraSimulation = initCamera(new THREE.Vector3(0, 30, -120)) // Camera para o modo Simulacao
-var cameraInspection = initCamera(new THREE.Vector3(0, 20, 60)) // Camera para o modo de Inspecao
+var cameraSimulation = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  5000
+)
+cameraSimulation.position.copy(new THREE.Vector3(0, 30, -120))
+cameraSimulation.lookAt(new THREE.Vector3(0, 0, 0))
+// Camera para o modo Simulacao
+
+var cameraInspection = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  5000
+)
+cameraInspection.position.copy(new THREE.Vector3(0, 20, 60))
+cameraInspection.lookAt(new THREE.Vector3(0, 0, 0))
+// Camera para o modo Inspecao
+
 var camera = cameraSimulation
 var clear = initCamera(new THREE.Vector3(0, 0, 0)) // Usada apenas para limpar o trackball
 var trackballControls = new TrackballControls(clear, renderer.domElement)
@@ -700,26 +704,20 @@ function keyboardUpdate() {
   if (!modoCam) {
     //Apenas no modo simulacao
     if (keyboard.pressed('down')) baixo()
-    // Chama movimento
+    //Chama movimento
     else nivBaixo() // Chama nivelamento
 
     if (keyboard.pressed('up')) cima()
     else nivCima()
 
     if (keyboard.pressed('left')) esquerda()
-    else {
-      breakMov()
-      nivEsq()
-    }
+    else nivEsq()
 
     if (keyboard.pressed('right')) direita()
-    else {
-      breakMov()
-      nivDir()
-    }
+    else nivDir()
 
-    if (keyboard.down('Q')) acelera()
-    if (keyboard.down('A')) desacelera()
+    if (keyboard.pressed('Q')) acelera()
+    if (keyboard.pressed('A')) desacelera()
   }
   if (keyboard.down('space')) switchCam()
 }
@@ -756,4 +754,3 @@ function render() {
   requestAnimationFrame(render)
   renderer.render(scene, camera) // Render scene
 }
-
