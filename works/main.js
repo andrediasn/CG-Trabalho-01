@@ -98,7 +98,7 @@ function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) {
     // Previne continuacao de movimento na troca de camera
-    if (speed < 14) {
+    if (speed < 5) {
       // Velocidade maxima
       speed += 0.5 // Valor da aceleracao
       auxAce = setTimeout(acelera, 120) // Recursividade para simular aceleracao
