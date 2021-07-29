@@ -80,7 +80,7 @@ function getcircuito(){
     start = getStart()
     duracao = new Date().getTime() - start
   }
-  console.log(duracao)
+  //console.log(duracao)
 }
 
 // ----------------- Aviao ----------------- //
@@ -163,7 +163,6 @@ function posicaoHolder() {
   pZ = pHolder.z
   esferaCam.position.set(pX, pY, pZ)
   esferaCam.translateY(10).translateZ(-30)
-  console.log(contadorCP)
 }
 
 // Camera para o modo Simulacao
@@ -182,46 +181,82 @@ var cameraInspection = new THREE.PerspectiveCamera(
   window.innerWidth / window.innerHeight,
   0.1,
   120
-)
-cameraInspection.position.copy(new THREE.Vector3(0, 20, 60))
-cameraInspection.lookAt(new THREE.Vector3(0, 0, 0))
-var camera = cameraSimulation
-var clear = initCamera(new THREE.Vector3(0, 0, 0)) // Usada apenas para limpar o trackball
-var trackballControls = new TrackballControls(clear, renderer.domElement)
-var modoCam = true // Auxilia na selecao da camera
-
-esferaCam.add(camera)
-switchCam()
-
-//Funcao para a troca do modo de camera
-function switchCam() {
-  if (modoCam) {
-    scene.add(plane)
-    scene.remove(axesHelper)
-    trackballControls = new TrackballControls(clear, renderer.domElement) // Remove o trackball
-    camera = cameraSimulation // Retorna camera para modo simulacao
-    esferaHelice.position.set(posX, posY, posZ) // Posiciona na posicao anterior salva
-    speed = auxSpeed // Restaura velocidade
-    showEnvironmentObjects(scene) // Recoloca arvores da cena
-    restoreNiv(esferaHelice, esferaMov, esferaCam) // Restaura angulos de inclinacao
-    nivV = true
-    nivH = true
-    modoCam = false // Auxilia modo da camera
-  } else {
-    getPosition() // Salva a posicao
-    auxSpeed = speed // Salva velocidade
-    speed = 0 // Interrompe o movimento
-    scene.add(axesHelper)
-    scene.remove(plane)
-    hideEnvironmentObjects(scene) // Esconde arvores da cena
-    forceNiv(esferaHelice, esferaMov, esferaCam) // Forca nivelamento instantaneo
-    camera = cameraInspection // Troca camera
-    trackballControls = new TrackballControls(camera, renderer.domElement) // Add trackball
-    esferaHelice.position.set(0, 0, 0) // Posiciona aviao no centro do mundo deslocando para baixo
-    esferaHelice.translateZ(25)
-    modoCam = true
+  )
+  cameraInspection.position.copy(new THREE.Vector3(0, 20, 60))
+  cameraInspection.lookAt(new THREE.Vector3(0, 0, 0))
+  var camera = cameraSimulation
+  var clear = initCamera(new THREE.Vector3(0, 0, 0)) // Usada apenas para limpar o trackball
+  var trackballControls = new TrackballControls(clear, renderer.domElement)
+  var modoCam = true // Auxilia na selecao da camera
+  
+  esferaCam.add(camera)
+  
+  //Funcao para a troca do modo de camera
+  function switchCam() {
+    if (modoCam) {
+      scene.add(plane)
+      scene.remove(axesHelper)
+      trackballControls = new TrackballControls(clear, renderer.domElement) // Remove o trackball
+      esferaHelice.position.set(posX, posY, posZ) // Posiciona na posicao anterior salva
+      showEnvironmentObjects(scene) // Recoloca arvores da cena
+      if (modoCockpit) {
+        camera = cameraSimulation
+        esferaCam.add(camera)
+      }
+      else{
+        camera = camCockpit
+        cockpit.add(camera)
+      }
+      speed = auxSpeed // Restaura velocidade
+      restoreNiv(esferaHelice, esferaMov) // Restaura angulos de inclinacao
+      nivV = true
+      nivH = true
+      modoCam = false // Auxilia modo da camera
+    } else {
+      getPosition() // Salva a posicao
+      auxSpeed = speed // Salva velocidade
+      speed = 0 // Interrompe o movimento
+      scene.add(axesHelper)
+      scene.remove(plane)
+      hideEnvironmentObjects(scene) // Esconde arvores da cena
+      forceNiv(esferaHelice, esferaMov) // Forca nivelamento instantaneo
+      camera = cameraInspection // Troca camera
+      trackballControls = new TrackballControls(camera, renderer.domElement) // Add trackball
+      esferaHelice.position.set(0, 0, 0) // Posiciona aviao no centro do mundo deslocando para baixo
+      esferaHelice.translateZ(25)
+      modoCam = true
+    }
+  }
+  
+  // Cockpit
+  var cockpit = new THREE.Mesh(holderGeo, holderMat)
+  esferaMov.add(cockpit)
+  
+  var camCockpit = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    7000
+  )
+  camCockpit.position.copy(new THREE.Vector3(0, 7, -15))
+  camCockpit.lookAt(new THREE.Vector3(0, 5, 0))
+  
+var modoCockpit = true
+function switchCockpit(){
+  if (modoCockpit) {
+    camera = camCockpit
+    cockpit.add(camera)
+    modoCockpit = false
+  }
+  else{
+    camera = cameraSimulation
+    esferaCam.add(camera)
+    modoCockpit = true
   }
 }
+console.log(modoCockpit)
+
+switchCam()
 
 // --------------------------- Keybord---------------------------------- //
 
@@ -256,9 +291,12 @@ function keyboardUpdate() {
     if ( keyboard.down("Q") )           acelera()
     if ( keyboard.down("A") )           desacelera()
 
-    if ( keyboard.down("P") )           printP()
-
+    
+    if ( keyboard.down("C") )           switchCockpit()
+    
     if (keyboard.down('enter'))         switchTrajeto()
+
+    if ( keyboard.down("P") )           printP() // usado para testes
         
   }
   if ( keyboard.down("space") )         switchCam()
