@@ -104,7 +104,7 @@ function aceleracao() {
 function acelera() {
   clearTimeout(auxDes)                      // Interrompe desaceleracao
   if(!modoCam) {                            // Previne continuacao de movimento na troca de camera
-    if(speed < 2) {                         // Velocidade maxima
+    if(speed < 5) {                         // Velocidade maxima
       speed += 0.05                         // Valor da aceleracao
       auxAce = setTimeout(acelera, 120)     // Recursividade para simular aceleracao
     }
@@ -157,6 +157,7 @@ function posicaoHolder() {
   pZ = pHolder.z
   esferaCam.position.set(pX, pY, pZ)
   esferaCam.translateY(10).translateZ(-30)
+  console.log(contadorCP)
 }
 
 // Camera para o modo Simulacao
@@ -220,6 +221,12 @@ function switchCam() {
 
 var keyboard = new KeyboardState();
 
+function printP(){
+  console.log('x', pX)
+  console.log('y', pY)
+  console.log('z', pZ)
+}
+
 function keyboardUpdate() {
   keyboard.update()
   if(!modoCam) {                                      
@@ -242,6 +249,8 @@ function keyboardUpdate() {
     
     if ( keyboard.down("Q") )           acelera()
     if ( keyboard.down("A") )           desacelera()
+
+    if ( keyboard.down("P") )           printP()
 
     if (keyboard.down('enter'))         switchTrajeto()
         

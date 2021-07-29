@@ -43,9 +43,9 @@ var trajY3 = trajY2 + metaY3 - metaY2
 var trajZ3 = trajZ2 + metaZ3 + Math.abs(metaZ2) 
 
 //Torus4
-var metaX4 = 3300
+var metaX4 = 3200
 var metaY4 = 150
-var metaZ4 = 1000
+var metaZ4 = 1200
 // Trajeto ate torus 4
 var trajX4 = trajX3 + metaX4 - metaX3 
 var trajY4 = trajY3 + metaY4 - metaY3 
@@ -53,7 +53,7 @@ var trajZ4 = trajZ3 + metaZ4 + Math.abs(metaZ3)
 
 //Torus5
 var metaX5 = 2800
-var metaY5 = 150
+var metaY5 = 200
 var metaZ5 = 2000
 // Trajeto ate torus 5
 var trajX5 = trajX4 + metaX5 - metaX4 
@@ -62,8 +62,8 @@ var trajZ5 = trajZ4 + metaZ5 - metaZ4
 
 //Torus6
 var metaX6 = 1000
-var metaY6 = 160
-var metaZ6 = 2500
+var metaY6 = 500
+var metaZ6 = 1800
 // Trajeto ate torus 6
 var trajX6 = trajX5 + metaX6 - metaX5 
 var trajY6 = trajY5 + metaY6 - metaY5 
@@ -71,7 +71,7 @@ var trajZ6 = trajZ5 + metaZ6 - metaZ5
 
 //Torus7
 var metaX7 = 0
-var metaY7 = 170
+var metaY7 = 200
 var metaZ7 = 2000
 // Trajeto ate torus 7
 var trajX7 = trajX6 + metaX7 - metaX6 
@@ -105,6 +105,45 @@ var trajX10 = trajX9 + metaX10 - metaX9
 var trajY10 = trajY9 + metaY10 - metaY9 
 var trajZ10 = trajZ9 + metaZ10 + Math.abs(metaZ9) 
 
+//Torus11
+var metaX11 = 0
+var metaY11 = 150
+var metaZ11 = -1500
+// Trajeto ate torus 11
+var trajX11 = trajX10 + metaX11 - metaX10 
+var trajY11 = trajY10 + metaY11 - metaY10 
+var trajZ11 = trajZ10 + metaZ11 + Math.abs(metaZ10) 
+
+//Torus12
+var metaX12 = 600
+var metaY12 = 130
+var metaZ12 = -2200
+// Trajeto ate torus 12
+var trajX12 = trajX11 + metaX12 - metaX11 
+var trajY12 = trajY11 + metaY12 - metaY11 
+var trajZ12 = trajZ11 + metaZ12 + Math.abs(metaZ11)
+
+//Torus13
+var metaX13 = 600
+var metaY13 = 130
+var metaZ13 = -2200
+// Trajeto ate torus 13
+var trajX13 = trajX12 + metaX13 - metaX12 
+var trajY13 = trajY12 + metaY13 - metaY12 
+var trajZ13 = trajZ12 + metaZ13 + Math.abs(metaZ12)
+
+//Torus14
+var metaX14 = 2200
+var metaY14 = 140
+var metaZ14 = -3000
+// Trajeto ate torus 14
+var trajX14 = trajX12 + metaX14 - metaX12 
+var trajY14 = trajY12 + metaY14 - metaY12 
+var trajZ14 = trajZ12 + metaZ14 + Math.abs(metaZ12)
+
+
+
+
 
 export function addTrajeto() {
     
@@ -122,6 +161,10 @@ export function addTrajeto() {
         new THREE.Vector3( trajX8, trajY8, trajZ8 ),
         new THREE.Vector3( trajX9, trajY9, trajZ9 ),
         new THREE.Vector3( trajX10, trajY10, trajZ10 ),
+        new THREE.Vector3( trajX11, trajY11, trajZ11 ),
+        new THREE.Vector3( trajX12, trajY12, trajZ12 ),
+        new THREE.Vector3( trajX13, trajY13, trajZ13 ),
+        new THREE.Vector3( trajX14, trajY14, trajZ14 )
     ] );
 
     const points = curve.getPoints( 50 );
@@ -171,10 +214,24 @@ meta7.translateX(metaX7).translateY(metaY7).translateZ(metaZ7)
 meta7.rotateOnAxis(rotY, degreesToRadians(60) )
 var meta8 = new THREE.Mesh( torusGeo, torusMat)
 meta8.translateX(metaX8).translateY(metaY8).translateZ(metaZ8)
+meta8.rotateOnAxis(rotY, degreesToRadians(60) )
 var meta9 = new THREE.Mesh( torusGeo, torusMat)
 meta9.translateX(metaX9).translateY(metaY9).translateZ(metaZ9)
 var meta10 = new THREE.Mesh( torusGeo, torusMat)
 meta10.translateX(metaX10).translateY(metaY10).translateZ(metaZ10)
+meta10.rotateOnAxis(rotY, degreesToRadians(120) )
+var meta11 = new THREE.Mesh( torusGeo, torusMat)
+meta11.translateX(metaX11).translateY(metaY11).translateZ(metaZ11)
+meta11.rotateOnAxis(rotY, degreesToRadians(120) )
+var meta12 = new THREE.Mesh( torusGeo, torusMat)
+meta12.translateX(metaX12).translateY(metaY12).translateZ(metaZ12)
+meta12.rotateOnAxis(rotY, degreesToRadians(120) )
+var meta13 = new THREE.Mesh( torusGeo, torusMat)
+meta13.translateX(metaX13).translateY(metaY13).translateZ(metaZ13)
+meta13.rotateOnAxis(rotY, degreesToRadians(120) )
+var meta14 = new THREE.Mesh( torusGeo, torusMat)
+meta14.translateX(metaX14).translateY(metaY14).translateZ(metaZ14)
+meta14.rotateOnAxis(rotY, degreesToRadians(120) )
 
 
 var aux = 0
@@ -189,7 +246,7 @@ export function getDist() {
     return aux
 }
 
-function circuito (scene) { // funcao pra teste
+function circuito (scene) { // funcao pra teste, add todos torus ao msm tempo
     scene.add(meta0)
     scene.add(meta1)
     scene.add(meta2)
@@ -201,14 +258,17 @@ function circuito (scene) { // funcao pra teste
     scene.add(meta8)
     scene.add(meta9)
     scene.add(meta10)
-    //scene.add(meta11)
+    scene.add(meta11)
+    scene.add(meta12)
+    scene.add(meta13)
+    scene.add(meta14)
 }
 
 export function checkpoint(scene, px, py, pz) {
     //console.log(cont)
     //console.log(aux)
+    //circuito(scene) // apenas para teste
     if (cont == 0) {
-        circuito(scene) // apenas para teste
         scene.add(meta0)
         scene.add(meta1)
         scene.add(meta2)
@@ -274,14 +334,47 @@ export function checkpoint(scene, px, py, pz) {
     }
     else if(cont == 9){
         scene.remove(meta8)
-        aux = distancia(meta2, px, py, pz)
+        scene.add(meta11)
+        aux = distancia(meta9.position.x, meta9.position.y, meta9.position.z, px, py, pz)
         if(aux < auxm) 
             cont ++
     }
-    else if(cont == 10)
+    else if(cont == 10){
         scene.remove(meta9)
-    else if(cont == 11)
+        scene.add(meta12)
+        aux = distancia(meta10.position.x, meta10.position.y, meta10.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++     
+    }
+    else if(cont == 11){
         scene.remove(meta10)
+        scene.add(meta13)
+        aux = distancia(meta11.position.x, meta11.position.y, meta11.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++  
+    }
+    else if(cont == 12){
+        scene.remove(meta11)
+        scene.add(meta14)
+        aux = distancia(meta12.position.x, meta12.position.y, meta12.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++  
+    }
+    else if(cont == 13){
+        scene.remove(meta12)
+        aux = distancia(meta13.position.x, meta13.position.y, meta13.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++  
+    }
+    else if(cont == 14){
+        scene.remove(meta13)
+        aux = distancia(meta14.position.x, meta14.position.y, meta14.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++  
+    }
+    else if(cont == 14){
+        scene.remove(meta14)
+    }
 }
 
 function distancia(mx, my, mz, px, py, pz){

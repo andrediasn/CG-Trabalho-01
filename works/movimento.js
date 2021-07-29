@@ -2,9 +2,6 @@ import * as THREE from '../build/three.module.js'
 import { degreesToRadians } from '../libs/util/util.js'
 
 // Variaveis de posicao
-var posX = 3000                             
-var posY = 7
-var posZ = -3500
 var position = new THREE.Vector3()       
 // Auxiliares na rotacao:
 var rotZ = new THREE.Vector3(0,0,1)      
