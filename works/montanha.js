@@ -237,4 +237,42 @@ function createMountain(index) {
   return object
 }
 
-export { createMountain }
+export function addMontanhas(scene){
+  // Montanhas
+  var mat4 = new THREE.Matrix4()
+  // Montanha Mais Alta
+  var montanhaAlta1 = createMountain(0)
+  var montanhaAlta2 = createMountain(1)
+  var montanhaAlta3 = createMountain(2)
+
+  var montanhaAlta = [montanhaAlta1, montanhaAlta2, montanhaAlta3]
+  montanhaAlta.map((montanha) => {
+    scene.add(montanha)
+    montanha.matrixAutoUpdate = false
+    montanha.matrix.multiply(mat4.makeTranslation(-1000, 0, -1500))
+  })
+
+  // Montanha da Esquerda
+  var montanhaEsq1 = createMountain(3)
+  var montanhaEsq2 = createMountain(4)
+
+  var montanhaEsquerda = [montanhaEsq1, montanhaEsq2]
+  montanhaEsquerda.map((montanha) => {
+    scene.add(montanha)
+    montanha.matrixAutoUpdate = false
+    montanha.matrix.multiply(mat4.makeTranslation(-2400, 0, -600))
+    montanha.matrix.multiply(mat4.makeRotationY(degreesToRadians(20)))
+  })
+
+  // Montanha da Direita
+  var montanhaDir1 = createMountain(5)
+  var montanhaDir2 = createMountain(6)
+
+  var montanhaDireita = [montanhaDir1, montanhaDir2]
+  montanhaDireita.map((montanha) => {
+    scene.add(montanha)
+    montanha.matrixAutoUpdate = false
+    montanha.matrix.multiply(mat4.makeTranslation(1500, 0, -2600))
+    montanha.matrix.multiply(mat4.makeRotationY(degreesToRadians(-40)))
+  })
+}

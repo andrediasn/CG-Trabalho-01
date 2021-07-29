@@ -1,10 +1,8 @@
 import * as THREE from '../build/three.module.js'
-import { degreesToRadians } from '../libs/util/util.js'
+import { degreesToRadians} from '../libs/util/util.js'
 
-// Variáveis iniciais
-var mat4 = new THREE.Matrix4()
-const c = 0.6 // Constante para modificar o tamanho do avião
 
+const c = 0.6
 // Esfera que é a base de tudo
 var heliceMat = new THREE.MeshPhongMaterial({
   // Material para os elementos da hélice
@@ -13,223 +11,171 @@ var heliceMat = new THREE.MeshPhongMaterial({
 })
 var esferaHeliceGeo = new THREE.SphereGeometry(2 * c, 20, 20)
 var esferaHelice = new THREE.Mesh(esferaHeliceGeo, heliceMat)
-esferaHelice.castShadow = true
-esferaHelice.receiveShadow = true
 
-// ----------------- Criação dos polígonos ----------------- //
 
-// Cone da hélice
-var coneHeliceGeo = new THREE.CylinderGeometry(0.1 * c, 1.3 * c, 1.5 * c, 70)
-var coneHelice = new THREE.Mesh(coneHeliceGeo, heliceMat)
-coneHelice.castShadow = true
-coneHelice.receiveShadow = true
+  // Variáveis iniciais
+  var mat4 = new THREE.Matrix4()
+  // Constante para modificar o tamanho do avião
 
-// Cilindros do corpo do avião
-var cylCorpoMat = new THREE.MeshPhongMaterial({
-  color: 0x888888,
-  specular: 0x333333,
-})
+  // ----------------- Criação dos polígonos ----------------- //
 
-var cyl1corpoGeo = new THREE.CylinderGeometry(1.9 * c, 4.8 * c, 6 * c, 18)
-var cyl1corpo = new THREE.Mesh(cyl1corpoGeo, cylCorpoMat)
-cyl1corpo.castShadow = true
-cyl1corpo.receiveShadow = true
+  // Cone da hélice
+  var coneHeliceGeo = new THREE.CylinderGeometry(0.1 * c, 1.3 * c, 1.5 * c, 70)
+  var coneHelice = new THREE.Mesh(coneHeliceGeo, heliceMat)
+  
+  // Cilindros do corpo do avião
+  var cylCorpoMat = new THREE.MeshPhongMaterial({
+    color: 0x888888,
+    specular: 0x333333,
+  })
+  
+  var cyl1corpoGeo = new THREE.CylinderGeometry(1.9 * c, 4.8 * c, 6 * c, 18)
+  var cyl1corpo = new THREE.Mesh(cyl1corpoGeo, cylCorpoMat)
+  
+  var cyl2corpoGeo = new THREE.CylinderGeometry(4.8 * c, 7 * c, 10 * c, 18)
+  var cyl2corpo = new THREE.Mesh(cyl2corpoGeo, cylCorpoMat)
+  
+  var cyl3corpoGeo = new THREE.CylinderGeometry(7 * c, 8.5 * c, 10 * c, 18)
+  var cyl3corpo = new THREE.Mesh(cyl3corpoGeo, cylCorpoMat)
+  
+  var cyl4corpoGeo = new THREE.CylinderGeometry(8.5 * c, 8.5 * c, 30 * c, 18)
+  var cyl4corpo = new THREE.Mesh(cyl4corpoGeo, cylCorpoMat)
+  
+  var cyl5corpoGeo = new THREE.CylinderGeometry(8.5 * c, 6 * c, 12 * c, 18)
+  var cyl5corpo = new THREE.Mesh(cyl5corpoGeo, cylCorpoMat)
+  
+  var cyl6corpoGeo = new THREE.CylinderGeometry(6 * c, 3 * c, 9 * c, 18)
+  var cyl6corpo = new THREE.Mesh(cyl6corpoGeo, cylCorpoMat)
+  
+  var cyl7corpoGeo = new THREE.CylinderGeometry(3 * c, 2.2 * c, 7 * c, 18)
+  var cyl7corpo = new THREE.Mesh(cyl7corpoGeo, cylCorpoMat)
+  
+  // Asas
+  var asaMat = new THREE.MeshPhongMaterial({
+    color: 0x999999,
+    specular: 0x989898,
+  })
+  
+  var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
+  
+  var asa1 = new THREE.Mesh(asaGeo, asaMat)
+  var asa2 = new THREE.Mesh(asaGeo, asaMat)
+  
+  // Winglet da asa (estrutura na extremidade da asa)
+  var wingletAsaGeo = new THREE.BoxGeometry(3 * c, 9.55 * c, 1.2 * c)
+  var wingletAsa1 = new THREE.Mesh(wingletAsaGeo, asaMat)
+  var wingletAsa2 = new THREE.Mesh(wingletAsaGeo, asaMat)
+  
+  // Componente auxiliar do winglet
+  var auxWingletGeo = new THREE.BoxGeometry(2 * c, 9.5 * c, 0.3 * c)
+  var auxWinglet1 = new THREE.Mesh(auxWingletGeo, asaMat)
+  var auxWinglet2 = new THREE.Mesh(auxWingletGeo, asaMat)
+  
+  // Turbinas
+  var turbinaMat = new THREE.MeshPhongMaterial({
+    color: 0xff0000,
+    specular: 0x989898,
+  })
+  
+  var cylTurbinaGeo = new THREE.CylinderGeometry(3.5 * c, 2.2 * c, 6 * c, 20)
+  var cylTurbina1 = new THREE.Mesh(cylTurbinaGeo, turbinaMat)
+  var cylTurbina2 = new THREE.Mesh(cylTurbinaGeo, turbinaMat)
+  
+  var esferaTurbinaGeo = new THREE.SphereGeometry(2.2 * c, 20, 20)
+  var esferaTurbina1 = new THREE.Mesh(esferaTurbinaGeo, turbinaMat)
+  var esferaTurbina2 = new THREE.Mesh(esferaTurbinaGeo, turbinaMat)
+  
+  // Laminas da turbina
+  var laminaTurbinaMat = new THREE.MeshPhongMaterial({
+    color: 0x222222,
+    specular: 0x989898,
+  })
+  var laminaTurbinaGeo = new THREE.BoxGeometry(5.5 * c, 2 * c, 0.2 * c)
+  
+  var laminasTurbinaEsq = []
+  var laminasTurbinaDir = []
+  
+  for (let i = 0; i < 12; i++) {
+    laminasTurbinaEsq.push(new THREE.Mesh(laminaTurbinaGeo, laminaTurbinaMat))
+    laminasTurbinaDir.push(new THREE.Mesh(laminaTurbinaGeo, laminaTurbinaMat))
+  }
+  
+  // Leme
+  // Esfera do leme
+  var lemeMat = new THREE.MeshPhongMaterial({
+    color: 0xff00000,
+    specular: 0x989898,
+  })
+  
+  var esferaLemeGeo = new THREE.SphereGeometry(2.2 * c, 20, 20)
+  var esferaLeme = new THREE.Mesh(esferaLemeGeo, lemeMat)
+  
+  // Cilindro do leme
+  var cylLemeGeo = new THREE.CylinderGeometry(1.8 * c, 1.0 * c, 2 * c, 10)
+  var cylLeme = new THREE.Mesh(cylLemeGeo, lemeMat)
+  
+  // Retângulo na vertical do leme
+  var retVerLemeGeo = new THREE.BoxGeometry(0.4 * c, 8 * c, 2.4 * c)
+  var retVerLeme = new THREE.Mesh(retVerLemeGeo, lemeMat)
+  
+  // Retângulo na horizontal do leme
+  var retHorLemeGeo = new THREE.BoxGeometry(16 * c, 3.0 * c, 0.6 * c)
+  var retHorLeme = new THREE.Mesh(retHorLemeGeo, lemeMat)
+  
+  // Cabine do avião
+  var cabineMat = new THREE.MeshPhongMaterial({
+    color: 0x333333,
+    specular: 0x989898,
+  })
+  
+  var cylCabineGeo = new THREE.CylinderGeometry(3 * c, 3 * c, 4.5 * c, 30)
+  var sCabineGeo = new THREE.SphereGeometry(3.0 * c, 20, 20)
+  
+  var cylCabine = new THREE.Mesh(cylCabineGeo, cabineMat)
+  var sCabine1 = new THREE.Mesh(sCabineGeo, cabineMat)
+  var sCabine2 = new THREE.Mesh(sCabineGeo, cabineMat)
+  
+  // Janelas
+  var janelaMat = new THREE.MeshPhongMaterial({
+    color: 0xf0f0f0,
+    specular: 0xbbbbbb,
+  })
+  // Janelas no cilindro antes do central(cyl3)
+  var janela3Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 2 * c, 16)
+  var janela3esq = new THREE.Mesh(janela3Geo, janelaMat)
+  var janela3dir = new THREE.Mesh(janela3Geo, janelaMat)
+  
+  // Janelas no cilindro central(cyl4)
+  var janela4Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 16.8 * c, 16)
+  var janelas4 = []
+  for (let i = 0; i < 7; i++) {
+    janelas4.push(new THREE.Mesh(janela4Geo, janelaMat))
+  }
+  
+  //Janelas no cilindro depois do central(cyl5)
+  var janela5Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 2 * c, 16)
+  var janelas5esq = []
+  var janelas5dir = []
+  for (let i = 0; i < 2; i++) {
+    janelas5esq.push(new THREE.Mesh(janela5Geo, janelaMat))
+    janelas5dir.push(new THREE.Mesh(janela5Geo, janelaMat))
+  }
 
-var cyl2corpoGeo = new THREE.CylinderGeometry(4.8 * c, 7 * c, 10 * c, 18)
-var cyl2corpo = new THREE.Mesh(cyl2corpoGeo, cylCorpoMat)
-cyl2corpo.castShadow = true
-cyl2corpo.receiveShadow = true
-
-var cyl3corpoGeo = new THREE.CylinderGeometry(7 * c, 8.5 * c, 10 * c, 18)
-var cyl3corpo = new THREE.Mesh(cyl3corpoGeo, cylCorpoMat)
-cyl3corpo.castShadow = true
-cyl3corpo.receiveShadow = true
-
-var cyl4corpoGeo = new THREE.CylinderGeometry(8.5 * c, 8.5 * c, 30 * c, 18)
-var cyl4corpo = new THREE.Mesh(cyl4corpoGeo, cylCorpoMat)
-cyl4corpo.castShadow = true
-cyl4corpo.receiveShadow = true
-
-var cyl5corpoGeo = new THREE.CylinderGeometry(8.5 * c, 6 * c, 12 * c, 18)
-var cyl5corpo = new THREE.Mesh(cyl5corpoGeo, cylCorpoMat)
-cyl5corpo.castShadow = true
-cyl5corpo.receiveShadow = true
-
-var cyl6corpoGeo = new THREE.CylinderGeometry(6 * c, 3 * c, 9 * c, 18)
-var cyl6corpo = new THREE.Mesh(cyl6corpoGeo, cylCorpoMat)
-cyl6corpo.castShadow = true
-cyl6corpo.receiveShadow = true
-
-var cyl7corpoGeo = new THREE.CylinderGeometry(3 * c, 2.2 * c, 7 * c, 18)
-var cyl7corpo = new THREE.Mesh(cyl7corpoGeo, cylCorpoMat)
-cyl7corpo.castShadow = true
-cyl7corpo.receiveShadow = true
-
-// Asas
-var asaMat = new THREE.MeshPhongMaterial({
-  color: 0x999999,
-  specular: 0x989898,
-})
-
-var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
-
-var asa1 = new THREE.Mesh(asaGeo, asaMat)
-asa1.castShadow = true
-asa1.receiveShadow = true
-var asa2 = new THREE.Mesh(asaGeo, asaMat)
-asa2.castShadow = true
-asa2.receiveShadow = true
-
-// Winglet da asa (estrutura na extremidade da asa)
-var wingletAsaGeo = new THREE.BoxGeometry(3 * c, 9.55 * c, 1.2 * c)
-var wingletAsa1 = new THREE.Mesh(wingletAsaGeo, asaMat)
-wingletAsa1.castShadow = true
-wingletAsa1.receiveShadow = true
-var wingletAsa2 = new THREE.Mesh(wingletAsaGeo, asaMat)
-wingletAsa2.castShadow = true
-wingletAsa2.receiveShadow = true
-
-// Componente auxiliar do winglet
-var auxWingletGeo = new THREE.BoxGeometry(2 * c, 9.5 * c, 0.3 * c)
-var auxWinglet1 = new THREE.Mesh(auxWingletGeo, asaMat)
-var auxWinglet2 = new THREE.Mesh(auxWingletGeo, asaMat)
-
-// Turbinas
-var turbinaMat = new THREE.MeshPhongMaterial({
-  color: 0xff0000,
-  specular: 0x989898,
-})
-
-var cylTurbinaGeo = new THREE.CylinderGeometry(3.5 * c, 2.2 * c, 6 * c, 20)
-var cylTurbina1 = new THREE.Mesh(cylTurbinaGeo, turbinaMat)
-cylTurbina1.castShadow = true
-cylTurbina1.receiveShadow = true
-var cylTurbina2 = new THREE.Mesh(cylTurbinaGeo, turbinaMat)
-cylTurbina2.castShadow = true
-cylTurbina2.receiveShadow = true
-
-var esferaTurbinaGeo = new THREE.SphereGeometry(2.2 * c, 20, 20)
-var esferaTurbina1 = new THREE.Mesh(esferaTurbinaGeo, turbinaMat)
-esferaTurbina1.castShadow = true
-esferaTurbina1.receiveShadow = true
-var esferaTurbina2 = new THREE.Mesh(esferaTurbinaGeo, turbinaMat)
-esferaTurbina2.castShadow = true
-esferaTurbina2.receiveShadow = true
-
-// Laminas da turbina
-var laminaTurbinaMat = new THREE.MeshPhongMaterial({
-  color: 0x222222,
-  specular: 0x989898,
-})
-var laminaTurbinaGeo = new THREE.BoxGeometry(5.5 * c, 2 * c, 0.2 * c)
-
-var laminasTurbinaEsq = []
-var laminasTurbinaDir = []
-
-for (let i = 0; i < 12; i++) {
-  laminasTurbinaEsq.push(new THREE.Mesh(laminaTurbinaGeo, laminaTurbinaMat))
-  laminasTurbinaDir.push(new THREE.Mesh(laminaTurbinaGeo, laminaTurbinaMat))
-}
-
-// Leme
-// Esfera do leme
-var lemeMat = new THREE.MeshPhongMaterial({
-  color: 0xff00000,
-  specular: 0x989898,
-})
-
-var esferaLemeGeo = new THREE.SphereGeometry(2.2 * c, 20, 20)
-var esferaLeme = new THREE.Mesh(esferaLemeGeo, lemeMat)
-esferaLeme.castShadow = true
-esferaLeme.receiveShadow = true
-
-// Cilindro do leme
-var cylLemeGeo = new THREE.CylinderGeometry(1.8 * c, 1.0 * c, 2 * c, 10)
-var cylLeme = new THREE.Mesh(cylLemeGeo, lemeMat)
-cylLeme.castShadow = true
-cylLeme.receiveShadow = true
-
-// Retângulo na vertical do leme
-var retVerLemeGeo = new THREE.BoxGeometry(0.4 * c, 8 * c, 2.4 * c)
-var retVerLeme = new THREE.Mesh(retVerLemeGeo, lemeMat)
-retVerLeme.castShadow = true
-retVerLeme.receiveShadow = true
-
-// Retângulo na horizontal do leme
-var retHorLemeGeo = new THREE.BoxGeometry(16 * c, 3.0 * c, 0.6 * c)
-var retHorLeme = new THREE.Mesh(retHorLemeGeo, lemeMat)
-retHorLeme.castShadow = true
-retHorLeme.receiveShadow = true
-
-// Cabine do avião
-var cabineMat = new THREE.MeshPhongMaterial({
-  color: 0x333333,
-  specular: 0x989898,
-})
-
-var cylCabineGeo = new THREE.CylinderGeometry(3 * c, 3 * c, 4.5 * c, 30)
-var sCabineGeo = new THREE.SphereGeometry(3.0 * c, 20, 20)
-
-var cylCabine = new THREE.Mesh(cylCabineGeo, cabineMat)
-cylCabine.castShadow = true
-cylCabine.receiveShadow = true
-var sCabine1 = new THREE.Mesh(sCabineGeo, cabineMat)
-sCabine1.castShadow = true
-sCabine1.receiveShadow = true
-var sCabine2 = new THREE.Mesh(sCabineGeo, cabineMat)
-sCabine2.castShadow = true
-sCabine2.receiveShadow = true
-
-// Janelas
-var janelaMat = new THREE.MeshPhongMaterial({
-  color: 0xf0f0f0,
-  specular: 0xbbbbbb,
-})
-// Janelas no cilindro antes do central(cyl3)
-var janela3Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 2 * c, 16)
-var janela3esq = new THREE.Mesh(janela3Geo, janelaMat)
-janela3esq.receiveShadow = true
-var janela3dir = new THREE.Mesh(janela3Geo, janelaMat)
-janela3dir.receiveShadow = true
-
-// Janelas no cilindro central(cyl4)
-var mesh
-var mesh2
-var janela4Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 16.8 * c, 16)
-var janelas4 = []
-for (let i = 0; i < 7; i++) {
-  mesh = new THREE.Mesh(janela4Geo, janelaMat)
-  mesh.receiveShadow = true
-  janelas4.push(mesh)
-}
-
-//Janelas no cilindro depois do central(cyl5)
-var janela5Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 2 * c, 16)
-var janelas5esq = []
-var janelas5dir = []
-for (let i = 0; i < 2; i++) {
-  mesh = new THREE.Mesh(janela5Geo, janelaMat)
-  mesh.receiveShadow = true
-  mesh2 = new THREE.Mesh(janela5Geo, janelaMat)
-  mesh2.receiveShadow = true
-  janelas5esq.push(mesh)
-  janelas5dir.push(mesh2)
-}
-
-var esferaMovGeo = new THREE.SphereGeometry(1, 1, 1)
+var esferaMovGeo = new THREE.SphereGeometry(0.1, 0.1, 1)
+var esferaVert = new THREE.Mesh(esferaMovGeo, heliceMat)
 var esferaMov = new THREE.Mesh(esferaMovGeo, heliceMat)
-
+  
 // ----------------- Adicionando os polígonos à cena e colocando-os em suas posições ----------------- //
 
 export function criaAviao(scene, posX, posY, posZ) {
   // Esfera que é a base de tudo
-  scene.add(esferaHelice)
-  esferaHelice.translateX(posX).translateY(posY).translateZ(posZ)
+  scene.add(esferaVert)
+  esferaVert.translateX(posX).translateY(posY).translateZ(posZ)
+  esferaVert.add(esferaMov)
+  esferaVert.add(esferaHelice)
 
   //Objeto para auxiliar no movimento
-
-  esferaHelice.add(esferaMov)
-  esferaHelice.translateX(posX).translateY(posX).translateZ(posZ)
+  
 
   // Cone para colocar as hélices rotacionando
   esferaHelice.add(coneHelice)
@@ -317,17 +263,13 @@ export function criaAviao(scene, posX, posY, posZ) {
 
   auxWinglet1.matrixAutoUpdate = false
   auxWinglet1.matrix.identity()
-  auxWinglet1.matrix.multiply(
-    mat4.makeTranslation(1.35 * c, 0.05 * c, -1.0 * c)
-  )
+  auxWinglet1.matrix.multiply(mat4.makeTranslation(1.35 * c, 0.05 * c, -1.0 * c))
   auxWinglet1.matrix.multiply(mat4.makeRotationY(degreesToRadians(90)))
   auxWinglet1.matrix.multiply(mat4.makeRotationZ(degreesToRadians(6)))
 
   auxWinglet2.matrixAutoUpdate = false
   auxWinglet2.matrix.identity()
-  auxWinglet2.matrix.multiply(
-    mat4.makeTranslation(-1.35 * c, 0.05 * c, -1.0 * c)
-  )
+  auxWinglet2.matrix.multiply(mat4.makeTranslation(-1.35 * c, 0.05 * c, -1.0 * c))
   auxWinglet2.matrix.multiply(mat4.makeRotationY(degreesToRadians(90)))
   auxWinglet2.matrix.multiply(mat4.makeRotationZ(degreesToRadians(6)))
 
@@ -471,44 +413,16 @@ export function rotatePlaneComponents() {
     lamina.matrix.multiply(mat4.makeRotationY(degreesToRadians(-3 + 1 / 4)))
   })
   laminasTurbinaEsq.map((lamina) => {
-    lamina.matrixAutoUpdate = false
-    lamina.matrix.multiply(mat4.makeRotationY(degreesToRadians(-3 + 1 / 4)))
+      lamina.matrixAutoUpdate = false
+      lamina.matrix.multiply(mat4.makeRotationY(degreesToRadians(-3 + 1 / 4)))
   })
 }
 
-export function getEsferaHelice() {
-  return esferaHelice
+
+export function getEsferaHelice(){
+  return esferaVert
 }
 
-export function getEsferaMov() {
+export function getEsferaMov(){
   return esferaMov
 }
-
-// ---------------------------Código acabado.---------------------------------- //
-/*
-// Use this to show information onscreen
-var controls = new InfoBox()
-controls.add('Basic Scene')
-controls.addParagraph()
-controls.add('Use mouse to interact:')
-controls.add('* Left button to rotate')
-controls.add('* Right button to translate (pan)')
-controls.add('* Scroll to zoom in/out.')
-controls.show()
-// Listen window size changes
-window.addEventListener(
-  'resize',
-  function () {
-    onWindowResize(camera, renderer)
-  },
-  false
-)
-render()
-function render() {
-  stats.update() // Update FPS
-  trackballControls.update() // Enable mouse movements
-  rotatePlaneComponents()
-  requestAnimationFrame(render)
-  renderer.render(scene, camera) // Render scene
-}
-*/

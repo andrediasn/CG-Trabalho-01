@@ -25,7 +25,7 @@ var trajY1 = trajY0 + metaY1 - metaY0
 var trajZ1 = trajZ0 + metaZ1 + Math.abs(metaZ0)    
 
 //Torus2
-var metaX2 = 3300
+var metaX2 = 3100
 var metaY2 = 150
 var metaZ2 = -1000
 // Trajeto ate torus 2
@@ -98,41 +98,39 @@ var trajZ9 = trajZ8 + metaZ9 - metaZ8
 
 //Torus10
 var metaX10 = -1500
-var metaY10 = 1100
+var metaY10 = 110
 var metaZ10 = -1000
 // Trajeto ate torus 10
 var trajX10 = trajX9 + metaX10 - metaX9 
 var trajY10 = trajY9 + metaY10 - metaY9 
 var trajZ10 = trajZ9 + metaZ10 + Math.abs(metaZ9) 
 
-var torusGeo = new THREE.TorusGeometry (30, 2, 16, 100) // (raio, tubo, radialSegments, tubularSegments)
-var torusMat = new THREE.MeshBasicMaterial ({ color: 0xfc1803 })
-        
+
 export function addTrajeto() {
-     
+    
     //Create a closed wavey loop
     const curve = new THREE.CatmullRomCurve3( [
-    new THREE.Vector3( 0, 0, 0 ),
-    new THREE.Vector3( trajX0, trajY0, trajZ0 ),
-    new THREE.Vector3( trajX1, trajY1, trajZ1 ),
-    new THREE.Vector3( trajX2, trajY2, trajZ2 ),
-    new THREE.Vector3( trajX3, trajY3, trajZ3 ),
-    new THREE.Vector3( trajX4, trajY4, trajZ4 ),
-    new THREE.Vector3( trajX5, trajY5, trajZ5 ),
-    new THREE.Vector3( trajX6, trajY6, trajZ6 ),
-    new THREE.Vector3( trajX7, trajY7, trajZ7 ),
-    new THREE.Vector3( trajX8, trajY8, trajZ8 ),
-    new THREE.Vector3( trajX9, trajY9, trajZ9 ),
-    new THREE.Vector3( trajX10, trajY10, trajZ10 ),
+        new THREE.Vector3( 0, 0, 0 ),
+        new THREE.Vector3( trajX0, trajY0, trajZ0 ),
+        new THREE.Vector3( trajX1, trajY1, trajZ1 ),
+        new THREE.Vector3( trajX2, trajY2, trajZ2 ),
+        new THREE.Vector3( trajX3, trajY3, trajZ3 ),
+        new THREE.Vector3( trajX4, trajY4, trajZ4 ),
+        new THREE.Vector3( trajX5, trajY5, trajZ5 ),
+        new THREE.Vector3( trajX6, trajY6, trajZ6 ),
+        new THREE.Vector3( trajX7, trajY7, trajZ7 ),
+        new THREE.Vector3( trajX8, trajY8, trajZ8 ),
+        new THREE.Vector3( trajX9, trajY9, trajZ9 ),
+        new THREE.Vector3( trajX10, trajY10, trajZ10 ),
     ] );
 
     const points = curve.getPoints( 50 );
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
     const material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
-
+    
     // Create the final object to add to the scene
     const trajeto = new THREE.Line( geometry, material );
-        
+    
     trajeto.translateX(trajX).translateY(trajY).translateZ(trajZ)
     
     return trajeto
@@ -142,68 +140,153 @@ var rotZ = new THREE.Vector3(0,0,1)
 var rotY = new THREE.Vector3(0,1,0)
 var rotX = new THREE.Vector3(1,0,0)
 
-export function circuito (scene, cont) {
-    if(cont == 0) {
-        var meta0 = new THREE.Mesh( torusGeo, torusMat)
+
+
+var torusGeo = new THREE.TorusGeometry (30, 2, 16, 100) // (raio, tubo, radialSegments, tubularSegments)
+var torusMat = new THREE.MeshPhongMaterial({
+    color: 0xfc1803,
+    opacity: 0.5,
+    transparent: true});
+// Criando torus
+var meta0 = new THREE.Mesh( torusGeo, torusMat)
+meta0.translateX(metaX0).translateY(metaY0).translateZ(metaZ0)
+var meta1 = new THREE.Mesh( torusGeo, torusMat)
+meta1.translateX(metaX1).translateY(metaY1).translateZ(metaZ1)
+var meta2 = new THREE.Mesh( torusGeo, torusMat)
+meta2.translateX(metaX2).translateY(metaY2).translateZ(metaZ2)
+meta2.rotateOnAxis(rotY, degreesToRadians(30) )
+var meta3 = new THREE.Mesh( torusGeo, torusMat)
+meta3.translateX(metaX3).translateY(metaY3).translateZ(metaZ3)
+var meta4 = new THREE.Mesh( torusGeo, torusMat)
+meta4.translateX(metaX4).translateY(metaY4).translateZ(metaZ4)
+meta4.rotateOnAxis(rotY, degreesToRadians(-30) )
+var meta5 = new THREE.Mesh( torusGeo, torusMat)
+meta5.translateX(metaX5).translateY(metaY5).translateZ(metaZ5)
+meta5.rotateOnAxis(rotY, degreesToRadians(-40) )
+var meta6 = new THREE.Mesh( torusGeo, torusMat)
+meta6.translateX(metaX6).translateY(metaY6).translateZ(metaZ6)
+var meta7 = new THREE.Mesh( torusGeo, torusMat)
+meta6.rotateOnAxis(rotY, degreesToRadians(90) )
+meta7.translateX(metaX7).translateY(metaY7).translateZ(metaZ7)
+meta7.rotateOnAxis(rotY, degreesToRadians(60) )
+var meta8 = new THREE.Mesh( torusGeo, torusMat)
+meta8.translateX(metaX8).translateY(metaY8).translateZ(metaZ8)
+var meta9 = new THREE.Mesh( torusGeo, torusMat)
+meta9.translateX(metaX9).translateY(metaY9).translateZ(metaZ9)
+var meta10 = new THREE.Mesh( torusGeo, torusMat)
+meta10.translateX(metaX10).translateY(metaY10).translateZ(metaZ10)
+
+
+var aux = 0
+var auxm = 50
+var cont = 0
+
+export function getCont () {
+    return cont
+}
+
+export function getDist() {
+    return aux
+}
+
+function circuito (scene) { // funcao pra teste
+    scene.add(meta0)
+    scene.add(meta1)
+    scene.add(meta2)
+    scene.add(meta3)
+    scene.add(meta4)
+    scene.add(meta5)
+    scene.add(meta6)
+    scene.add(meta7)
+    scene.add(meta8)
+    scene.add(meta9)
+    scene.add(meta10)
+    //scene.add(meta11)
+}
+
+export function checkpoint(scene, px, py, pz) {
+    //console.log(cont)
+    //console.log(aux)
+    if (cont == 0) {
+        circuito(scene) // apenas para teste
         scene.add(meta0)
-        meta0.translateX(metaX0).translateY(metaY0).translateZ(metaZ0)
-        //meta0.translateX(metaX0).translateY(30).translateZ(-3500)
-        var meta1 = new THREE.Mesh( torusGeo, torusMat)
         scene.add(meta1)
-        meta1.translateX(metaX1).translateY(metaY1).translateZ(metaZ1)
-        var meta2 = new THREE.Mesh( torusGeo, torusMat)
         scene.add(meta2)
-        meta2.translateX(metaX2).translateY(metaY2).translateZ(metaZ2)
-        meta2.rotateOnAxis(rotY, degreesToRadians(30) )
-        var meta3 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta3)
-        meta3.translateX(metaX3).translateY(metaY3).translateZ(metaZ3)
-        var meta4 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta4)
-        meta4.translateX(metaX4).translateY(metaY4).translateZ(metaZ4)
-        meta4.rotateOnAxis(rotY, degreesToRadians(-30) )
-        var meta5 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta5)
-        meta5.translateX(metaX5).translateY(metaY5).translateZ(metaZ5)
-        meta5.rotateOnAxis(rotY, degreesToRadians(-60) )
-        var meta6 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta6)
-        meta6.translateX(metaX6).translateY(metaY6).translateZ(metaZ6)
-        var meta7 = new THREE.Mesh( torusGeo, torusMat)
-        meta6.rotateOnAxis(rotY, degreesToRadians(90) )
-        scene.add(meta7)
-        meta7.translateX(metaX7).translateY(metaY7).translateZ(metaZ7)
-        meta7.rotateOnAxis(rotY, degreesToRadians(60) )
-        var meta8 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta8)
-        meta8.translateX(metaX8).translateY(metaY8).translateZ(metaZ8)
-        var meta9 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta9)
-        meta9.translateX(metaX9).translateY(metaY9).translateZ(metaZ9)
-        var meta10 = new THREE.Mesh( torusGeo, torusMat)
-        scene.add(meta10)
-        meta10.translateX(metaX10).translateY(metaY10).translateZ(metaZ10)
+        aux = distancia(meta0.position.x, meta0.position.y, meta0.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
     }
-    else if(cont == 1) // Remove apos atingir a meta
+    else if(cont == 1) {
         scene.remove(meta0)
-    else if(cont == 2)
+        scene.add(meta3)
+        aux = distancia(meta1.position.x, meta1.position.y, meta1.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 2){
         scene.remove(meta1)
-    else if(cont == 3)
+        scene.add(meta4)
+        aux = distancia(meta2.position.x, meta2.position.y, meta2.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 3){
         scene.remove(meta2)
-    else if(cont == 4)
+        scene.add(meta5)
+        aux = distancia(meta3.position.x, meta3.position.y, meta3.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 4){
         scene.remove(meta3)
-    else if(cont == 5)
+        scene.add(meta6)
+        aux = distancia(meta4.position.x, meta4.position.y, meta4.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 5){
         scene.remove(meta4)
-    else if(cont == 6)
+        scene.add(meta7)
+        aux = distancia(meta5.position.x, meta5.position.y, meta5.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 6){
         scene.remove(meta5)
-    else if(cont == 7)
+        scene.add(meta8)
+        aux = distancia(meta6.position.x, meta6.position.y, meta6.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 7){
         scene.remove(meta6)
-    else if(cont == 8)
+        scene.add(meta9)
+        aux = distancia(meta7.position.x, meta7.position.y, meta7.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 8){
         scene.remove(meta7)
-    else if(cont == 9)
+        scene.add(meta10)
+        aux = distancia(meta8.position.x, meta8.position.y, meta8.position.z, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
+    else if(cont == 9){
         scene.remove(meta8)
+        aux = distancia(meta2, px, py, pz)
+        if(aux < auxm) 
+            cont ++
+    }
     else if(cont == 10)
         scene.remove(meta9)
     else if(cont == 11)
         scene.remove(meta10)
+}
+
+function distancia(mx, my, mz, px, py, pz){
+    var dx = px - mx
+    var dy = py - my
+    var dz = pz - mz
+    return Math.sqrt( dx * dx + dy * dy + dz * dz );
 }

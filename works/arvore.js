@@ -108,4 +108,32 @@ var createTree = function () {
   return baseTronco
 }
 
-export { createTree }
+var mat4 = new THREE.Matrix4()
+var arvores = []
+export function addArvores(scene){
+
+
+  for (let i = 0; i < 300; i++) {
+    arvores.push(createTree())
+  }
+
+  arvores.map((arvore, index) => {
+    scene.add(arvore)
+    arvore.matrix.multiply(
+      mat4.makeTranslation(
+        (Math.random() - 0.35) * 6500,
+        (Math.random() - 0.35) * 5000,
+        1.8
+      )
+    )
+    arvore.matrix.multiply(mat4.makeRotationX(degreesToRadians(-90)))
+  })
+}
+
+export function showEnvironmentObjects(scene) {
+  arvores.map((arvore) => { arvore.visible = true })
+}
+
+export function hideEnvironmentObjects(scene) {
+  arvores.map((arvore) => { arvore.visible = false })
+}
