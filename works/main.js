@@ -100,18 +100,25 @@ function switchTrajeto() {
 }
 switchTrajeto()
 
+// Tempo
 var contadorCP = 0
 var distancia = 0
 var start = 0
 var duracao = 0
+var auxt = 0
+var auxduracao = 0
+var auxTempoModoCam = 0
 function getcircuito() {
   contadorCP = getCont()
   distancia = getDist()
-  if (contadorCP > 0 && contadorCP < 15) {
+  if (contadorCP > 0 && contadorCP < 15 && !modoCam) {
     start = getStart()
-    duracao = new Date().getTime() - start
+    duracao = new Date().getTime() - start - auxTempoModoCam 
+  } 
+  // Calcula tempo no modo de camera inspecao, para ser desconsiderado
+  else if (contadorCP > 0 && contadorCP < 15 && modoCam){ 
+    auxduracao = new Date().getTime() - auxt    
   }
-  //console.log(duracao)
 }
 
 // ----------------- Aviao ----------------- //
@@ -228,6 +235,7 @@ esferaCam.add(camera)
 //Funcao para a troca do modo de camera
 function switchCam() {
   if (modoCam) {
+    auxTempoModoCam += auxduracao // Usado para calcular tempo a ser diminuido do modo inspecao
     scene.add(plane)
     scene.remove(axesHelper)
     trackballControls = new TrackballControls(clear, renderer.domElement) // Remove o trackball
@@ -246,6 +254,7 @@ function switchCam() {
     nivH = true
     modoCam = false // Auxilia modo da camera
   } else {
+    auxt = new Date().getTime() // Usado para calcular tempo no modo inspeçao
     getPosition() // Salva a posicao
     auxSpeed = speed // Salva velocidade
     speed = 0 // Interrompe o movimento
@@ -363,7 +372,7 @@ render()
 function render() {
   if (!modoCam)
     timerMessage.changeMessage(
-      `Tempo: ${(duracao / 1000).toFixed(2)} - CheckPoint: ${contadorCP}`
+      `Tempo: ${(duracao / 1000).toFixed(2)} - CheckPoint: ${contadorCP}/15`
     )
   else timerMessage.changeMessage('')
   stats.update()
