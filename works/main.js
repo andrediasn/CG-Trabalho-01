@@ -6,7 +6,7 @@ import { initRenderer, initCamera, InfoBox, onWindowResize, degreesToRadians,
         createGroundPlaneWired, radiansToDegrees, createLightSphere} from '../libs/util/util.js'
 import { criaAviao, getEsferaHelice, getEsferaMov, rotatePlaneComponents } from './aviao.js';
 import {  esquerda, direita, cima, baixo, forceNiv, restoreNiv, nivelamento  } from './movimento.js';
-import { addTrajeto, checkpoint, getCont, getDist } from './circuito.js'
+import { addTrajeto, checkpoint, getCont, getDist, getStart } from './circuito.js'
 import { addMontanhas } from './montanha.js'
 import { addArvores, showEnvironmentObjects, hideEnvironmentObjects } from './arvore.js'
 
@@ -71,10 +71,16 @@ switchTrajeto()
 
 var contadorCP = 0
 var distancia = 0
-
+var start = 0
+var duracao = 0
 function getcircuito(){
   contadorCP = getCont()
   distancia = getDist()
+  if (contadorCP > 0 && contadorCP < 15){
+    start = getStart()
+    duracao = new Date().getTime() - start
+  }
+  console.log(duracao)
 }
 
 // ----------------- Aviao ----------------- //
@@ -219,13 +225,13 @@ function switchCam() {
 
 // --------------------------- Keybord---------------------------------- //
 
-var keyboard = new KeyboardState();
-
 function printP(){
   console.log('x', pX)
   console.log('y', pY)
   console.log('z', pZ)
 }
+
+var keyboard = new KeyboardState();
 
 function keyboardUpdate() {
   keyboard.update()

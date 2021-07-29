@@ -273,8 +273,10 @@ export function checkpoint(scene, px, py, pz) {
         scene.add(meta1)
         scene.add(meta2)
         aux = distancia(meta0.position.x, meta0.position.y, meta0.position.z, px, py, pz)
-        if(aux < auxm) 
+        if(aux < auxm) {
+            start = new Date().getTime()
             cont ++
+        }
     }
     else if(cont == 1) {
         scene.remove(meta0)
@@ -372,7 +374,7 @@ export function checkpoint(scene, px, py, pz) {
         if(aux < auxm) 
             cont ++  
     }
-    else if(cont == 14){
+    else if(cont == 15){
         scene.remove(meta14)
     }
 }
@@ -382,4 +384,9 @@ function distancia(mx, my, mz, px, py, pz){
     var dy = py - my
     var dz = pz - mz
     return Math.sqrt( dx * dx + dy * dy + dz * dz );
+}
+
+var start
+export function getStart (){
+    return start
 }
