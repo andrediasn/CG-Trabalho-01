@@ -68,7 +68,7 @@ export function cima(esferaHelice, esferaMov, speed) {
     if(speedVertC > -1){
       speedVertC -= 0.05
     }
-    esferaHelice.translateY( (speed/2) * speedVertC )
+    esferaHelice.translateY( (speed/3) * speedVertC )
   }
 }
 export function baixo(esferaHelice, esferaMov, speed){ 
@@ -80,7 +80,7 @@ export function baixo(esferaHelice, esferaMov, speed){
     if(speedVertB < 1){
       speedVertB += 0.05
     }
-    esferaHelice.translateY( (speed/2) * speedVertB )
+    esferaHelice.translateY( (speed/3) * speedVertB )
   }
 }
 
