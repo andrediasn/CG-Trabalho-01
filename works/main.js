@@ -11,6 +11,7 @@ import {
   createGroundPlaneWired,
   radiansToDegrees,
   createLightSphere,
+  SecondaryBox,
 } from '../libs/util/util.js'
 import {
   criaAviao,
@@ -334,12 +335,6 @@ function keyboardUpdate() {
 
 // Informacoes na tela
 var controls = new InfoBox()
-controls.add('Timer :')
-controls.add('CheckPoint:')
-controls.add(contadorCP)
-controls.add('CheckPoint:')
-controls.add(contadorCP)
-controls.addParagraph()
 controls.add('Instruções:')
 controls.add('Use SPACE para mudar o modo')
 controls.addParagraph()
@@ -362,8 +357,15 @@ window.addEventListener(
   false
 )
 
+var timerMessage = new SecondaryBox('')
+
 render()
 function render() {
+  if (!modoCam)
+    timerMessage.changeMessage(
+      `Tempo: ${(duracao / 1000).toFixed(2)} - CheckPoint: ${contadorCP}`
+    )
+  else timerMessage.changeMessage('')
   stats.update()
   trackballControls.update()
   keyboardUpdate()
