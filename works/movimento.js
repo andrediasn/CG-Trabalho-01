@@ -7,77 +7,80 @@ var position = new THREE.Vector3()
 var rotZ = new THREE.Vector3(0,0,1)      
 var rotY = new THREE.Vector3(0,1,0)
 var rotX = new THREE.Vector3(1,0,0)
-var angleRotHori = degreesToRadians(0.5)        
-var angleHori = degreesToRadians(0.4)
+var angleRotHori = degreesToRadians(0.4)        
+var angleHori = degreesToRadians(0.5)
 var angleVert = degreesToRadians(0.4)
+var limiteAng = -70
+
 var auxRotVertical = 0                   
 var auxRotHorizontal = 0       
 var speedHorEsq = 0   
 var speedHorDir = 0     
 var speedVertC = 0
-var speedVertB = 0      
+var speedVertB = 0   
+
 
 // Movimento direcional
 export function esquerda(esferaMov, esferaHelice, esferaCam, speed) {
   if(speed > 0) {                             // Movimento somente se houver aceleracao
     if (speed > 0) {
-      if (auxRotHorizontal < 60) {
+      if (auxRotHorizontal < 80) {
         esferaMov.rotation.z -= angleRotHori // Rotaciona o aviao para os lados
         auxRotHorizontal++ // Auxiliar para nivelamento
       }
       if (speedHorEsq <= 1) {
-        esferaHelice.rotation.y += angleHori * speedHorEsq
-        esferaCam.rotation.y += angleHori * speedHorEsq
+        esferaHelice.rotation.y += angleHori * speedHorEsq * speed/4
+        esferaCam.rotation.y += angleHori * speedHorEsq * speed/4
         speedHorDir = 0
         speedHorEsq += 0.05
       } 
       else {
-        esferaHelice.rotation.y += angleHori
-        esferaCam.rotation.y += angleHori 
+        esferaHelice.rotation.y += angleHori * speed/4
+        esferaCam.rotation.y += angleHori * speed/4
       }
     }
   }   
 }
 export function direita(esferaMov, esferaHelice, esferaCam, speed) {
   if (speed > 0) {
-    if (auxRotHorizontal > -60 ) {
+    if (auxRotHorizontal > -80 ) {
       esferaMov.rotation.z += angleRotHori
       auxRotHorizontal--
     }
     if (speedHorDir <= 1) {
-      esferaHelice.rotation.y -= angleHori * speedHorDir
-      esferaCam.rotation.y -= angleHori * speedHorDir
+      esferaHelice.rotation.y -= angleHori * speedHorDir * speed/4
+      esferaCam.rotation.y -= angleHori * speedHorDir * speed/4
       speedHorEsq = 0
       speedHorDir += 0.05
     } 
     else {
-      esferaHelice.rotation.y -= angleHori
-      esferaCam.rotation.y -= angleHori
+      esferaHelice.rotation.y -= angleHori * speed/4
+      esferaCam.rotation.y -= angleHori * speed/4
     }
   }
 }
 export function cima(esferaHelice, esferaMov, speed) {
   if(speed > 0) {  
-    if (auxRotVertical > -50) {
+    if (auxRotVertical > -60) {
       esferaMov.rotation.x += angleVert // Movimenta para cima com a rotação
       auxRotVertical-- // Auxiliar para nivelamento
     }
     if(speedVertC > -1){
       speedVertC -= 0.05
     }
-    esferaHelice.translateY( speed * speedVertC )
+    esferaHelice.translateY( (speed/2) * speedVertC )
   }
 }
 export function baixo(esferaHelice, esferaMov, speed){ 
   if (speed > 0) {
-    if (auxRotVertical < 50) {
+    if (auxRotVertical < 60) {
       esferaMov.rotation.x -= angleVert
       auxRotVertical++
     }
     if(speedVertB < 1){
       speedVertB += 0.05
     }
-    esferaHelice.translateY( speed * speedVertB )
+    esferaHelice.translateY( (speed/2) * speedVertB )
   }
 }
 
@@ -87,35 +90,42 @@ export function nivelamento (esferaHelice, esferaCam, esferaMov, nivV, nivH, spe
       esferaMov.rotation.x += angleVert
       auxRotVertical--
       if (speedVertB > 0){
-        esferaHelice.translateY( speedVertB * speed)
-        speedVertB -= 0.1
+        esferaHelice.translateY( speedVertB * (speed/2))
+        speedVertB -= 0.02
       }
-    }
-    else if (auxRotVertical < 0){ //nivCima
+    } else if (auxRotVertical < 0){ //nivCima
       esferaMov.rotation.x -= angleVert // Nivela aviao
       auxRotVertical++
       if (speedVertC < 0){
-        esferaHelice.translateY( speedVertC * speed )
-        speedVertC += 0.1
+        esferaHelice.translateY( speedVertC * (speed/2) )
+        speedVertC += 0.02
       }
+    } else if (auxRotVertical == 0){
+      speedVertB = 0
+      speedVertC = 0
     }
   }
   if(nivH){
     if (auxRotHorizontal < 0){ // nivDir
       esferaMov.rotation.z -= angleRotHori
-      esferaHelice.rotation.y -= angleHori * speedHorDir
-      esferaCam.rotation.y -= angleHori * speedHorDir
+      esferaHelice.rotation.y -= angleHori * speedHorDir * speed/4
+      esferaCam.rotation.y -= angleHori * speedHorDir  * speed/4
       if (speedHorDir > 0) 
-        speedHorDir -= 0.1
+        speedHorDir -= 0.02
       auxRotHorizontal++
+      console.log(speedHorDir)
     }
     else if (auxRotHorizontal > 0){ //nivEsq
       esferaMov.rotation.z += angleRotHori 
-      esferaHelice.rotation.y += angleHori * speedHorEsq
-      esferaCam.rotation.y += angleHori * speedHorEsq
+      esferaHelice.rotation.y += angleHori * speedHorEsq * speed/4
+      esferaCam.rotation.y += angleHori * speedHorEsq * speed/4
       if (speedHorEsq > 0) 
-        speedHorEsq -= 0.1
+        speedHorEsq -= 0.02
       auxRotHorizontal-- 
+    }
+    else if(auxRotHorizontal == 0){
+      speedHorDir = 0
+      speedHorEsq = 0
     }
   }
 }

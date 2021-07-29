@@ -149,7 +149,7 @@ function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) {
     // Previne continuacao de movimento na troca de camera
-    if (speed < 5) {
+    if (speed < 4) {
       // Velocidade maxima
       speed += 0.05 // Valor da aceleracao
       auxAce = setTimeout(acelera, 120) // Recursividade para simular aceleracao
@@ -307,28 +307,33 @@ function printP() {
   console.log('z', pZ)
 }
 
+var vD = false
+var vU = false
+var vL = false
+var vR = false
+
 var keyboard = new KeyboardState()
 
 function keyboardUpdate() {
   keyboard.update()
   if (!modoCam) {
     if (keyboard.pressed('down')) baixo(esferaHelice, esferaMov, speed)
-    if (keyboard.down('down')) nivV = false
-    if (keyboard.up('down')) nivV = true
+    if (keyboard.down('down')) {vD = true; nivV = false;}
+    if (keyboard.up('down')) {vD = false; if(!vU) nivV = true;}
 
     if (keyboard.pressed('up')) cima(esferaHelice, esferaMov, speed)
-    if (keyboard.down('up')) nivV = false
-    if (keyboard.up('up')) nivV = true
+    if (keyboard.down('up')) {vU = true; nivV = false}
+    if (keyboard.up('up')) {vU = false;  if(!vD) nivV = true}
 
     if (keyboard.pressed('left'))
       esquerda(esferaMov, esferaHelice, esferaCam, speed)
-    if (keyboard.down('left')) nivH = false
-    if (keyboard.up('left')) nivH = true
+    if (keyboard.down('left')) {vL = true; nivH = false}
+    if (keyboard.up('left')) {vL = false;  if(!vR) nivH = true}
 
     if (keyboard.pressed('right'))
       direita(esferaMov, esferaHelice, esferaCam, speed)
-    if (keyboard.down('right')) nivH = false
-    if (keyboard.up('right')) nivH = true
+    if (keyboard.down('right')) {vR = true; nivH = false}
+    if (keyboard.up('right')) {vR = false;  if(!vL)nivH = true}
 
     if (keyboard.down('Q')) acelera()
     if (keyboard.down('A')) desacelera()
@@ -351,6 +356,7 @@ controls.add('Modo 1: Simulador')
 controls.add('* Q para acelerar')
 controls.add('* A para desacelerar')
 controls.add('* Setas para direcionar')
+controls.add('* C para modo cockpit')
 controls.add('* Enter para trajeto on/off')
 controls.addParagraph()
 controls.add('Modo 2: Visualização')

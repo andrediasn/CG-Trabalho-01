@@ -235,7 +235,7 @@ meta14.rotateOnAxis(rotY, degreesToRadians(120) )
 
 
 var aux = 0
-var auxm = 50
+var auxm = 30
 var cont = 0
 
 export function getCont () {
