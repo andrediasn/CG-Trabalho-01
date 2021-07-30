@@ -63,7 +63,7 @@ var trajZ5 = trajZ4 + metaZ5 - metaZ4
 //Torus6
 var metaX6 = 1000
 var metaY6 = 500
-var metaZ6 = 1800
+var metaZ6 = 1820
 // Trajeto ate torus 6
 var trajX6 = trajX5 + metaX6 - metaX5 
 var trajY6 = trajY5 + metaY6 - metaY5 
@@ -146,8 +146,6 @@ var trajZ14 = trajZ12 + metaZ14 + Math.abs(metaZ12)
 
 
 export function addTrajeto() {
-    
-    //Create a closed wavey loop
     const curve = new THREE.CatmullRomCurve3( [
         new THREE.Vector3( 0, 0, 0 ),
         new THREE.Vector3( trajX0, trajY0, trajZ0 ),
@@ -170,20 +168,15 @@ export function addTrajeto() {
     const points = curve.getPoints( 50 );
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
     const material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
-    
-    // Create the final object to add to the scene
     const trajeto = new THREE.Line( geometry, material );
-    
     trajeto.translateX(trajX).translateY(trajY).translateZ(trajZ)
     
     return trajeto
 }
-//meta0.rotateOnAxis(rotY, degreesToRadians(90) )
+
 var rotZ = new THREE.Vector3(0,0,1)      
 var rotY = new THREE.Vector3(0,1,0)
 var rotX = new THREE.Vector3(1,0,0)
-
-
 
 var torusGeo = new THREE.TorusGeometry (30, 2, 16, 100) // (raio, tubo, radialSegments, tubularSegments)
 var torusMat = new THREE.MeshPhongMaterial({
@@ -195,11 +188,13 @@ var meta0 = new THREE.Mesh( torusGeo, torusMat)
 meta0.translateX(metaX0).translateY(metaY0).translateZ(metaZ0)
 var meta1 = new THREE.Mesh( torusGeo, torusMat)
 meta1.translateX(metaX1).translateY(metaY1).translateZ(metaZ1)
+meta1.rotateOnAxis(rotY, degreesToRadians(-10) )
 var meta2 = new THREE.Mesh( torusGeo, torusMat)
 meta2.translateX(metaX2).translateY(metaY2).translateZ(metaZ2)
-meta2.rotateOnAxis(rotY, degreesToRadians(30) )
+meta2.rotateOnAxis(rotY, degreesToRadians(20) )
 var meta3 = new THREE.Mesh( torusGeo, torusMat)
 meta3.translateX(metaX3).translateY(metaY3).translateZ(metaZ3)
+meta3.rotateOnAxis(rotY, degreesToRadians(10) )
 var meta4 = new THREE.Mesh( torusGeo, torusMat)
 meta4.translateX(metaX4).translateY(metaY4).translateZ(metaZ4)
 meta4.rotateOnAxis(rotY, degreesToRadians(-30) )
@@ -208,8 +203,8 @@ meta5.translateX(metaX5).translateY(metaY5).translateZ(metaZ5)
 meta5.rotateOnAxis(rotY, degreesToRadians(-40) )
 var meta6 = new THREE.Mesh( torusGeo, torusMat)
 meta6.translateX(metaX6).translateY(metaY6).translateZ(metaZ6)
-var meta7 = new THREE.Mesh( torusGeo, torusMat)
 meta6.rotateOnAxis(rotY, degreesToRadians(90) )
+var meta7 = new THREE.Mesh( torusGeo, torusMat)
 meta7.translateX(metaX7).translateY(metaY7).translateZ(metaZ7)
 meta7.rotateOnAxis(rotY, degreesToRadians(60) )
 var meta8 = new THREE.Mesh( torusGeo, torusMat)
@@ -217,6 +212,7 @@ meta8.translateX(metaX8).translateY(metaY8).translateZ(metaZ8)
 meta8.rotateOnAxis(rotY, degreesToRadians(60) )
 var meta9 = new THREE.Mesh( torusGeo, torusMat)
 meta9.translateX(metaX9).translateY(metaY9).translateZ(metaZ9)
+meta9.rotateOnAxis(rotY, degreesToRadians(40) )
 var meta10 = new THREE.Mesh( torusGeo, torusMat)
 meta10.translateX(metaX10).translateY(metaY10).translateZ(metaZ10)
 meta10.rotateOnAxis(rotY, degreesToRadians(120) )
@@ -265,8 +261,6 @@ function circuito (scene) { // funcao pra teste, add todos torus ao msm tempo
 }
 
 export function checkpoint(scene, px, py, pz) {
-    //console.log(cont)
-    //console.log(aux)
     //circuito(scene) // apenas para teste
     if (cont == 0) {
         scene.add(meta0)
@@ -376,6 +370,7 @@ export function checkpoint(scene, px, py, pz) {
     }
     else if(cont == 15){
         scene.remove(meta14)
+        aux = 0
     }
 }
 

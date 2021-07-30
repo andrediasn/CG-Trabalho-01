@@ -86,9 +86,10 @@ addArvores(scene)
 addMontanhas(scene)
 
 // ----------------- Circuito --------------- //
+
+// Ativa/desativa trajeto
 var trajOn = true
 var trajeto = addTrajeto()
-
 function switchTrajeto() {
   if (trajOn) {
     scene.add(trajeto)
@@ -137,61 +138,56 @@ var position = new THREE.Vector3()
 // Auxiliares na recursividade:
 var auxAce
 var auxDes
+var mAce = false
 
 // Movimento de aceleracao
 function aceleracao() {
   if (!modoCam) {
-    // Depende do modo da camera
     if (speed > 0) esferaHelice.translateZ(speed) // Movimento para frente
   }
 }
 function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
-  if (!modoCam) {
-    // Previne continuacao de movimento na troca de camera
-    if (speed < 4) {
-      // Velocidade maxima
-      speed += 0.05 // Valor da aceleracao
-      auxAce = setTimeout(acelera, 120) // Recursividade para simular aceleracao
+  if (!modoCam) { // Previne continuacao de movimento na troca de camera
+    mAce = true
+    if (speed < 4) { // Velocidade maxima
+      speed += 0.04 // Valor da aceleracao
+      auxAce = setTimeout(acelera, 100) // Recursividade para simular aceleracao
     }
   }
 }
 function desacelera() {
-  //Analogamente ao acelera()
-  clearTimeout(auxAce) //Interrompe aceleracao
+  clearTimeout(auxAce) 
   if (!modoCam) {
+    mAce = false
     if (speed > 0) {
-      speed -= 0.05
-      auxDes = setTimeout(desacelera, 120)
+      speed -= 0.04
+      auxDes = setTimeout(desacelera, 100)
     }
   }
 }
 
-function getPosition() {
+function getPosition() { // salva posição do aviao
   scene.updateMatrixWorld(true)
   position.setFromMatrixPosition(esferaHelice.matrixWorld) // Vetor posicao
   posX = position.x
   posY = position.y
   posZ = position.z
 }
-export function returnPosition(aux) {
-  if (aux == 0) return posX
-  else if (aux == 1) return posY
-  else if (aux == 2) return posZ
-}
 
+//Nivelamento
 var nivV = false
 var nivH = false
 
 // ----------------- Camera ----------------- //
+var axesHelper = new THREE.AxesHelper(12)
+
 var pX = posX
 var pY = posY
 var pZ = posZ
 var pHolder = new THREE.Vector3()
-
 var holderGeo = new THREE.SphereGeometry(0.01, 0.01, 1)
 var holderMat = new THREE.MeshBasicMaterial({ color: 0xff1803 })
-var axesHelper = new THREE.AxesHelper(12)
 var esferaCam = new THREE.Mesh(holderGeo, holderMat) // Objeto que carrega a cammera
 scene.add(esferaCam)
 esferaCam.position.set(pX, pY, pZ) // Posiciona objeto no centro do aviao
@@ -203,7 +199,6 @@ function posicaoHolder() {
   pY = pHolder.y
   pZ = pHolder.z
   esferaCam.position.set(pX, pY, pZ)
-  esferaCam.translateY(10).translateZ(-30)
 }
 
 // Camera para o modo Simulacao
@@ -213,7 +208,7 @@ var cameraSimulation = new THREE.PerspectiveCamera(
   0.1,
   7000
 )
-cameraSimulation.position.copy(new THREE.Vector3(0, 30, -120))
+cameraSimulation.position.copy(new THREE.Vector3(0, 40, -150))
 cameraSimulation.lookAt(new THREE.Vector3(0, 0, 0))
 
 // Camera para o modo Inspecao
@@ -248,13 +243,17 @@ function switchCam() {
       camera = camCockpit
       cockpit.add(camera)
     }
-    speed = auxSpeed // Restaura velocidade
     restoreNiv(esferaHelice, esferaMov) // Restaura angulos de inclinacao
     nivV = true
     nivH = true
     modoCam = false // Auxilia modo da camera
+    speed = auxSpeed // Restaura velocidade
+    if(mAce) acelera()
+    else desacelera()
   } else {
     auxt = new Date().getTime() // Usado para calcular tempo no modo inspeçao
+    nivV = false
+    nivH = false
     getPosition() // Salva a posicao
     auxSpeed = speed // Salva velocidade
     speed = 0 // Interrompe o movimento
@@ -295,7 +294,6 @@ function switchCockpit() {
     modoCockpit = true
   }
 }
-console.log(modoCockpit)
 
 switchCam()
 
@@ -340,6 +338,8 @@ function keyboardUpdate() {
 
     if (keyboard.down('C')) switchCockpit()
 
+    if (keyboard.down('R')) document.location.reload(true)
+
     if (keyboard.down('enter')) switchTrajeto()
 
     if (keyboard.down('P')) printP() // usado para testes
@@ -347,17 +347,19 @@ function keyboardUpdate() {
   if (keyboard.down('space')) switchCam()
 }
 
+
 // Informacoes na tela
 var controls = new InfoBox()
 controls.add('Instruções:')
 controls.add('Use SPACE para mudar o modo')
+controls.add('Use R para reiniciar')
 controls.addParagraph()
 controls.add('Modo 1: Simulador')
 controls.add('* Q para acelerar')
 controls.add('* A para desacelerar')
 controls.add('* Setas para direcionar')
 controls.add('* C para modo cockpit')
-controls.add('* Enter para trajeto on/off')
+controls.add('* ENTER para trajeto on/off')
 controls.addParagraph()
 controls.add('Modo 2: Visualização')
 controls.add('* Utilize o mouse para rotacionar')
@@ -378,7 +380,7 @@ render()
 function render() {
   if (!modoCam)
     timerMessage.changeMessage(
-      `Tempo: ${(duracao / 1000).toFixed(2)} - CheckPoint: ${contadorCP}/15`
+      `Tempo: ${(duracao / 1000).toFixed(2)} - CheckPoint: ${contadorCP}/15 - Distancia até o próximo: ${distancia.toFixed(0)}`
     )
   else timerMessage.changeMessage('')
   stats.update()
