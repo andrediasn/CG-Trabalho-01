@@ -1,6 +1,0 @@
-# Simulador de Voo v1
-
-## Equipe
-- André Dias Nunes 201665570C
-- Guilherme Fiorini Justen 201965041AC
-
