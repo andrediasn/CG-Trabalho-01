@@ -109,7 +109,7 @@ var duracao = 0
 var auxt = 0
 var auxduracao = 0
 var auxTempoModoCam = 0
-function getcircuito() {
+function getCircuito() {
   contadorCP = getCont()
   distancia = getDist()
   if (contadorCP > 0 && contadorCP < 15 && !modoCam) {
@@ -150,7 +150,7 @@ function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) { // Previne continuacao de movimento na troca de camera
     mAce = true
-    if (speed < 4) { // Velocidade maxima
+    if (speed < 3) { // Velocidade maxima
       speed += 0.04 // Valor da aceleracao
       auxAce = setTimeout(acelera, 100) // Recursividade para simular aceleracao
     }
@@ -179,7 +179,7 @@ function getPosition() { // salva posição do aviao
 var nivV = false
 var nivH = false
 
-// ----------------- Camera ----------------- //
+        // ----------------- Camera ----------------- //
 var axesHelper = new THREE.AxesHelper(12)
 
 var pX = posX
@@ -296,8 +296,21 @@ function switchCockpit() {
 }
 
 switchCam()
+// --------------------------- Audio---------------------------------- //
 
-// --------------------------- Keybord---------------------------------- //
+var listener = new THREE.AudioListener();
+esferaCam.add(listener);
+var sound = new THREE.Audio(listener);
+var audioLoader = new THREE.AudioLoader();
+audioLoader.load('Sounds/Base2.mp3', function (buffer) {
+        sound.setBuffer(buffer);
+        sound.setLoop(true);
+        sound.setVolume(0.2);
+        sound.play();
+      });
+  
+
+// --------------------------- Keyboard---------------------------------- //
 
 function printP() {
   console.log('x', pX)
@@ -386,7 +399,7 @@ function render() {
   stats.update()
   trackballControls.update()
   keyboardUpdate()
-  getcircuito() // contadores do circuito
+  getCircuito() // contadores do circuito
   aceleracao()
   nivelamento(esferaHelice, esferaCam, esferaMov, nivV, nivH, speed)
   posicaoHolder() // atualiza posicao do holder
