@@ -2,46 +2,78 @@ import * as THREE from '../build/three.module.js'
 import Stats from '../build/jsm/libs/stats.module.js'
 import { TrackballControls } from '../build/jsm/controls/TrackballControls.js'
 import KeyboardState from '../libs/util/KeyboardState.js'
-import { initRenderer, initCamera, InfoBox, onWindowResize, degreesToRadians, createGroundPlaneWired,
-  createGroundPlane, radiansToDegrees, createLightSphere, SecondaryBox } from '../libs/util/util.js'
-import { criaAviao, getEsferaHelice, getEsferaMov, rotatePlaneComponents } from './aviao.js'
-import { esquerda, direita, cima, baixo, forceNiv, restoreNiv, nivelamento } from './movimento.js'
-import { addTrajeto, checkpoint, getCont, getDist, getStart } from './circuito.js'
+import {
+  initRenderer,
+  initCamera,
+  InfoBox,
+  onWindowResize,
+  degreesToRadians,
+  createGroundPlaneWired,
+  createGroundPlane,
+  radiansToDegrees,
+  createLightSphere,
+  SecondaryBox,
+} from '../libs/util/util.js'
+import {
+  criaAviao,
+  getEsferaHelice,
+  getEsferaMov,
+  rotatePlaneComponents,
+} from './aviao.js'
+import {
+  esquerda,
+  direita,
+  cima,
+  baixo,
+  forceNiv,
+  restoreNiv,
+  nivelamento,
+} from './movimento.js'
+import {
+  addTrajeto,
+  checkpoint,
+  getCont,
+  getDist,
+  getStart,
+} from './circuito.js'
 import { addMontanhas } from './montanha.js'
-import { addArvores, showEnvironmentObjects, hideEnvironmentObjects, } from './arvore.js'
+import {
+  addArvores,
+  showEnvironmentObjects,
+  hideEnvironmentObjects,
+} from './arvore.js'
+import { loadGLTFFile } from './externalObject.js'
+import { createBuilding } from './predios.js'
 
-var stats = new Stats(); // To show FPS information
-var scene = new THREE.Scene(); // Create main scene
-var renderer = initRenderer(); // View function in util/utils
+var stats = new Stats() // To show FPS information
+var scene = new THREE.Scene() // Create main scene
+var renderer = initRenderer() // View function in util/utils
 
-// ---------------- Planos ---------------- // 
-var plane = createGroundPlane(10000, 10000, 100, 100);
-plane.rotateX(degreesToRadians(-90));
-plane.translateX(1000);
+// ---------------- Planos ---------------- //
+var plane = createGroundPlane(10000, 10000, 100, 100)
+plane.rotateX(degreesToRadians(-90))
+plane.translateX(1000)
 
- var planeExt = createGroundPlane(50000, 50000, 100, 100, "rgb(100,140,90)");
-plane.add(planeExt);
-planeExt.translateZ(-10).translateX(-1000); 
+var planeExt = createGroundPlane(50000, 50000, 100, 100, 'rgb(100,140,90)')
+plane.add(planeExt)
+planeExt.translateZ(-10).translateX(-1000)
 
-var textureLoader = new THREE.TextureLoader();
-var planeText = textureLoader.load('Images/planet2.jpg');
+var textureLoader = new THREE.TextureLoader()
+var planeText = textureLoader.load('Images/planet2.jpg')
 
-plane.material.map = planeText;
-plane.material.map.repeat.set(70,70);
-plane.material.map.wrapS = THREE.RepeatWrapping;
-plane.material.map.wrapT = THREE.RepeatWrapping;
-plane.material.map.minFilter = THREE.LinearFilter;
-plane.material.map.magFilter = THREE.LinearFilter;
+plane.material.map = planeText
+plane.material.map.repeat.set(70, 70)
+plane.material.map.wrapS = THREE.RepeatWrapping
+plane.material.map.wrapT = THREE.RepeatWrapping
+plane.material.map.minFilter = THREE.LinearFilter
+plane.material.map.magFilter = THREE.LinearFilter
 // ---------------- Ambiente ---------------- //
 // Iluminação
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
 scene.add(ambientLight)
 
 // Sol
-const sunColor = 0xff5800
 const sunPosition = new THREE.Vector3(0, 2000, 0)
-var sunObject = createLightSphere(scene, 100, 100, 100, sunPosition)
-sunObject.material = new THREE.MeshPhongMaterial({ color: sunColor })
 
 // Criando o spotLight do sol
 var sunLight = new THREE.SpotLight('rgb(255,136,0)')
@@ -58,7 +90,6 @@ sunLight.shadow.camera.fov = radiansToDegrees(sunLight.angle)
 sunLight.shadow.camera.far = 7000.0
 sunLight.shadow.camera.near = 0.2
 
-scene.add(sunObject)
 scene.add(sunLight)
 
 // Árvores
@@ -66,6 +97,31 @@ addArvores(scene)
 
 // Montanhas
 addMontanhas(scene)
+
+// -------------- Objeto Externo ------------ //
+loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
+
+// ------------------ Prédios --------------- //
+var predio1 = createBuilding(1)
+predio1
+  .translateZ(3700)
+  .translateY(-2200)
+  .translateX(25)
+  .rotateZ(degreesToRadians(-90))
+
+var predio2 = createBuilding(2)
+predio2.translateZ(3100).translateY(-2200).rotateZ(degreesToRadians(-90))
+
+var predio3 = createBuilding(3)
+predio3
+  .translateZ(2500)
+  .translateY(-2200)
+  .translateX(-50)
+  .rotateZ(degreesToRadians(-90))
+
+scene.add(predio1)
+scene.add(predio2)
+scene.add(predio3)
 
 // ----------------- Circuito --------------- //
 
@@ -96,11 +152,11 @@ function getCircuito() {
   distancia = getDist()
   if (contadorCP > 0 && contadorCP < 15 && !modoCam) {
     start = getStart()
-    duracao = new Date().getTime() - start - auxTempoModoCam 
-  } 
+    duracao = new Date().getTime() - start - auxTempoModoCam
+  }
   // Calcula tempo no modo de camera inspecao, para ser desconsiderado
-  else if (contadorCP > 0 && contadorCP < 15 && modoCam){ 
-    auxduracao = new Date().getTime() - auxt    
+  else if (contadorCP > 0 && contadorCP < 15 && modoCam) {
+    auxduracao = new Date().getTime() - auxt
   }
 }
 
@@ -130,26 +186,29 @@ function aceleracao() {
 }
 function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
-  if (!modoCam) { // Previne continuacao de movimento na troca de camera
+  if (!modoCam) {
+    // Previne continuacao de movimento na troca de camera
     mAce = true
-    if (speed < 3) { // Velocidade maxima
+    if (speed < 3) {
+      // Velocidade maxima
       speed += 0.04 // Valor da aceleracao
       auxAce = setTimeout(acelera, 100) // Recursividade para simular aceleracao
     }
   }
 }
 function desacelera() {
-  clearTimeout(auxAce) 
+  clearTimeout(auxAce)
   if (!modoCam) {
     mAce = false
     if (speed > 0) {
-      speed -= 0.04
+      speed -= 0.4
       auxDes = setTimeout(desacelera, 100)
     }
   }
 }
 
-function getPosition() { // salva posição do aviao
+function getPosition() {
+  // salva posição do aviao
   scene.updateMatrixWorld(true)
   position.setFromMatrixPosition(esferaHelice.matrixWorld) // Vetor posicao
   posX = position.x
@@ -161,7 +220,7 @@ function getPosition() { // salva posição do aviao
 var nivV = false
 var nivH = false
 
-        // ----------------- Camera ----------------- //
+// ----------------- Camera ----------------- //
 var axesHelper = new THREE.AxesHelper(12)
 
 var pX = posX
@@ -230,7 +289,7 @@ function switchCam() {
     nivH = true
     modoCam = false // Auxilia modo da camera
     speed = auxSpeed // Restaura velocidade
-    if(mAce) acelera()
+    if (mAce) acelera()
     else desacelera()
   } else {
     auxt = new Date().getTime() // Usado para calcular tempo no modo inspeçao
@@ -280,55 +339,54 @@ function switchCockpit() {
 switchCam()
 // --------------------------- Audio---------------------------------- //
 
-var listener = new THREE.AudioListener();
-esferaCam.add(listener);
+var listener = new THREE.AudioListener()
+esferaCam.add(listener)
 
 //Music
-var sound = new THREE.Audio(listener);
-var audioLoader = new THREE.AudioLoader();
+var sound = new THREE.Audio(listener)
+var audioLoader = new THREE.AudioLoader()
 audioLoader.load('Sounds/Base2.mp3', function (buffer) {
-        sound.setBuffer(buffer);
-        sound.setLoop(true);
-        sound.setVolume(0.2);
-        sound.play();
-      });
+  sound.setBuffer(buffer)
+  sound.setLoop(true)
+  sound.setVolume(0.2)
+  sound.play()
+})
 
 //Airplane
-var sound2 = new THREE.Audio(listener);
-var audioLoader2 = new THREE.AudioLoader();
+var sound2 = new THREE.Audio(listener)
+var audioLoader2 = new THREE.AudioLoader()
 audioLoader2.load('Sounds/Airplane.mp3', function (buffer) {
-  sound2.setBuffer(buffer);
-  sound2.setLoop(true);
-  sound2.setVolume(0.1*speed/3);
-  sound2.play();
-});
-function airplaneAudio(){
-  sound2.setVolume(0.1*speed/3);  
+  sound2.setBuffer(buffer)
+  sound2.setLoop(true)
+  sound2.setVolume((0.1 * speed) / 3)
+  sound2.play()
+})
+function airplaneAudio() {
+  sound2.setVolume((0.1 * speed) / 3)
 }
-  
+
 // --------------------------- Skybox ---------------------------------- //
 
-let textSky = [];
-let texture_ft = new THREE.TextureLoader().load( 'Images/sw_ft.png');
-let texture_bk = new THREE.TextureLoader().load( 'Images/sw_bk.png');
-let texture_up = new THREE.TextureLoader().load( 'Images/sw_up.png');
-let texture_dn = new THREE.TextureLoader().load( 'Images/sw_dn.png');
-let texture_rt = new THREE.TextureLoader().load( 'Images/sw_rt.png');
-let texture_lf = new THREE.TextureLoader().load( 'Images/sw_lf.png');
-  
-textSky.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
-textSky.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
-textSky.push(new THREE.MeshBasicMaterial( { map: texture_up }));
-textSky.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
-textSky.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
-textSky.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
-   
-for (let i = 0; i < 6; i++)
-  textSky[i].side = THREE.BackSide;
-   
-let skyboxGeo = new THREE.BoxGeometry( 90000, 90000, 90000);
-let skybox = new THREE.Mesh( skyboxGeo, textSky );
-scene.add( skybox );
+let textSky = []
+let texture_ft = new THREE.TextureLoader().load('Images/sw_ft.png')
+let texture_bk = new THREE.TextureLoader().load('Images/sw_bk.png')
+let texture_up = new THREE.TextureLoader().load('Images/sw_up.png')
+let texture_dn = new THREE.TextureLoader().load('Images/sw_dn.png')
+let texture_rt = new THREE.TextureLoader().load('Images/sw_rt.png')
+let texture_lf = new THREE.TextureLoader().load('Images/sw_lf.png')
+
+textSky.push(new THREE.MeshBasicMaterial({ map: texture_ft }))
+textSky.push(new THREE.MeshBasicMaterial({ map: texture_bk }))
+textSky.push(new THREE.MeshBasicMaterial({ map: texture_up }))
+textSky.push(new THREE.MeshBasicMaterial({ map: texture_dn }))
+textSky.push(new THREE.MeshBasicMaterial({ map: texture_rt }))
+textSky.push(new THREE.MeshBasicMaterial({ map: texture_lf }))
+
+for (let i = 0; i < 6; i++) textSky[i].side = THREE.BackSide
+
+let skyboxGeo = new THREE.BoxGeometry(90000, 90000, 90000)
+let skybox = new THREE.Mesh(skyboxGeo, textSky)
+scene.add(skybox)
 //skybox.translateY(2000);
 
 // --------------------------- Keyboard---------------------------------- //
@@ -350,22 +408,46 @@ function keyboardUpdate() {
   keyboard.update()
   if (!modoCam) {
     if (keyboard.pressed('down')) baixo(esferaHelice, esferaMov, speed)
-    if (keyboard.down('down')) {vD = true; nivV = false;}
-    if (keyboard.up('down')) {vD = false; if(!vU) nivV = true;}
+    if (keyboard.down('down')) {
+      vD = true
+      nivV = false
+    }
+    if (keyboard.up('down')) {
+      vD = false
+      if (!vU) nivV = true
+    }
 
     if (keyboard.pressed('up')) cima(esferaHelice, esferaMov, speed)
-    if (keyboard.down('up')) {vU = true; nivV = false}
-    if (keyboard.up('up')) {vU = false;  if(!vD) nivV = true}
+    if (keyboard.down('up')) {
+      vU = true
+      nivV = false
+    }
+    if (keyboard.up('up')) {
+      vU = false
+      if (!vD) nivV = true
+    }
 
     if (keyboard.pressed('left'))
       esquerda(esferaMov, esferaHelice, esferaCam, speed)
-    if (keyboard.down('left')) {vL = true; nivH = false}
-    if (keyboard.up('left')) {vL = false;  if(!vR) nivH = true}
+    if (keyboard.down('left')) {
+      vL = true
+      nivH = false
+    }
+    if (keyboard.up('left')) {
+      vL = false
+      if (!vR) nivH = true
+    }
 
     if (keyboard.pressed('right'))
       direita(esferaMov, esferaHelice, esferaCam, speed)
-    if (keyboard.down('right')) {vR = true; nivH = false}
-    if (keyboard.up('right')) {vR = false;  if(!vL)nivH = true}
+    if (keyboard.down('right')) {
+      vR = true
+      nivH = false
+    }
+    if (keyboard.up('right')) {
+      vR = false
+      if (!vL) nivH = true
+    }
 
     if (keyboard.down('Q')) acelera()
     if (keyboard.down('A')) desacelera()
@@ -380,7 +462,6 @@ function keyboardUpdate() {
   }
   if (keyboard.down('space')) switchCam()
 }
-
 
 // Informacoes na tela
 var controls = new InfoBox()
@@ -414,7 +495,11 @@ render()
 function render() {
   if (!modoCam)
     timerMessage.changeMessage(
-      `Tempo: ${(duracao / 1000).toFixed(2)} - CheckPoint: ${contadorCP}/15 - Distancia até o próximo: ${distancia.toFixed(0)}`
+      `Tempo: ${(duracao / 1000).toFixed(
+        2
+      )} - CheckPoint: ${contadorCP}/15 - Distancia até o próximo: ${distancia.toFixed(
+        0
+      )}`
     )
   else timerMessage.changeMessage('')
   stats.update()
@@ -430,4 +515,3 @@ function render() {
   requestAnimationFrame(render)
   renderer.render(scene, camera) // Render scene
 }
-
