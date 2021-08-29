@@ -21,6 +21,7 @@ export function createBuilding(modelo) {
       var glassWindow = textureLoader.load('Images/Predio4/GlassWindow.jpg')
       var glassWindow2 = textureLoader.load('Images/Predio4/GlassWindow.jpg')
       var glassWindow3 = textureLoader.load('Images/Predio4/GlassWindow.jpg')
+      var roofTexture = textureLoader.load('Images/Predio4/Teto.jpg')
 
       var faceBotGeo = new THREE.PlaneGeometry(50 * c, 60 * c)
       var faceMidGeo = new THREE.PlaneGeometry(40 * c, 40 * c)
@@ -79,6 +80,7 @@ export function createBuilding(modelo) {
         .rotateX(degreesToRadians(90))
         .translateZ(-30 * c)
         .translateY(-25 * c)
+      insertTexture(roofTexture, roof1, 2, 2)
 
       var faceMid1 = new THREE.Mesh(faceMidGeo, face2Mat)
       faceMid1
@@ -511,16 +513,23 @@ export function createBuilding2(modelo) {
 
       var p1Text3 = textureLoader.load('Images/Predio1/Janelas.jpg')
       var p1bk = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 2 * m))
-      p1bk
-        .translateY(0.5 * m)
-        .rotateY(degreesToRadians(180))
+      p1bk.translateY(0.5 * m).rotateY(degreesToRadians(180))
       insertTexture(p1Text3, p1bk, 1, 3)
 
       var p1Text1 = textureLoader.load('Images/Predio1/Janelas.jpg')
-      var p1ft = new THREE.Mesh(new THREE.CylinderGeometry( 0.5 * m, 0.5 * m, 1 * m, 60, 60, true, 1.97, 3.04))
-      p1ft
-        .translateZ(0.47 * m)
-        .rotateY(degreesToRadians(160))
+      var p1ft = new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          0.5 * m,
+          0.5 * m,
+          1 * m,
+          60,
+          60,
+          true,
+          1.97,
+          3.04
+        )
+      )
+      p1ft.translateZ(0.47 * m).rotateY(degreesToRadians(160))
       insertTexture(p1Text1, p1ft, 1, 1.5)
 
       var p1Text4 = textureLoader.load('Images/Predio1/Janelas.jpg')
@@ -775,16 +784,16 @@ export function createBuilding2(modelo) {
   }
 }
 
-export function createCity(scene){
+export function createCity(scene) {
   // Criando predios
-  var predio1 = new Array(5);
-  var predio2 = new Array(5);
-  var predio3 = new Array(5);
-  var predio4 = new Array(5);
-  var predio5 = new Array(5);
-  var predio6 = new Array(5);
+  var predio1 = new Array(5)
+  var predio2 = new Array(5)
+  var predio3 = new Array(5)
+  var predio4 = new Array(5)
+  var predio5 = new Array(5)
+  var predio6 = new Array(5)
 
-  for(var i = 0; i < 5; i++){
+  for (var i = 0; i < 5; i++) {
     predio1[i] = createBuilding2(1)
     predio2[i] = createBuilding2(2)
     predio3[i] = createBuilding2(3)
@@ -794,19 +803,11 @@ export function createCity(scene){
   }
 
   //Posicionando Predios
-  predio1[0]
-    .translateZ(-1800)
-    .translateX(2700)
-    .rotateY(degreesToRadians(180))
+  predio1[0].translateZ(-1800).translateX(2700).rotateY(degreesToRadians(180))
 
-  predio2[0]
-    .translateZ(-1800)
-    .translateX(3150)
-    .rotateY(degreesToRadians(180))
+  predio2[0].translateZ(-1800).translateX(3150).rotateY(degreesToRadians(180))
 
-  predio3[0]
-    .translateZ(-1800)
-    .translateX(3700)
+  predio3[0].translateZ(-1800).translateX(3700)
 
   predio4[0]
     .translateZ(2300)
@@ -814,10 +815,7 @@ export function createCity(scene){
     .translateX(25)
     .rotateZ(degreesToRadians(-90))
 
-  predio5[0]
-    .translateZ(1900)
-    .translateY(-2200)
-    .rotateZ(degreesToRadians(-90))
+  predio5[0].translateZ(1900).translateY(-2200).rotateZ(degreesToRadians(-90))
 
   predio6[0]
     .translateZ(1300)
@@ -826,7 +824,7 @@ export function createCity(scene){
     .rotateZ(degreesToRadians(-90))
 
   //Add predios na scene
-  for(var i = 0; i < 5; i++){
+  for (var i = 0; i < 5; i++) {
     scene.add(predio1[i])
     scene.add(predio2[i])
     scene.add(predio3[i])
@@ -834,6 +832,4 @@ export function createCity(scene){
     scene.add(predio5[i])
     scene.add(predio6[i])
   }
-
-
 }
