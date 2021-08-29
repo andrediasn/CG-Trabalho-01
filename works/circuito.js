@@ -158,7 +158,10 @@ var auxm = 30;
 var cont = 0;
 var start;
 
-export function checkpoint(scene, px, py, pz){
+export function checkpoint(scene, px, py, pz, listener){
+    var sound = new THREE.Audio(listener);
+    var audioLoader = new THREE.AudioLoader();
+
     if (cont == 0) {
         scene.add(torus[cont]);
         scene.add(torus[cont+1]);
@@ -167,18 +170,50 @@ export function checkpoint(scene, px, py, pz){
         if(aux < auxm) {
             start = new Date().getTime();
             cont ++;
+            audioLoader.load('Sounds/Checkpoint.mp3', function (buffer) {
+                sound.setBuffer(buffer);
+                sound.setLoop(false);
+                sound.setVolume(0.2);
+                sound.play();
+            });
         }
     } else if(cont < 13){
         scene.remove(torus[cont-1]);
         scene.add(torus[cont+2]);
         aux = distancia(torus[cont].position.x, torus[cont].position.y, torus[cont].position.z, px, py, pz);
-        if(aux < auxm) 
+        if(aux < auxm){ 
             cont ++;
-    } else if(cont < 15){
+            audioLoader.load('Sounds/Checkpoint.mp3', function (buffer) {
+                sound.setBuffer(buffer);
+                sound.setLoop(false);
+                sound.setVolume(0.2);
+                sound.play();
+            });
+        }
+    } else if(cont == 13){
         scene.remove(torus[cont-1]);
         aux = distancia(torus[cont].position.x, torus[cont].position.y, torus[cont].position.z, px, py, pz);
-        if(aux < auxm) 
+        if(aux < auxm){ 
             cont ++;
+            audioLoader.load('Sounds/Checkpoint.mp3', function (buffer) {
+                sound.setBuffer(buffer);
+                sound.setLoop(false);
+                sound.setVolume(0.2);
+                sound.play();
+            });
+        }
+    } else if(cont == 14){
+        scene.remove(torus[cont-1]);
+        aux = distancia(torus[cont].position.x, torus[cont].position.y, torus[cont].position.z, px, py, pz);
+        if(aux < auxm){ 
+            cont ++;
+            audioLoader.load('Sounds/End.mp3', function (buffer) {
+                sound.setBuffer(buffer);
+                sound.setLoop(false);
+                sound.setVolume(0.2);
+                sound.play();
+            });
+        }
     } else{
         scene.remove(torus[cont-1]);
         aux = 0;

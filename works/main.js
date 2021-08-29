@@ -47,7 +47,7 @@ var scene = new THREE.Scene() // Create main scene
 var renderer = initRenderer() // View function in util/utils
 
 // Plano e iluminação
-var plane = createGroundPlaneWired(7500, 7200, 100, 100, 'rgb(20, 90, 30)')
+var plane = createGroundPlaneWired(10000, 10000, 100, 100, 'rgb(20, 90, 30)')
 plane.translateX(1000)
 
 // ---------------- Ambiente ---------------- //
@@ -206,7 +206,7 @@ var cameraSimulation = new THREE.PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
   0.1,
-  7000
+  90000
 )
 cameraSimulation.position.copy(new THREE.Vector3(0, 40, -150))
 cameraSimulation.lookAt(new THREE.Vector3(0, 0, 0))
@@ -277,7 +277,7 @@ var camCockpit = new THREE.PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
   0.1,
-  7000
+  90000
 )
 camCockpit.position.copy(new THREE.Vector3(0, 7, -15))
 camCockpit.lookAt(new THREE.Vector3(0, 5, 0))
@@ -300,6 +300,8 @@ switchCam()
 
 var listener = new THREE.AudioListener();
 esferaCam.add(listener);
+
+//Music
 var sound = new THREE.Audio(listener);
 var audioLoader = new THREE.AudioLoader();
 audioLoader.load('Sounds/Base2.mp3', function (buffer) {
@@ -308,7 +310,44 @@ audioLoader.load('Sounds/Base2.mp3', function (buffer) {
         sound.setVolume(0.2);
         sound.play();
       });
+
+//Airplane
+var sound2 = new THREE.Audio(listener);
+var audioLoader2 = new THREE.AudioLoader();
+audioLoader2.load('Sounds/Airplane.mp3', function (buffer) {
+  sound2.setBuffer(buffer);
+  sound2.setLoop(true);
+  sound2.setVolume(0.1*speed/3);
+  sound2.play();
+});
+function airplaneAudio(){
+  sound2.setVolume(0.1*speed/3);  
+}
   
+// --------------------------- Skybox ---------------------------------- //
+
+let textSky = [];
+let texture_ft = new THREE.TextureLoader().load( 'Images/sw_ft.png');
+let texture_bk = new THREE.TextureLoader().load( 'Images/sw_bk.png');
+let texture_up = new THREE.TextureLoader().load( 'Images/sw_up.png');
+let texture_dn = new THREE.TextureLoader().load( 'Images/sw_dn.png');
+let texture_rt = new THREE.TextureLoader().load( 'Images/sw_rt.png');
+let texture_lf = new THREE.TextureLoader().load( 'Images/sw_lf.png');
+  
+textSky.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
+textSky.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
+textSky.push(new THREE.MeshBasicMaterial( { map: texture_up }));
+textSky.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
+textSky.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
+textSky.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
+   
+for (let i = 0; i < 6; i++)
+  textSky[i].side = THREE.BackSide;
+   
+let skyboxGeo = new THREE.BoxGeometry( 90000, 90000, 90000);
+let skybox = new THREE.Mesh( skyboxGeo, textSky );
+scene.add( skybox );
+//skybox.translateY(2000);
 
 // --------------------------- Keyboard---------------------------------- //
 
@@ -403,8 +442,9 @@ function render() {
   aceleracao()
   nivelamento(esferaHelice, esferaCam, esferaMov, nivV, nivH, speed)
   posicaoHolder() // atualiza posicao do holder
-  checkpoint(scene, pX, pY, pZ) // calcula colisao com checkpoint
+  checkpoint(scene, pX, pY, pZ, listener) // calcula colisao com checkpoint
   rotatePlaneComponents()
+  airplaneAudio()
   requestAnimationFrame(render)
   renderer.render(scene, camera) // Render scene
 }
