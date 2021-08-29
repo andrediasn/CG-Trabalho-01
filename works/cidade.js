@@ -775,6 +775,65 @@ export function createBuilding2(modelo) {
   }
 }
 
-//export function createCity(scene){
+export function createCity(scene){
+  // Criando predios
+  var predio1 = new Array(5);
+  var predio2 = new Array(5);
+  var predio3 = new Array(5);
+  var predio4 = new Array(5);
+  var predio5 = new Array(5);
+  var predio6 = new Array(5);
 
-//}
+  for(var i = 0; i < 5; i++){
+    predio1[i] = createBuilding2(1)
+    predio2[i] = createBuilding2(2)
+    predio3[i] = createBuilding2(3)
+    predio4[i] = createBuilding(1)
+    predio5[i] = createBuilding(2)
+    predio6[i] = createBuilding(3)
+  }
+
+  //Posicionando Predios
+  predio1[0]
+    .translateZ(-1800)
+    .translateX(2700)
+    .rotateY(degreesToRadians(180))
+
+  predio2[0]
+    .translateZ(-1800)
+    .translateX(3150)
+    .rotateY(degreesToRadians(180))
+
+  predio3[0]
+    .translateZ(-1800)
+    .translateX(3700)
+
+  predio4[0]
+    .translateZ(2300)
+    .translateY(-2200)
+    .translateX(25)
+    .rotateZ(degreesToRadians(-90))
+
+  predio5[0]
+    .translateZ(1900)
+    .translateY(-2200)
+    .rotateZ(degreesToRadians(-90))
+
+  predio6[0]
+    .translateZ(1300)
+    .translateY(-2200)
+    .translateX(-50)
+    .rotateZ(degreesToRadians(-90))
+
+  //Add predios na scene
+  for(var i = 0; i < 5; i++){
+    scene.add(predio1[i])
+    scene.add(predio2[i])
+    scene.add(predio3[i])
+    scene.add(predio4[i])
+    scene.add(predio5[i])
+    scene.add(predio6[i])
+  }
+
+
+}

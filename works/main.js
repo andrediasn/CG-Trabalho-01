@@ -44,10 +44,8 @@ import {
 } from './arvore.js'
 import { loadGLTFFile } from './externalObject.js'
 import {
-  createBuilding,
-  createBuilding2,
-  //createCity
-} from './predios.js'
+  createCity
+} from './cidade.js'
 
 var stats = new Stats() // To show FPS information
 var scene = new THREE.Scene() // Create main scene
@@ -96,48 +94,16 @@ scene.add(ambientLight)
 
 // scene.add(sunLight)
 
-// Árvores
-//addArvores(scene)
-
-// Montanhas
-addMontanhas(scene)
 
 // -------------- Objeto Externo ------------ //
 loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
 
-// ------------------ Prédios --------------- //
-var predio1 = createBuilding(1)
-predio1
-  .translateZ(2300)
-  .translateY(-2200)
-  .translateX(25)
-  .rotateZ(degreesToRadians(-90))
-scene.add(predio1)
+// ------------------ Cidade --------------- //
 
-var predio2 = createBuilding(2)
-predio2.translateZ(1900).translateY(-2200).rotateZ(degreesToRadians(-90))
-scene.add(predio2)
+createCity(scene);
 
-var predio3 = createBuilding(3)
-predio3
-  .translateZ(1300)
-  .translateY(-2200)
-  .translateX(-50)
-  .rotateZ(degreesToRadians(-90))
-scene.add(predio3)
-
-var predio4 = createBuilding2(1)
-predio4.translateZ(-1800).translateX(2700).rotateY(degreesToRadians(180))
-scene.add(predio4)
-
-var predio5 = createBuilding2(2)
-predio5.translateZ(-1800).translateX(3150).rotateY(degreesToRadians(180))
-scene.add(predio5)
-
-var predio6 = createBuilding2(3)
-predio6.translateZ(-1800).translateX(3700)
-scene.add(predio6)
-//createCity(scene);
+// Árvores
+//addArvores(scene)
 
 // ----------------- Circuito --------------- //
 
@@ -469,15 +435,10 @@ function keyboardUpdate() {
 
     if (keyboard.down('Q')) acelera()
     if (keyboard.down('A')) desacelera()
-
     if (keyboard.down('C')) switchCockpit()
-
     if (keyboard.down('R')) document.location.reload(true)
-
     if (keyboard.down('H')) switchControls()
-
     if (keyboard.down('enter')) switchTrajeto()
-
     if (keyboard.down('P')) printP() // usado para testes
   }
   if (keyboard.down('space')) switchCam()
@@ -514,8 +475,6 @@ function switchControls(){
     showControls = true
   }
 }
-
-
 
 // Listen window size changes
 window.addEventListener(
