@@ -67,32 +67,33 @@ plane.material.map.wrapS = THREE.RepeatWrapping
 plane.material.map.wrapT = THREE.RepeatWrapping
 plane.material.map.minFilter = THREE.LinearFilter
 plane.material.map.magFilter = THREE.LinearFilter
+
 // ---------------- Ambiente ---------------- //
 // Iluminação
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
 scene.add(ambientLight)
 
-// // Sol
-// const sunPosition = new THREE.Vector3(0, 2000, 0)
+/* // Sol
+const sunPosition = new THREE.Vector3(0, 2000, 0)
 
-// // Criando o spotLight do sol
-// var sunLight = new THREE.SpotLight('rgb(255,136,0)')
-// sunLight.intensity = 3
-// sunLight.position.copy(sunPosition)
-// sunLight.distance = 0
-// sunLight.castShadow = true
-// sunLight.decay = 2
-// sunLight.penumbra = 1
-// sunLight.angle = degreesToRadians(110)
-// sunLight.shadow.mapSize.width = 4000
-// sunLight.shadow.mapSize.height = 4000
-// sunLight.shadow.camera.fov = radiansToDegrees(sunLight.angle)
-// sunLight.shadow.camera.far = 7000.0
-// sunLight.shadow.camera.near = 0.2
+// Criando o spotLight do sol
+var sunLight = new THREE.SpotLight('rgb(255,136,0)')
+sunLight.intensity = 3
+sunLight.position.copy(sunPosition)
+sunLight.distance = 0
+sunLight.castShadow = true
+sunLight.decay = 2
+sunLight.penumbra = 1
+sunLight.angle = degreesToRadians(110)
+sunLight.shadow.mapSize.width = 4000
+sunLight.shadow.mapSize.height = 4000
+sunLight.shadow.camera.fov = radiansToDegrees(sunLight.angle)
+sunLight.shadow.camera.far = 7000.0
+sunLight.shadow.camera.near = 0.2
 
-// scene.add(sunLight)
+scene.add(sunLight) */
 
-// Luz para a câmera de inspeção
+//Luz para a câmera de inspeção
 var inspectionLight = new THREE.SpotLight('rgb(255,136,0)')
 inspectionLight.intensity = 1
 inspectionLight.position.copy(new THREE.Vector3(0, 20, 60))
@@ -309,6 +310,7 @@ function switchCam() {
 // God Mode
 var godOn = true
 godMode();
+godMode();
 function godMode(){
   if(godOn){
     camera = cameraSimulation
@@ -339,14 +341,16 @@ function godKeyUp(){
   if (keyboard.down('G')) godMode()
   
   if(keyboard.pressed('W'))
-    camera.translateZ(-5);
+    camera.translateZ(-3);
   else if(keyboard.pressed('S'))
-    camera.translateZ(5);
+    camera.translateZ(3);
+  else if(keyboard.pressed('space'))
+    camera.translateZ(-10);
   
   if(keyboard.pressed('A'))
-    camera.translateX(-5);
+    camera.translateX(-3);
   else if(keyboard.pressed('D'))
-    camera.translateX(5);
+    camera.translateX(3);
   if(keyboard.pressed('up'))
     camera.rotateX(degreesToRadians(0.5));
   else if(keyboard.pressed('down'))
@@ -358,9 +362,9 @@ function godKeyUp(){
     camera.rotateY(degreesToRadians(-0.5));
 
   if(keyboard.pressed('Q'))
-    camera.translateY(-5);
+    camera.translateY(-2);
   else if(keyboard.pressed('E'))
-    camera.translateY(5);
+    camera.translateY(2);
 }
 
 

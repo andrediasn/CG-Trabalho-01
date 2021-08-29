@@ -784,6 +784,19 @@ function createBuilding2(modelo) {
   }
 }
 
+var t = 50; // tamanho da rua 1x1
+
+function createStreet(modelo){
+  switch (modelo) {
+    case 1: {
+      var stretText = textureLoader.load('Images/Floor/street1.jpg')
+      var street =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
+      insertTexture(stretText, street, 1, 1)
+      return street
+    }
+  }
+}
+
 export function createCity(scene) {
   // Criando predios
   var predio1 = new Array(5)
@@ -800,6 +813,12 @@ export function createCity(scene) {
     predio4[i] = createBuilding(1)
     predio5[i] = createBuilding(2)
     predio6[i] = createBuilding(3)
+/*     scene.add(predio1[i])
+    scene.add(predio2[i])
+    scene.add(predio3[i])
+    scene.add(predio4[i])
+    scene.add(predio5[i])
+    scene.add(predio6[i]) */
   }
 
   //Posicionando Predios
@@ -823,18 +842,158 @@ export function createCity(scene) {
     .translateX(-50)
     .rotateZ(degreesToRadians(-90))
 
-  //Add predios na scene
-  for (var i = 0; i < 5; i++) {
-    scene.add(predio1[i])
-    scene.add(predio2[i])
-    scene.add(predio3[i])
-    scene.add(predio4[i])
-    scene.add(predio5[i])
-    scene.add(predio6[i])
+  //Criando Ruas
+  var street1h = new Array(15)
+  var street2h = new Array(15)
+  var street3h = new Array(15)
+  var street4h = new Array(15)
+  var street1v = new Array(15)
+  var street2v = new Array(15)
+  var street3v = new Array(15)
+  var street4v = new Array(15)
+  for(var i = 0; i < street1h.length; i++){
+    street1h[i] = createStreet(1)
+    street2h[i] = createStreet(1)
+    street3h[i] = createStreet(1)
+    street4h[i] = createStreet(1)
+    street1v[i] = createStreet(1)
+    street2v[i] = createStreet(1)
+    street3v[i] = createStreet(1)
+    street4v[i] = createStreet(1)
+    scene.add(street1h[i]) 
+    scene.add(street2h[i]) 
+    scene.add(street3h[i]) 
+    scene.add(street4h[i]) 
+    scene.add(street1v[i]) 
+    scene.add(street2v[i]) 
+    scene.add(street3v[i]) 
+    scene.add(street4v[i]) 
+  }
+  
+
+  //Posicionando Ruas
+  var px = 3000 
+  var py = 5 
+  var pz = -3500 
+  // rotateX => deita  || rotateZ => gira 
+  
+
+
+  // Horizontal 0
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street1h[i].position.set((px-(i*t)), py, pz)
+    street1h[i].rotateX(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street1h[i-1].position.set((px-(i*t)), py, pz)
+    street1h[i-1].rotateX(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street1h[i-2].position.set((px-(i*t)), py, pz)
+    street1h[i-2].rotateX(degreesToRadians(90))
+  }
+  /*   for(var i = 18; i < 23; i++){ // 15 a 21
+    street1h[i-3].position.set((px-(i*t)), py, pz)
+    street1h[i-3].rotateX(degreesToRadians(90))
+  } */
+
+  // Horizontal 1
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street2h[i].position.set((px-(i*t)), py, (6*t+pz))
+    street2h[i].rotateX(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street2h[i-1].position.set((px-(i*t)), py, (6*t+pz))
+    street2h[i-1].rotateX(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street2h[i-2].position.set((px-(i*t)), py, (6*t+pz))
+    street2h[i-2].rotateX(degreesToRadians(90))
+  }  
+
+  // Horizontal 2
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street3h[i].position.set((px-(i*t)), py, (12*t+pz))
+    street3h[i].rotateX(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street3h[i-1].position.set((px-(i*t)), py, (12*t+pz))
+    street3h[i-1].rotateX(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street3h[i-2].position.set((px-(i*t)), py, (12*t+pz))
+    street3h[i-2].rotateX(degreesToRadians(90))
   }
 
-  //Criando Ruas
+  // Horizontal 3
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street4h[i].position.set((px-(i*t)), py, (18*t+pz))
+    street4h[i].rotateX(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street4h[i-1].position.set((px-(i*t)), py, (18*t+pz))
+    street4h[i-1].rotateX(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street4h[i-2].position.set((px-(i*t)), py, (18*t+pz))
+    street4h[i-2].rotateX(degreesToRadians(90))
+  }
 
+  // Vertical 0
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street1v[i].position.set((px+t), py, (pz+t+(i*t)))
+    street1v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street1v[i-1].position.set((px+t), py, (pz+t+(i*t)))
+    street1v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street1v[i-2].position.set((px+t), py, (pz+t+(i*t)))
+    street1v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  } 
+
+  // Vertical 1
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street2v[i].position.set((px-5*t), py, (pz+t+(i*t)))
+    street2v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street2v[i-1].position.set((px-5*t), py, (pz+t+(i*t)))
+    street2v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street2v[i-2].position.set((px-5*t), py, (pz+t+(i*t)))
+    street2v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  } 
+
+  // Vertical 2
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street3v[i].position.set((px-11*t), py, (pz+t+(i*t)))
+    street3v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street3v[i-1].position.set((px-11*t), py, (pz+t+(i*t)))
+    street3v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street3v[i-2].position.set((px-11*t), py, (pz+t+(i*t)))
+    street3v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  } 
+
+  // Vertical 3
+  for (var i = 0; i < 5; i++){ // 0 a 4
+    street4v[i].position.set((px-17*t), py, (pz+t+(i*t)))
+    street4v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for (var i = 6; i < 11; i++){ // 5 a 9
+    street4v[i-1].position.set((px-17*t), py, (pz+t+(i*t)))
+    street4v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  }
+  for(var i = 12; i < 17; i++){ // 10 a 14
+    street4v[i-2].position.set((px-17*t), py, (pz+t+(i*t)))
+    street4v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  } 
 
 
 
