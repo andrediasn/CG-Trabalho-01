@@ -43,10 +43,10 @@ import {
   hideEnvironmentObjects,
 } from './arvore.js'
 import { loadGLTFFile } from './externalObject.js'
-import { 
+import {
   createBuilding,
   createBuilding2,
-  //createCity 
+  //createCity
 } from './predios.js'
 
 var stats = new Stats() // To show FPS information
@@ -76,28 +76,28 @@ plane.material.map.magFilter = THREE.LinearFilter
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
 scene.add(ambientLight)
 
-// Sol
-const sunPosition = new THREE.Vector3(0, 2000, 0)
+// // Sol
+// const sunPosition = new THREE.Vector3(0, 2000, 0)
 
-// Criando o spotLight do sol
-var sunLight = new THREE.SpotLight('rgb(255,136,0)')
-sunLight.intensity = 3
-sunLight.position.copy(sunPosition)
-sunLight.distance = 0
-sunLight.castShadow = true
-sunLight.decay = 2
-sunLight.penumbra = 1
-sunLight.angle = degreesToRadians(110)
-sunLight.shadow.mapSize.width = 4000
-sunLight.shadow.mapSize.height = 4000
-sunLight.shadow.camera.fov = radiansToDegrees(sunLight.angle)
-sunLight.shadow.camera.far = 7000.0
-sunLight.shadow.camera.near = 0.2
+// // Criando o spotLight do sol
+// var sunLight = new THREE.SpotLight('rgb(255,136,0)')
+// sunLight.intensity = 3
+// sunLight.position.copy(sunPosition)
+// sunLight.distance = 0
+// sunLight.castShadow = true
+// sunLight.decay = 2
+// sunLight.penumbra = 1
+// sunLight.angle = degreesToRadians(110)
+// sunLight.shadow.mapSize.width = 4000
+// sunLight.shadow.mapSize.height = 4000
+// sunLight.shadow.camera.fov = radiansToDegrees(sunLight.angle)
+// sunLight.shadow.camera.far = 7000.0
+// sunLight.shadow.camera.near = 0.2
 
-scene.add(sunLight)
+// scene.add(sunLight)
 
 // Árvores
-addArvores(scene)
+//addArvores(scene)
 
 // Montanhas
 addMontanhas(scene)
@@ -112,9 +112,11 @@ predio1
   .translateY(-2200)
   .translateX(25)
   .rotateZ(degreesToRadians(-90))
+scene.add(predio1)
 
 var predio2 = createBuilding(2)
 predio2.translateZ(1900).translateY(-2200).rotateZ(degreesToRadians(-90))
+scene.add(predio2)
 
 var predio3 = createBuilding(3)
 predio3
@@ -122,22 +124,19 @@ predio3
   .translateY(-2200)
   .translateX(-50)
   .rotateZ(degreesToRadians(-90))
-
-scene.add(predio1)
-scene.add(predio2)
 scene.add(predio3)
 
-var predio4 = createBuilding2(1);
-predio4.translateZ(-1800).translateX(2700).rotateY(degreesToRadians(180));
-scene.add(predio4);
+var predio4 = createBuilding2(1)
+predio4.translateZ(-1800).translateX(2700).rotateY(degreesToRadians(180))
+scene.add(predio4)
 
-var predio5 = createBuilding2(2);
-predio5.translateZ(-1800).translateX(3150).rotateY(degreesToRadians(180));
-scene.add(predio5);
+var predio5 = createBuilding2(2)
+predio5.translateZ(-1800).translateX(3150).rotateY(degreesToRadians(180))
+scene.add(predio5)
 
-var predio6 = createBuilding2(3);
-predio6.translateZ(-1800).translateX(3700);
-scene.add(predio6);  
+var predio6 = createBuilding2(3)
+predio6.translateZ(-1800).translateX(3700)
+scene.add(predio6)
 //createCity(scene);
 
 // ----------------- Circuito --------------- //

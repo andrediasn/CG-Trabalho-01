@@ -17,6 +17,24 @@ esferaHelice.receiveShadow = true
 var mat4 = new THREE.Matrix4()
 // Constante para modificar o tamanho do avião
 
+// ------------------ Carregando Texturas ------------------ //
+
+// Função para inserir a textura no objeto
+function insertTexture(texture, object, repeatX, repeatY) {
+  object.material.map = texture
+  object.material.map.repeat.set(repeatX, repeatY)
+  object.material.map.wrapS = THREE.RepeatWrapping
+  object.material.map.wrapT = THREE.RepeatWrapping
+  object.material.side = THREE.DoubleSide
+}
+
+var textureLoader = new THREE.TextureLoader()
+var windowTexture = textureLoader.load('Images/Aviao/PlaneWindow.png')
+var bodyTexture = textureLoader.load('Images/Aviao/PlaneBody.jpg')
+var bodyTexture2 = textureLoader.load('Images/Aviao/PlaneBody.jpg')
+var wingTexture = textureLoader.load('Images/Aviao/WingTexture.png')
+var wingTexture2 = textureLoader.load('Images/Aviao/WingTexture2.png')
+
 // ----------------- Criação dos polígonos ----------------- //
 
 // Cone da hélice
@@ -30,9 +48,14 @@ var cylCorpoMat = new THREE.MeshPhongMaterial({
   color: 0x888888,
   specular: 0x333333,
 })
+var cylCorpoMat2 = new THREE.MeshPhongMaterial({
+  color: 0x888888,
+  specular: 0x333333,
+})
 
 var cyl1corpoGeo = new THREE.CylinderGeometry(1.9 * c, 4.8 * c, 6 * c, 18)
 var cyl1corpo = new THREE.Mesh(cyl1corpoGeo, cylCorpoMat)
+insertTexture(bodyTexture, cyl1corpo, 2, 1)
 cyl1corpo.castShadow = true
 cyl1corpo.receiveShadow = true
 
@@ -47,7 +70,8 @@ cyl3corpo.castShadow = true
 cyl3corpo.receiveShadow = true
 
 var cyl4corpoGeo = new THREE.CylinderGeometry(8.5 * c, 8.5 * c, 30 * c, 18)
-var cyl4corpo = new THREE.Mesh(cyl4corpoGeo, cylCorpoMat)
+var cyl4corpo = new THREE.Mesh(cyl4corpoGeo, cylCorpoMat2)
+insertTexture(bodyTexture2, cyl4corpo, 2, 2)
 cyl4corpo.castShadow = true
 cyl4corpo.receiveShadow = true
 
@@ -68,21 +92,31 @@ cyl7corpo.receiveShadow = true
 
 // Asas
 var asaMat = new THREE.MeshPhongMaterial({
+  color: 0x444444,
+  specular: 0x989898,
+})
+var asaTextureMat = new THREE.MeshPhongMaterial({
+  color: 0x999999,
+  specular: 0x989898,
+})
+var asaTextureMat2 = new THREE.MeshPhongMaterial({
   color: 0x999999,
   specular: 0x989898,
 })
 
 var asaGeo = new THREE.BoxGeometry(30 * c, 10 * c, 1.2 * c)
 
-var asa1 = new THREE.Mesh(asaGeo, asaMat)
+var asa1 = new THREE.Mesh(asaGeo, asaTextureMat)
+insertTexture(wingTexture2, asa1, 1, 1)
 asa1.castShadow = true
 asa1.receiveShadow = true
-var asa2 = new THREE.Mesh(asaGeo, asaMat)
+var asa2 = new THREE.Mesh(asaGeo, asaTextureMat2)
+insertTexture(wingTexture, asa2, 1, 1)
 asa2.castShadow = true
 asa2.receiveShadow = true
 
 // Winglet da asa (estrutura na extremidade da asa)
-var wingletAsaGeo = new THREE.BoxGeometry(3 * c, 9.55 * c, 1.2 * c)
+var wingletAsaGeo = new THREE.BoxGeometry(3 * c, 9.55 * c, 1 * c)
 var wingletAsa1 = new THREE.Mesh(wingletAsaGeo, asaMat)
 wingletAsa1.castShadow = true
 wingletAsa1.receiveShadow = true
@@ -193,6 +227,7 @@ var janelaMat = new THREE.MeshPhongMaterial({
 // Janelas no cilindro antes do central(cyl3)
 var janela3Geo = new THREE.CylinderGeometry(1.66 * c, 1.66 * c, 2 * c, 16)
 var janela3esq = new THREE.Mesh(janela3Geo, janelaMat)
+insertTexture(windowTexture, janela3esq, 1, 1)
 janela3esq.receiveShadow = true
 var janela3dir = new THREE.Mesh(janela3Geo, janelaMat)
 janela3dir.receiveShadow = true
