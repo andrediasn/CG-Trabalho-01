@@ -40,6 +40,7 @@ function insertTexture(texture, object, repeatX, repeatY) {
   object.material.map.repeat.set(repeatX, repeatY)
   object.material.map.wrapS = THREE.RepeatWrapping
   object.material.map.wrapT = THREE.RepeatWrapping
+  object.material.side = THREE.DoubleSide
 }
 
 var c = 5 // Constante escalar
@@ -475,3 +476,199 @@ export function createBuilding(modelo) {
     }
   }
 }
+
+
+export function createBuilding2(modelo) {
+  var m = 300;
+  var n = 200;
+  var geoHolder = new THREE.PlaneGeometry(10, 10, 10, 10);
+  var matHolder = new THREE.MeshPhongMaterial({opacity: 0,transparent: true});
+  switch (modelo) {
+    case 1: {
+      var predio1 = new THREE.Mesh(geoHolder, matHolder);
+      predio1.translateY(0.5*m);
+      
+      var p1Text3 = textureLoader.load('Images/Predio1/Janelas.jpg')
+      var p1bk = new THREE.Mesh(new THREE.PlaneGeometry(1*m, 2*m));
+      p1bk.translateY(0.5*m).rotateY(degreesToRadians(180))
+      insertTexture(p1Text3, p1bk, 1, 3);
+      
+      var p1Text1 = textureLoader.load('Images/Predio1/Janelas.jpg');
+      var p1ft = new THREE.Mesh(new THREE.CylinderGeometry(0.5*m, 0.5*m, 1*m, 60, 60, true, 1.97, 3.04));
+      p1ft.translateZ(0.47*m).rotateY(degreesToRadians(160));
+      insertTexture(p1Text1, p1ft, 1, 1.5);
+      
+      var p1Text4 = textureLoader.load('Images/Predio1/Janelas.jpg');
+      var p1ft2 = new THREE.Mesh(new THREE.PlaneGeometry(1*m, 1*m));
+      p1ft2.translateY(m).translateZ(0.5*m);
+      insertTexture(p1Text4, p1ft2, 1, 1.5);
+      
+      var p1Text2 = textureLoader.load('Images/Predio1/Tijolos2.jpg');
+      var p1lf = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 2*m));
+      p1lf.rotateY(degreesToRadians(90)).translateZ(0.5*m).translateX(-0.25*m).translateY(0.5*m);
+      insertTexture(p1Text2, p1lf, 3, 10);
+      
+      var p1rt = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 2*m));
+      p1rt.rotateY(degreesToRadians(-90)).translateZ(0.5*m).translateX(0.25*m).translateY(0.5*m);
+      insertTexture(p1Text2, p1rt, 3, 10);
+      
+      var p1Text5 = textureLoader.load('Images/Predio1/Concreto2.jpg');
+      var p1up1 = new THREE.Mesh(new THREE.PlaneGeometry(1*m, 0.5*m));
+      p1up1.rotateX(degreesToRadians(-90)).translateZ(1.5*m).translateY(-0.25*m);
+      insertTexture(p1Text5, p1up1, 6, 3);
+      
+      var p1Text6 = textureLoader.load('Images/Predio1/Concreto3.jpg');
+      var p1up2 = new THREE.Mesh(new THREE.CircleGeometry(0.5*m,90, 3.15, 3.1))
+      p1up2.rotateX(degreesToRadians(-90)).translateZ(0.5*m).translateY(-0.47*m);
+      insertTexture(p1Text6, p1up2, 3, 3);
+            
+      predio1.add(p1bk).add(p1ft).add(p1ft2).add(p1lf).add(p1rt).add(p1up1).add(p1up2);
+      
+      return predio1;
+    }
+    case 2:{
+      var predio2 = new THREE.Mesh(geoHolder, matHolder);
+      predio2.translateY(1*n);
+
+      var p2Text1  = textureLoader.load('Images/Predio2/Tijolos.jpg');
+      var p2rt = new THREE.Mesh(new THREE.PlaneGeometry(1*n, 2*n));
+      p2rt.translateX(1*n).rotateY(degreesToRadians(90));
+      insertTexture(p2Text1, p2rt, 4, 5);
+      var p2lf = new THREE.Mesh(new THREE.PlaneGeometry(1*n, 2*n));
+      p2lf.translateX(-1*n).rotateY(degreesToRadians(-90));
+      insertTexture(p2Text1, p2lf, 4, 5);
+      
+      var p2Text2  = textureLoader.load('Images/Predio2/Janelas1.jpg');
+      var p2bk = new THREE.Mesh(new THREE.PlaneGeometry(2*n, 2*n));
+      p2bk.translateZ(-0.5*n).rotateY(degreesToRadians(180));
+      insertTexture(p2Text2, p2bk, 4, 3);
+      
+      var p2Text3  = textureLoader.load('Images/Predio2/Janelas.jpg');
+      var p2ft1lf = new THREE.Mesh(new THREE.PlaneGeometry(0.5*n, 2*n));
+      p2ft1lf.translateX(-0.75*n).translateZ(-1*n).rotateY(degreesToRadians(180));
+      insertTexture(p2Text3, p2ft1lf, 1, 5);
+      var p2ft1rt = new THREE.Mesh(new THREE.PlaneGeometry(0.5*n, 2*n));
+      p2ft1rt.translateX(0.75*n).translateZ(-1*n).rotateY(degreesToRadians(180));
+      insertTexture(p2Text3, p2ft1rt, 1, 5);
+      
+      var p2Text4  = textureLoader.load('Images/Predio2/Janelas1.jpg');
+      var p2ft2 = new THREE.Mesh(new THREE.PlaneGeometry(1*n, 2*n));
+      p2ft2.translateZ(0.25*n).translateZ(-1*n).rotateY(degreesToRadians(180));;
+      insertTexture(p2Text4, p2ft2, 2, 4);
+      
+      var p2Text5  = textureLoader.load('Images/Predio2/Tijolos.jpg');
+      var p2ft3lf = new THREE.Mesh(new THREE.PlaneGeometry(0.25*n, 2*n));
+      p2ft3lf.rotateY(degreesToRadians(-90)).translateX(-0.875*n).translateZ(-0.5*n);
+      insertTexture(p2Text5, p2ft3lf, 1, 5);
+      var p2ft3rt = new THREE.Mesh(new THREE.PlaneGeometry(0.25*n, 2*n));
+      p2ft3rt.rotateY(degreesToRadians(90)).translateX(0.875*n).translateZ(-0.5*n);
+      insertTexture(p2Text5, p2ft3rt, 1, 5);
+      
+      var p2Text6  = textureLoader.load('Images/Predio2/Teto.jpg');
+      var p2up = new THREE.Mesh(new THREE.PlaneGeometry(0.75*n, 2*n));
+      p2up.rotateZ(degreesToRadians(90)).rotateY(degreesToRadians(90)).translateZ(1*n).translateX(0.125*n);
+      insertTexture(p2Text6, p2up, 10, 16);
+      var p2Text7  = textureLoader.load('Images/Predio2/Teto.jpg');
+      var p2up2 = new THREE.Mesh(new THREE.PlaneGeometry(0.25*n, 0.5*n));
+      p2up2.rotateZ(degreesToRadians(90)).rotateY(degreesToRadians(90)).translateZ(1*n).translateX(-0.375*n).translateY(-0.75*n);
+      insertTexture(p2Text7, p2up2, 4, 4);
+      var p2up3 = new THREE.Mesh(new THREE.PlaneGeometry(0.25*n, 0.5*n));
+      p2up3.rotateZ(degreesToRadians(90)).rotateY(degreesToRadians(90)).translateZ(1*n).translateX(-0.375*n).translateY(0.75*n);
+      insertTexture(p2Text7, p2up3, 4, 4);
+      
+      var p2Text8  = textureLoader.load('Images/Predio2/Door.jpg');
+      var p2ft4 = new THREE.Mesh(new THREE.PlaneGeometry(1*n, 0.2*n));
+      p2ft4.translateY(-0.9*n).translateZ(-0.76*n).rotateY(degreesToRadians(180));;
+      insertTexture(p2Text8, p2ft4, 4, 1);
+      
+      
+      predio2.add(p2rt).add(p2lf).add(p2up2).add(p2up3).add(p2up).add(p2bk); // Sides + Back + up
+      p2bk.add(p2ft1lf).add(p2ft1rt).add(p2ft2).add(p2ft3lf).add(p2ft3rt).add(p2ft4); // Front
+
+      return predio2;
+    }
+    case 3: {
+      var predio3 = new THREE.Mesh(geoHolder, matHolder);
+      predio3.translateY(m);
+
+      var p3Text = textureLoader.load('Images/Predio3/Janelas2.jpg');
+      var p3ft1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 2*m));
+      p3ft1.translateX(-0.5*m).translateZ(0.5*m);
+      insertTexture(p3Text, p3ft1, 1, 7);
+      var p3ft2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 2*m)); 
+      p3ft2.translateX(0.5*m).translateZ(0.5*m);
+      insertTexture(p3Text, p3ft2, 1, 7);
+
+      var p3bk1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 2*m));
+      p3bk1.translateX(-0.5*m).translateZ(-0.5*m);
+      insertTexture(p3Text, p3bk1, 1, 7);
+      var p3bk2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 2*m));
+      p3bk2.translateX(0.5*m).translateZ(-0.5*m);
+      insertTexture(p3Text, p3bk2, 1, 5);
+
+      var p3Text2 = textureLoader.load('Images/Predio3/Janelas3.jpg');
+      var p3lf1 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2*m));
+      p3lf1.translateX(-0.75*m).rotateY(degreesToRadians(90));
+      insertTexture(p3Text2, p3lf1, 2, 7);
+      var p3lf2 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2*m));
+      p3lf2.translateX(-0.25*m).rotateY(degreesToRadians(90)); 
+      insertTexture(p3Text2, p3lf2, 2, 7);
+      var p3rt1 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2*m));
+      p3rt1.translateX(0.75*m).rotateY(degreesToRadians(90));
+      insertTexture(p3Text2, p3rt1, 2, 7);
+      var p3rt2 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2*m));
+      p3rt2.translateX(0.25*m).rotateY(degreesToRadians(90));
+      insertTexture(p3Text2, p3rt2, 1, 2); 
+
+      var p3Text3 = textureLoader.load('Images/Predio3/Concreto.jpg');
+      var p3up1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, m));
+      p3up1.rotateX(degreesToRadians(-90)).translateZ(m).translateX(-0.5*m);
+      insertTexture(p3Text3, p3up1, 1, 1); 
+      var p3up2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, m));
+      p3up2.rotateX(degreesToRadians(-90)).translateZ(m).translateX(0.5*m);
+      insertTexture(p3Text3, p3up2, 2, 4); 
+
+      var p3Text4 = textureLoader.load('Images/Predio3/Janelas4.jpg');
+      var p3c1ft = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.25*m));
+      p3c1ft.translateZ(0.2*m).translateY(-0.5*m);
+      insertTexture(p3Text4, p3c1ft, 1, 1); 
+      var p3c1bk = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.25*m));
+      p3c1bk.translateZ(-0.2*m).translateY(-0.5*m);
+      insertTexture(p3Text4, p3c1bk, 1, 1); 
+
+      var p3Text5 = textureLoader.load('Images/Predio3/Janelas5.jpg');
+      var p3c1up = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.4*m));
+      p3c1up.translateY(-0.375*m).rotateX(degreesToRadians(-90));
+      insertTexture(p3Text5, p3c1up, 1, 1); 
+      var p3Text6 = textureLoader.load('Images/Predio3/Tijolos.jpg');
+      var p3c1dn = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.4*m));
+      p3c1dn.translateY(-0.625*m).rotateX(degreesToRadians(90));
+      insertTexture(p3Text6, p3c1dn, 5, 5); 
+
+      var p3c2ft = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.25*m));
+      p3c2ft.translateZ(0.2*m).translateY(0.5*m);
+      insertTexture(p3Text4, p3c2ft, 1, 1); 
+      var p3c2bk = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.25*m));
+      p3c2bk.translateZ(-0.2*m).translateY(0.5*m);
+      insertTexture(p3Text4, p3c2bk, 1, 1); 
+
+      var p3c2up = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.4*m));
+      p3c2up.translateY(0.625*m).rotateX(degreesToRadians(-90));
+      insertTexture(p3Text5, p3c2up, 1, 1); 
+      var p3c2dn = new THREE.Mesh(new THREE.PlaneGeometry(0.5*m, 0.4*m));
+      p3c2dn.translateY(0.375*m).rotateX(degreesToRadians(90));
+      insertTexture(p3Text6, p3c2dn, 5, 5); 
+
+      predio3.add(p3ft1).add(p3ft2).add(p3bk1).add(p3bk2).add(p3lf1).add(p3lf2).add(p3rt1).add(p3rt2).add(p3up1).add(p3up2)
+      .add(p3c1ft).add(p3c1bk).add(p3c1up).add(p3c1dn).add(p3c2ft).add(p3c2bk).add(p3c2up).add(p3c2dn)
+
+      return predio3;
+    }
+  }
+}
+
+
+
+//export function createCity(scene){
+
+//}

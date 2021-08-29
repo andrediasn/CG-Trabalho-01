@@ -43,7 +43,11 @@ import {
   hideEnvironmentObjects,
 } from './arvore.js'
 import { loadGLTFFile } from './externalObject.js'
-import { createBuilding } from './predios.js'
+import { 
+  createBuilding,
+  createBuilding2,
+  //createCity 
+} from './predios.js'
 
 var stats = new Stats() // To show FPS information
 var scene = new THREE.Scene() // Create main scene
@@ -104,17 +108,17 @@ loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
 // ------------------ Prédios --------------- //
 var predio1 = createBuilding(1)
 predio1
-  .translateZ(3700)
+  .translateZ(2300)
   .translateY(-2200)
   .translateX(25)
   .rotateZ(degreesToRadians(-90))
 
 var predio2 = createBuilding(2)
-predio2.translateZ(3100).translateY(-2200).rotateZ(degreesToRadians(-90))
+predio2.translateZ(1900).translateY(-2200).rotateZ(degreesToRadians(-90))
 
 var predio3 = createBuilding(3)
 predio3
-  .translateZ(2500)
+  .translateZ(1300)
   .translateY(-2200)
   .translateX(-50)
   .rotateZ(degreesToRadians(-90))
@@ -122,6 +126,19 @@ predio3
 scene.add(predio1)
 scene.add(predio2)
 scene.add(predio3)
+
+var predio4 = createBuilding2(1);
+predio4.translateZ(-1800).translateX(2700).rotateY(degreesToRadians(180));
+scene.add(predio4);
+
+var predio5 = createBuilding2(2);
+predio5.translateZ(-1800).translateX(3150).rotateY(degreesToRadians(180));
+scene.add(predio5);
+
+var predio6 = createBuilding2(3);
+predio6.translateZ(-1800).translateX(3700);
+scene.add(predio6);  
+//createCity(scene);
 
 // ----------------- Circuito --------------- //
 
@@ -341,14 +358,16 @@ switchCam()
 
 var listener = new THREE.AudioListener()
 esferaCam.add(listener)
+var listener2 = new THREE.AudioListener()
+esferaCam.add(listener2)
 
 //Music
 var sound = new THREE.Audio(listener)
 var audioLoader = new THREE.AudioLoader()
-audioLoader.load('Sounds/Base2.mp3', function (buffer) {
+audioLoader.load('Sounds/SWsound.mp3', function (buffer) {
   sound.setBuffer(buffer)
   sound.setLoop(true)
-  sound.setVolume(0.2)
+  sound.setVolume(0.1)
   sound.play()
 })
 
@@ -368,12 +387,12 @@ function airplaneAudio() {
 // --------------------------- Skybox ---------------------------------- //
 
 let textSky = []
-let texture_ft = new THREE.TextureLoader().load('Images/sw_ft.png')
-let texture_bk = new THREE.TextureLoader().load('Images/sw_bk.png')
-let texture_up = new THREE.TextureLoader().load('Images/sw_up.png')
-let texture_dn = new THREE.TextureLoader().load('Images/sw_dn.png')
-let texture_rt = new THREE.TextureLoader().load('Images/sw_rt.png')
-let texture_lf = new THREE.TextureLoader().load('Images/sw_lf.png')
+let texture_ft = new THREE.TextureLoader().load('Images/SkyBox/sw_ft.png')
+let texture_bk = new THREE.TextureLoader().load('Images/SkyBox/sw_bk.png')
+let texture_up = new THREE.TextureLoader().load('Images/SkyBox/sw_up.png')
+let texture_dn = new THREE.TextureLoader().load('Images/SkyBox/sw_dn.png')
+let texture_rt = new THREE.TextureLoader().load('Images/SkyBox/sw_rt.png')
+let texture_lf = new THREE.TextureLoader().load('Images/SkyBox/sw_lf.png')
 
 textSky.push(new THREE.MeshBasicMaterial({ map: texture_ft }))
 textSky.push(new THREE.MeshBasicMaterial({ map: texture_bk }))
@@ -509,7 +528,7 @@ function render() {
   aceleracao()
   nivelamento(esferaHelice, esferaCam, esferaMov, nivV, nivH, speed)
   posicaoHolder() // atualiza posicao do holder
-  checkpoint(scene, pX, pY, pZ, listener) // calcula colisao com checkpoint
+  checkpoint(scene, pX, pY, pZ, listener2) // calcula colisao com checkpoint
   rotatePlaneComponents()
   airplaneAudio()
   requestAnimationFrame(render)
