@@ -43,9 +43,7 @@ import {
   hideEnvironmentObjects,
 } from './arvore.js'
 import { loadGLTFFile } from './externalObject.js'
-import {
-  createCity
-} from './cidade.js'
+import { createCity } from './cidade.js'
 
 var stats = new Stats() // To show FPS information
 var scene = new THREE.Scene() // Create main scene
@@ -94,12 +92,27 @@ scene.add(ambientLight)
 
 // scene.add(sunLight)
 
+// Luz para a câmera de inspeção
+var inspectionLight = new THREE.SpotLight('rgb(255,136,0)')
+inspectionLight.intensity = 1
+inspectionLight.position.copy(new THREE.Vector3(0, 20, 60))
+inspectionLight.distance = 0
+inspectionLight.castShadow = false
+inspectionLight.decay = 2
+inspectionLight.penumbra = 0
+inspectionLight.angle = degreesToRadians(110)
+inspectionLight.shadow.mapSize.width = 0
+inspectionLight.shadow.mapSize.height = 0
+inspectionLight.shadow.camera.fov = radiansToDegrees(inspectionLight.angle)
+inspectionLight.shadow.camera.far = 20.0
+inspectionLight.shadow.camera.near = 0.2
+
 // -------------- Objeto Externo ------------ //
 loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
 
 // ------------------ Cidade --------------- //
 
-createCity(scene);
+createCity(scene)
 
 // Árvores
 //addArvores(scene)
@@ -265,6 +278,7 @@ function switchCam() {
       camera = camCockpit
       cockpit.add(camera)
     }
+    scene.remove(inspectionLight)
     restoreNiv(esferaHelice, esferaMov) // Restaura angulos de inclinacao
     nivV = true
     nivH = true
@@ -281,6 +295,7 @@ function switchCam() {
     speed = 0 // Interrompe o movimento
     scene.add(axesHelper)
     scene.remove(plane)
+    scene.add(inspectionLight)
     hideEnvironmentObjects(scene) // Esconde arvores da cena
     forceNiv(esferaHelice, esferaMov) // Forca nivelamento instantaneo
     camera = cameraInspection // Troca camera
@@ -507,15 +522,14 @@ var controls = new InfoBox()
 controls.show()
 switchControls()
 
-function switchControls(){
-  if(showControls){
-    controls.infoBox.style.backgroundColor = "rgba(255,255,255,0)"
-    controls.infoBox.innerHTML = ""
+function switchControls() {
+  if (showControls) {
+    controls.infoBox.style.backgroundColor = 'rgba(255,255,255,0)'
+    controls.infoBox.innerHTML = ''
     showControls = false
-  }  else {
-    controls.infoBox.style.backgroundColor = "rgba(255,255,255,0.2)"
-    controls.infoBox.innerHTML = 
-    `Instruções:<br/>
+  } else {
+    controls.infoBox.style.backgroundColor = 'rgba(255,255,255,0.2)'
+    controls.infoBox.innerHTML = `Instruções:<br/>
     Use H para esconder instruções<br/>
     Use SPACE para mudar o modo<br/>
     Use R para reiniciar<br/>
@@ -566,5 +580,6 @@ function render() {
   rotatePlaneComponents()
   airplaneAudio()
   requestAnimationFrame(render)
+  inspectionLight.position.copy(cameraInspection.position)
   renderer.render(scene, camera) // Render scene
 }
