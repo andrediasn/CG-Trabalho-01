@@ -2,54 +2,36 @@ import * as THREE from '../build/three.module.js'
 import Stats from '../build/jsm/libs/stats.module.js'
 import { TrackballControls } from '../build/jsm/controls/TrackballControls.js'
 import KeyboardState from '../libs/util/KeyboardState.js'
-import {
-  initRenderer,
-  initCamera,
-  InfoBox,
-  onWindowResize,
-  degreesToRadians,
-  createGroundPlaneWired,
-  radiansToDegrees,
-  createLightSphere,
-  SecondaryBox,
-} from '../libs/util/util.js'
-import {
-  criaAviao,
-  getEsferaHelice,
-  getEsferaMov,
-  rotatePlaneComponents,
-} from './aviao.js'
-import {
-  esquerda,
-  direita,
-  cima,
-  baixo,
-  forceNiv,
-  restoreNiv,
-  nivelamento,
-} from './movimento.js'
-import {
-  addTrajeto,
-  checkpoint,
-  getCont,
-  getDist,
-  getStart,
-} from './circuito.js'
+import { initRenderer, initCamera, InfoBox, onWindowResize, degreesToRadians, createGroundPlaneWired,
+  createGroundPlane, radiansToDegrees, createLightSphere, SecondaryBox } from '../libs/util/util.js'
+import { criaAviao, getEsferaHelice, getEsferaMov, rotatePlaneComponents } from './aviao.js'
+import { esquerda, direita, cima, baixo, forceNiv, restoreNiv, nivelamento } from './movimento.js'
+import { addTrajeto, checkpoint, getCont, getDist, getStart } from './circuito.js'
 import { addMontanhas } from './montanha.js'
-import {
-  addArvores,
-  showEnvironmentObjects,
-  hideEnvironmentObjects,
-} from './arvore.js'
+import { addArvores, showEnvironmentObjects, hideEnvironmentObjects, } from './arvore.js'
 
-var stats = new Stats() // To show FPS information
-var scene = new THREE.Scene() // Create main scene
-var renderer = initRenderer() // View function in util/utils
+var stats = new Stats(); // To show FPS information
+var scene = new THREE.Scene(); // Create main scene
+var renderer = initRenderer(); // View function in util/utils
 
-// Plano e iluminação
-var plane = createGroundPlaneWired(10000, 10000, 100, 100, 'rgb(20, 90, 30)')
-plane.translateX(1000)
+// ---------------- Planos ---------------- // 
+var plane = createGroundPlane(10000, 10000, 100, 100);
+plane.rotateX(degreesToRadians(-90));
+plane.translateX(1000);
 
+ var planeExt = createGroundPlane(50000, 50000, 100, 100, "rgb(100,140,90)");
+plane.add(planeExt);
+planeExt.translateZ(-10).translateX(-1000); 
+
+var textureLoader = new THREE.TextureLoader();
+var planeText = textureLoader.load('../assets/textures/grass.jpg');
+
+plane.material.map = planeText;
+plane.material.map.repeat.set(100,100);
+plane.material.map.wrapS = THREE.RepeatWrapping;
+plane.material.map.wrapT = THREE.RepeatWrapping;
+plane.material.map.minFilter = THREE.LinearFilter;
+plane.material.map.magFilter = THREE.LinearFilter;
 // ---------------- Ambiente ---------------- //
 // Iluminação
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
