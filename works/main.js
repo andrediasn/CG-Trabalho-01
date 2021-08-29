@@ -58,12 +58,12 @@ var plane = createGroundPlane(10000, 10000, 100, 100)
 plane.rotateX(degreesToRadians(-90))
 plane.translateX(1000)
 
-var planeExt = createGroundPlane(50000, 50000, 100, 100, 'rgb(100,140,90)')
+var planeExt = createGroundPlane(90000, 90000, 100, 100, '#616161')
 plane.add(planeExt)
 planeExt.translateZ(-10).translateX(-1000)
 
 var textureLoader = new THREE.TextureLoader()
-var planeText = textureLoader.load('Images/planet2.jpg')
+var planeText = textureLoader.load('Images/Floor/planet2.jpg')
 
 plane.material.map = planeText
 plane.material.map.repeat.set(70, 70)
