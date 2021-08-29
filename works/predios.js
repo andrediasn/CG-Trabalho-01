@@ -511,23 +511,16 @@ export function createBuilding2(modelo) {
 
       var p1Text3 = textureLoader.load('Images/Predio1/Janelas.jpg')
       var p1bk = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 2 * m))
-      p1bk.translateY(0.5 * m).rotateY(degreesToRadians(180))
+      p1bk
+        .translateY(0.5 * m)
+        .rotateY(degreesToRadians(180))
       insertTexture(p1Text3, p1bk, 1, 3)
 
       var p1Text1 = textureLoader.load('Images/Predio1/Janelas.jpg')
-      var p1ft = new THREE.Mesh(
-        new THREE.CylinderGeometry(
-          0.5 * m,
-          0.5 * m,
-          1 * m,
-          60,
-          60,
-          true,
-          1.97,
-          3.04
-        )
-      )
-      p1ft.translateZ(0.47 * m).rotateY(degreesToRadians(160))
+      var p1ft = new THREE.Mesh(new THREE.CylinderGeometry( 0.5 * m, 0.5 * m, 1 * m, 60, 60, true, 1.97, 3.04))
+      p1ft
+        .translateZ(0.47 * m)
+        .rotateY(degreesToRadians(160))
       insertTexture(p1Text1, p1ft, 1, 1.5)
 
       var p1Text4 = textureLoader.load('Images/Predio1/Janelas.jpg')

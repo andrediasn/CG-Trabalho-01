@@ -474,6 +474,8 @@ function keyboardUpdate() {
 
     if (keyboard.down('R')) document.location.reload(true)
 
+    if (keyboard.down('H')) switchControls()
+
     if (keyboard.down('enter')) switchTrajeto()
 
     if (keyboard.down('P')) printP() // usado para testes
@@ -482,21 +484,38 @@ function keyboardUpdate() {
 }
 
 // Informacoes na tela
+var showControls = false
 var controls = new InfoBox()
-controls.add('Instruções:')
-controls.add('Use SPACE para mudar o modo')
-controls.add('Use R para reiniciar')
-controls.addParagraph()
-controls.add('Modo 1: Simulador')
-controls.add('* Q para acelerar')
-controls.add('* A para desacelerar')
-controls.add('* Setas para direcionar')
-controls.add('* C para modo cockpit')
-controls.add('* ENTER para trajeto on/off')
-controls.addParagraph()
-controls.add('Modo 2: Visualização')
-controls.add('* Utilize o mouse para rotacionar')
 controls.show()
+switchControls()
+
+function switchControls(){
+  if(showControls){
+    controls.infoBox.style.backgroundColor = "rgba(255,255,255,0)"
+    controls.infoBox.innerHTML = ""
+    showControls = false
+  }  else {
+    controls.infoBox.style.backgroundColor = "rgba(255,255,255,0.2)"
+    controls.infoBox.innerHTML = 
+    `Instruções:<br/>
+    Use H para esconder instruções<br/>
+    Use SPACE para mudar o modo<br/>
+    Use R para reiniciar<br/>
+    <br/>
+    Modo 1: Simulador<br/>
+    * Q para acelerar<br/>
+    * A para desacelerar<br/>
+    * Setas para direcionar<br/>
+    * C para modo cockpit<br/>
+    * ENTER para trajeto on/off<br/>
+    <br/>
+    Modo 2: Visualização<br/>
+    * Utilize o mouse para rotacionar`
+    showControls = true
+  }
+}
+
+
 
 // Listen window size changes
 window.addEventListener(
