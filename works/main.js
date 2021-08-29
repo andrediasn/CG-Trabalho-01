@@ -94,7 +94,6 @@ scene.add(ambientLight)
 
 // scene.add(sunLight)
 
-
 // -------------- Objeto Externo ------------ //
 loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
 
@@ -292,6 +291,64 @@ function switchCam() {
   }
 }
 
+// God Mode
+var godOn = true
+godMode();
+function godMode(){
+  if(godOn){
+    camera = cameraSimulation
+    godOn = false
+  } else{
+    var camGod = new THREE.PerspectiveCamera(
+      45,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      90000
+    )
+    camGod.position.copy(new THREE.Vector3(0, 40, -150))
+    camGod.lookAt(new THREE.Vector3(0, 0, 0))
+    camera = camGod
+    godOn = true
+  }
+}
+
+function switchKeyboardUpdate(){
+  if(!godOn)
+    keyboardUpdate()
+  else
+    godKeyUp()
+}
+
+function godKeyUp(){
+  keyboard.update();
+  if (keyboard.down('G')) godMode()
+  
+  if(keyboard.pressed('W'))
+    camera.translateZ(-5);
+  else if(keyboard.pressed('S'))
+    camera.translateZ(5);
+  
+  if(keyboard.pressed('A'))
+    camera.translateX(-5);
+  else if(keyboard.pressed('D'))
+    camera.translateX(5);
+  if(keyboard.pressed('up'))
+    camera.rotateX(degreesToRadians(0.5));
+  else if(keyboard.pressed('down'))
+    camera.rotateX(degreesToRadians(-0.5));
+  
+  if(keyboard.pressed('left'))
+    camera.rotateY(degreesToRadians(0.5));
+  else if(keyboard.pressed('right'))
+    camera.rotateY(degreesToRadians(-0.5));
+
+  if(keyboard.pressed('Q'))
+    camera.translateY(-5);
+  else if(keyboard.pressed('E'))
+    camera.translateY(5);
+}
+
+
 // Cockpit
 var cockpit = new THREE.Mesh(holderGeo, holderMat)
 esferaMov.add(cockpit)
@@ -432,7 +489,6 @@ function keyboardUpdate() {
       vR = false
       if (!vL) nivH = true
     }
-
     if (keyboard.down('Q')) acelera()
     if (keyboard.down('A')) desacelera()
     if (keyboard.down('C')) switchCockpit()
@@ -440,6 +496,7 @@ function keyboardUpdate() {
     if (keyboard.down('H')) switchControls()
     if (keyboard.down('enter')) switchTrajeto()
     if (keyboard.down('P')) printP() // usado para testes
+    if (keyboard.down('G')) godMode()
   }
   if (keyboard.down('space')) switchCam()
 }
@@ -500,7 +557,7 @@ function render() {
   else timerMessage.changeMessage('')
   stats.update()
   trackballControls.update()
-  keyboardUpdate()
+  switchKeyboardUpdate()
   getCircuito() // contadores do circuito
   aceleracao()
   nivelamento(esferaHelice, esferaCam, esferaMov, nivV, nivH, speed)

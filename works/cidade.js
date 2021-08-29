@@ -15,7 +15,7 @@ var textureLoader = new THREE.TextureLoader()
 var c = 5 // Constante escalar
 
 // Função que cria modelo do prédio 1
-export function createBuilding(modelo) {
+function createBuilding(modelo) {
   switch (modelo) {
     case 1:
       var glassWindow = textureLoader.load('Images/Predio4/GlassWindow.jpg')
@@ -499,7 +499,7 @@ export function createBuilding(modelo) {
   }
 }
 
-export function createBuilding2(modelo) {
+function createBuilding2(modelo) {
   var m = 300
   var n = 200
   var geoHolder = new THREE.PlaneGeometry(10, 10, 10, 10)
@@ -834,6 +834,10 @@ export function createCity(scene){
     scene.add(predio5[i])
     scene.add(predio6[i])
   }
+
+  //Criando Ruas
+
+
 
 
 }
