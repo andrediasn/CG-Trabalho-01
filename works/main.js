@@ -24,10 +24,10 @@ plane.add(planeExt);
 planeExt.translateZ(-10).translateX(-1000); 
 
 var textureLoader = new THREE.TextureLoader();
-var planeText = textureLoader.load('../assets/textures/grass.jpg');
+var planeText = textureLoader.load('Images/planet2.jpg');
 
 plane.material.map = planeText;
-plane.material.map.repeat.set(100,100);
+plane.material.map.repeat.set(70,70);
 plane.material.map.wrapS = THREE.RepeatWrapping;
 plane.material.map.wrapT = THREE.RepeatWrapping;
 plane.material.map.minFilter = THREE.LinearFilter;
