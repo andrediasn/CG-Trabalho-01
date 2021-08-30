@@ -310,7 +310,7 @@ function switchCam() {
 // God Mode
 var godOn = true
 godMode();
-godMode();
+//godMode();
 function godMode(){
   if(godOn){
     camera = cameraSimulation

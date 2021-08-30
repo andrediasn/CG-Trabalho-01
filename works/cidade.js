@@ -789,10 +789,28 @@ var t = 50; // tamanho da rua 1x1
 function createStreet(modelo){
   switch (modelo) {
     case 1: {
-      var stretText = textureLoader.load('Images/Floor/street1.jpg')
+      var streetText = textureLoader.load('Images/Floor/street1.jpg')
       var street =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
-      insertTexture(stretText, street, 1, 1)
+      insertTexture(streetText, street, 1, 1)
       return street
+    }
+    case 2: {
+      var crossText = textureLoader.load('Images/Floor/Cross3.jpg')
+      var cross =  new THREE.Mesh(new THREE.PlaneGeometry(t,t/5))
+      insertTexture(crossText, cross, 1, 1)
+      return cross
+    }
+    case 3:{
+      var crossText = textureLoader.load('Images/Floor/Cross1.jpg')
+      var cross =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
+      insertTexture(crossText, cross, 1, 1)
+      return cross
+    }
+    case 4:{
+      var crossText = textureLoader.load('Images/Floor/Cross2.jpg')
+      var cross =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
+      insertTexture(crossText, cross, 1, 1)
+      return cross
     }
   }
 }
@@ -843,158 +861,94 @@ export function createCity(scene) {
     .rotateZ(degreesToRadians(-90))
 
   //Criando Ruas
-  var street1h = new Array(15)
-  var street2h = new Array(15)
-  var street3h = new Array(15)
-  var street4h = new Array(15)
-  var street1v = new Array(15)
-  var street2v = new Array(15)
-  var street3v = new Array(15)
-  var street4v = new Array(15)
-  for(var i = 0; i < street1h.length; i++){
+  var street1h = new Array(17)
+  var street2h = new Array(17)
+  var street3h = new Array(17)
+  var street4h = new Array(17)
+  var street1v = new Array(17)
+  var street3v = new Array(17)
+  var street4v = new Array(17)
+  
+  for(var i = 0; i < 17; i++){
     street1h[i] = createStreet(1)
-    street2h[i] = createStreet(1)
-    street3h[i] = createStreet(1)
     street4h[i] = createStreet(1)
     street1v[i] = createStreet(1)
-    street2v[i] = createStreet(1)
-    street3v[i] = createStreet(1)
     street4v[i] = createStreet(1)
+    street2h[i] = createStreet(1)
+    street3h[i] = createStreet(1)
+    street3v[i] = createStreet(1)
     scene.add(street1h[i]) 
-    scene.add(street2h[i]) 
-    scene.add(street3h[i]) 
     scene.add(street4h[i]) 
     scene.add(street1v[i]) 
-    scene.add(street2v[i]) 
-    scene.add(street3v[i]) 
-    scene.add(street4v[i]) 
+    scene.add(street4v[i])  
+    if(i!=11){
+      scene.add(street2h[i]) 
+      scene.add(street3h[i]) 
+      scene.add(street3v[i])
+    } 
   }
-  
+  scene.remove(street3v[5])
+
+  var cross1 = new Array(6)
+  var cross2 = new Array(6)
+  for(var i = 0; i < 6; i++){
+    if(i<4){
+      cross1[i] = createStreet(3)
+      scene.add(cross1[i])
+    } else{
+      cross1[i] = createStreet(4)
+      scene.add(cross1[i])
+    }
+    cross2[i] = createStreet(2)
+    scene.add(cross2[i])
+  }
 
   //Posicionando Ruas
   var px = 3000 
   var py = 5 
   var pz = -3500 
-  // rotateX => deita  || rotateZ => gira 
-  
 
-
-  // Horizontal 0
-  for (var i = 0; i < 5; i++){ // 0 a 4
+  for (var i = 0; i < 17; i++){ 
     street1h[i].position.set((px-(i*t)), py, pz)
     street1h[i].rotateX(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street1h[i-1].position.set((px-(i*t)), py, pz)
-    street1h[i-1].rotateX(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street1h[i-2].position.set((px-(i*t)), py, pz)
-    street1h[i-2].rotateX(degreesToRadians(90))
-  }
-  /*   for(var i = 18; i < 23; i++){ // 15 a 21
-    street1h[i-3].position.set((px-(i*t)), py, pz)
-    street1h[i-3].rotateX(degreesToRadians(90))
-  } */
-
-  // Horizontal 1
-  for (var i = 0; i < 5; i++){ // 0 a 4
     street2h[i].position.set((px-(i*t)), py, (6*t+pz))
     street2h[i].rotateX(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street2h[i-1].position.set((px-(i*t)), py, (6*t+pz))
-    street2h[i-1].rotateX(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street2h[i-2].position.set((px-(i*t)), py, (6*t+pz))
-    street2h[i-2].rotateX(degreesToRadians(90))
-  }  
-
-  // Horizontal 2
-  for (var i = 0; i < 5; i++){ // 0 a 4
     street3h[i].position.set((px-(i*t)), py, (12*t+pz))
     street3h[i].rotateX(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street3h[i-1].position.set((px-(i*t)), py, (12*t+pz))
-    street3h[i-1].rotateX(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street3h[i-2].position.set((px-(i*t)), py, (12*t+pz))
-    street3h[i-2].rotateX(degreesToRadians(90))
-  }
-
-  // Horizontal 3
-  for (var i = 0; i < 5; i++){ // 0 a 4
     street4h[i].position.set((px-(i*t)), py, (18*t+pz))
-    street4h[i].rotateX(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street4h[i-1].position.set((px-(i*t)), py, (18*t+pz))
-    street4h[i-1].rotateX(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street4h[i-2].position.set((px-(i*t)), py, (18*t+pz))
-    street4h[i-2].rotateX(degreesToRadians(90))
-  }
-
-  // Vertical 0
-  for (var i = 0; i < 5; i++){ // 0 a 4
+    street4h[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(180))
     street1v[i].position.set((px+t), py, (pz+t+(i*t)))
     street1v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street1v[i-1].position.set((px+t), py, (pz+t+(i*t)))
-    street1v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street1v[i-2].position.set((px+t), py, (pz+t+(i*t)))
-    street1v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  } 
-
-  // Vertical 1
-  for (var i = 0; i < 5; i++){ // 0 a 4
-    street2v[i].position.set((px-5*t), py, (pz+t+(i*t)))
-    street2v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street2v[i-1].position.set((px-5*t), py, (pz+t+(i*t)))
-    street2v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street2v[i-2].position.set((px-5*t), py, (pz+t+(i*t)))
-    street2v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  } 
-
-  // Vertical 2
-  for (var i = 0; i < 5; i++){ // 0 a 4
     street3v[i].position.set((px-11*t), py, (pz+t+(i*t)))
     street3v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street3v[i-1].position.set((px-11*t), py, (pz+t+(i*t)))
-    street3v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street3v[i-2].position.set((px-11*t), py, (pz+t+(i*t)))
-    street3v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  } 
-
-  // Vertical 3
-  for (var i = 0; i < 5; i++){ // 0 a 4
     street4v[i].position.set((px-17*t), py, (pz+t+(i*t)))
-    street4v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+    street4v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
   }
-  for (var i = 6; i < 11; i++){ // 5 a 9
-    street4v[i-1].position.set((px-17*t), py, (pz+t+(i*t)))
-    street4v[i-1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  }
-  for(var i = 12; i < 17; i++){ // 10 a 14
-    street4v[i-2].position.set((px-17*t), py, (pz+t+(i*t)))
-    street4v[i-2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  } 
 
-
+  //Cruzamentos
+  cross1[0].position.set(px+t, py, pz)
+  cross1[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  cross1[1].position.set(px+t, py, pz+(t*18))
+  cross1[1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(180))
+  cross1[2].position.set(px-(t*17), py, pz)
+  cross1[2].rotateX(degreesToRadians(90))
+  cross1[3].position.set(px-(t*17), py, pz+(t*18))
+  cross1[3].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
+  cross1[4].position.set(px-(t*11), py, pz+(t*6))
+  cross1[4].rotateX(degreesToRadians(90))
+  cross1[5].position.set(px-(t*11), py, pz+(t*12))
+  cross1[5].rotateX(degreesToRadians(90))
+  cross2[1].position.set(px-(t*11), py+0.1, pz+(t/2.5))
+  cross2[1].rotateX(degreesToRadians(90))
+  cross2[3].position.set(px-(t*11), py+0.1, pz+(t*18)-(t/2.5))
+  cross2[3].rotateX(degreesToRadians(90))
+  cross2[4].position.set(px+(t/1.66), py+0.1, pz+(t*6))
+  cross2[4].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  cross2[5].position.set(px+(t/1.66), py+0.1, pz+(t*12))
+  cross2[5].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+  cross2[2].position.set(px-(t*16)-(t/1.66), py+0.1, pz+(t*6))
+  cross2[2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
+  cross2[0].position.set(px-(t*16)-(t/1.66), py+0.1, pz+(t*12))
+  cross2[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90)) 
 
 }
