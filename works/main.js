@@ -8,10 +8,8 @@ import {
   InfoBox,
   onWindowResize,
   degreesToRadians,
-  createGroundPlaneWired,
   createGroundPlane,
   radiansToDegrees,
-  createLightSphere,
   SecondaryBox,
 } from '../libs/util/util.js'
 import {

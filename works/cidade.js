@@ -938,7 +938,7 @@ function createBuilding2(modelo) {
   }
 }
 
-var t = 50 // tamanho da rua 1x1
+var t = 100 // tamanho da rua 1x1
 
 function createStreet(modelo) {
   switch (modelo) {
@@ -994,19 +994,9 @@ export function createCity(scene) {
   }
 
   // Posições para os blocos da cidade
-  var posA = [3000, 5, -3500]
-  var posB = [3000, 5, -2500]
-
-  // Prédios já postos
-  // Predio1 = 1
-  // Predio2 = 1
-  // Predio3 = 3
-  // Predio4 = 3
-  // Predio5 = 1
-  // Predio6 = 2
+  var posA = [2000, 5, -2500]
 
   // Posicionando Predios
-  // Primeira leva de prédios
   predio1[0]
     .translateZ(posA[2] + 260)
     .translateX(posA[0] - 100)
@@ -1044,26 +1034,110 @@ export function createCity(scene) {
     .translateX(15)
     .rotateZ(degreesToRadians(-90))
 
-  // Segunda leva de prédios
-
   predio6[1]
-    .translateZ(posB[0] - 70)
-    .translateY(posB[2] + 100)
+    .translateZ(posA[0] - 70)
+    .translateY(posA[2] + 1000)
     .translateX(-30)
     .rotateZ(degreesToRadians(-90))
 
-  predio3[2].translateZ(posB[2] + 150).translateX(posB[0] - 310)
+  predio3[2].translateZ(posA[2] + 1050).translateX(posA[0] - 310)
 
   predio4[2]
-    .translateZ(posB[0] - 100)
-    .translateY(posB[2] + 640)
+    .translateZ(posA[0] - 100)
+    .translateY(posA[2] + 1540)
     .translateX(15)
     .rotateZ(degreesToRadians(-90))
 
-  //Criando Ruas
+  predio5[1]
+    .translateZ(posA[0] - 650)
+    .translateY(posA[2] + 980)
+    .rotateZ(degreesToRadians(-90))
 
-  createBlockOfStreets(3000, 5, -3500)
-  //createBlockOfStreets(3000, -5, -2500)
+  predio1[1]
+    .translateZ(posA[2] + 1480)
+    .translateX(posA[0] - 100)
+    .rotateY(degreesToRadians(180))
+
+  predio2[1]
+    .translateZ(posA[2] + 1400)
+    .translateX(posA[0] - 350)
+    .rotateY(degreesToRadians(180))
+
+  predio5[2]
+    .translateZ(posA[0] - 400)
+    .translateY(posA[2] + 1550)
+    .rotateZ(degreesToRadians(-90))
+
+  predio6[2]
+    .translateZ(posA[0] - 700)
+    .translateY(posA[2] + 1550)
+    .translateX(-50)
+    .rotateZ(degreesToRadians(-90))
+
+  predio5[3]
+    .translateZ(posA[0] - 900)
+    .translateY(posA[2] + 1330)
+    .rotateZ(degreesToRadians(-90))
+
+  predio1[2]
+    .translateZ(posA[2] + 1390)
+    .translateX(posA[0] - 530)
+    .rotateY(degreesToRadians(270))
+
+  predio3[3].translateZ(posA[2] + 450).translateX(posA[0] - 1400)
+
+  predio2[2]
+    .translateZ(posA[2] + 150)
+    .translateX(posA[0] - 1300)
+    .rotateY(degreesToRadians(180))
+
+  predio5[4]
+    .translateZ(posA[0] - 1550)
+    .translateY(posA[2] + 110)
+    .rotateZ(degreesToRadians(-90))
+
+  predio6[3]
+    .translateZ(posA[0] - 940)
+    .translateY(posA[2] + 100)
+    .translateX(-50)
+    .rotateZ(degreesToRadians(-90))
+
+  predio1[3]
+    .translateZ(posA[2] + 390)
+    .translateX(posA[0] - 850)
+    .rotateY(degreesToRadians(270))
+
+  predio2[3]
+    .translateZ(posA[2] + 750)
+    .translateX(posA[0] - 910)
+    .rotateY(degreesToRadians(180))
+
+  predio4[3]
+    .translateZ(posA[0] - 1272)
+    .translateY(posA[2] + 682)
+    .translateX(15)
+    .rotateZ(degreesToRadians(-90))
+
+  predio6[4]
+    .translateZ(posA[0] - 1500)
+    .translateY(posA[2] + 710)
+    .translateX(-50)
+    .rotateZ(degreesToRadians(-90))
+
+  predio1[4].translateZ(posA[2] + 960).translateX(posA[0] - 1400)
+
+  predio3[4].translateZ(posA[2] + 1370).translateX(posA[0] - 1400)
+
+  predio4[4]
+    .translateZ(posA[0] - 1510)
+    .translateY(posA[2] + 1540)
+    .translateX(15)
+    .rotateZ(degreesToRadians(-90))
+
+  predio2[4].translateZ(posA[2] + 1610).translateX(posA[0] - 900)
+
+  //Criando Ruas
+  createBlockOfStreets(posA[0], posA[1], posA[2])
 
   function createBlockOfStreets(px, py, pz) {
     var street1h = new Array(17)
