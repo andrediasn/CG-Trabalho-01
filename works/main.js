@@ -50,17 +50,17 @@ var renderer = initRenderer() // View function in util/utils
 // ---------------- Planos ---------------- //
 var plane = createGroundPlane(10000, 10000, 100, 100)
 plane.rotateX(degreesToRadians(-90))
-plane.translateX(1000)
+plane.translateX(1000).translateZ(-5)
 
 var planeExt = createGroundPlane(90000, 90000, 100, 100, '#616161')
-plane.add(planeExt)
-planeExt.translateZ(-10).translateX(-1000)
+scene.add(planeExt)
+planeExt.rotateX(degreesToRadians(90)).translateZ(30)
 
 var textureLoader = new THREE.TextureLoader()
-var planeText = textureLoader.load('Images/Floor/planet2.jpg')
+var planeText = textureLoader.load('Images/Floor/Text1.jpg')
 
 plane.material.map = planeText
-plane.material.map.repeat.set(70, 70)
+plane.material.map.repeat.set(50,50)
 plane.material.map.wrapS = THREE.RepeatWrapping
 plane.material.map.wrapT = THREE.RepeatWrapping
 plane.material.map.minFilter = THREE.LinearFilter
@@ -308,7 +308,7 @@ function switchCam() {
 // God Mode
 var godOn = true
 godMode()
-//godMode();
+godMode();
 function godMode() {
   if (godOn) {
     camera = cameraSimulation
@@ -320,7 +320,7 @@ function godMode() {
       0.1,
       90000
     )
-    camGod.position.copy(new THREE.Vector3(0, 40, -150))
+    camGod.position.copy(esferaCam.position)
     camGod.lookAt(new THREE.Vector3(0, 0, 0))
     camera = camGod
     godOn = true
