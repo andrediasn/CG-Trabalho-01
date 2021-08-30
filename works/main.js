@@ -33,6 +33,7 @@ import {
   getCont,
   getDist,
   getStart,
+  circuitoFull
 } from './circuito.js'
 import { addMontanhas } from './montanha.js'
 import {
@@ -49,7 +50,6 @@ var renderer = initRenderer() // View function in util/utils
 
 // ---------------- LoadScreen ---------------- //
 
-var loader = document.getElementById('loader')
 var LoadingManager = new THREE.LoadingManager()
 
 var loadingScreen = {
@@ -60,7 +60,7 @@ var loadingScreen = {
 
 
 var LOADING_MANAGER = null;
-var RESOURCES_LOADED = true; // trocar para n ter tela de load
+var RESOURCES_LOADED = false; // trocar para n ter tela de load
 var textLoad = new THREE.TextureLoader()
 var textStart = textLoad.load('Images/Floor/Start.jpg')
 loadingScreen.box.position.set(0, 0, 5)
@@ -177,6 +177,8 @@ function switchTrajeto() {
 }
 switchTrajeto()
 
+circuitoFull(scene)
+
 // Tempo
 var contadorCP = 0
 var distancia = 0
@@ -201,7 +203,7 @@ function getCircuito() {
 // ----------------- Aviao ----------------- //
 var posX = 1001
 var posY = 7
-var posZ = -3600
+var posZ = -3700
 criaAviao(scene, posX, posY, posZ)
 var esferaHelice = getEsferaHelice()
 var esferaMov = getEsferaMov()
@@ -220,14 +222,15 @@ var mAce = false
 function aceleracao() {
   if (!modoCam) {
     if (speed > 0) esferaHelice.translateZ(speed) // Movimento para frente
+    console.log(speed)
   }
 }
 function acelera() {
   clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) {
-    // Previne continuacao de movimento na troca de camera
+    // Previne continuacao de movimento na troca de camera 
     mAce = true
-    if (speed < 3) {
+    if (speed < 2) {
       // Velocidade maxima
       speed += 0.04 // Valor da aceleracao
       auxAce = setTimeout(acelera, 100) // Recursividade para simular aceleracao
@@ -606,13 +609,7 @@ const load = document.getElementById('load')
 
 function loading() {
   LoadingManager.onProgress = function (item, loaded, total) {
-    load.innerHTML =
-      'Loading<br/>' + ((parseInt(loaded) * 100) / total).toFixed(2) + '%'
-    console.log(
-      'Gerando Texturas:',
-      ((parseInt(loaded) * 100) / total).toFixed(2),
-      '%'
-    )
+    load.innerHTML ='Loading<br/>' + ((parseInt(loaded) * 100) / total).toFixed(2) + '%'
   }
 
   LoadingManager.onLoad = function () {

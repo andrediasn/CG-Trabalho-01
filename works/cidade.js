@@ -965,6 +965,18 @@ function createStreet(modelo, textureLoader) {
       insertTexture(crossText, cross, 1, 1)
       return cross
     }
+    case 5:{
+      var pisoText = textureLoader.load('Images/Floor/Piso.jpg')
+      var piso = new THREE.Mesh(new THREE.PlaneGeometry(t*5, t*5))
+      insertTexture(pisoText, piso, 20, 20)
+      return piso
+    }
+    case 6:{
+      var pisoText = textureLoader.load('Images/Floor/Piso.jpg')
+      var piso = new THREE.Mesh(new THREE.PlaneGeometry(t*11, t*5))
+      insertTexture(pisoText, piso, 40, 20)
+      return piso
+    }
   }
 }
 
@@ -995,7 +1007,7 @@ export function createCity(scene, LoadingManager) {
   }
 
   // Posições para os blocos da cidade
-  var posA = [2000, 5, -2500]
+  var posA = [2000, 0, -2500]
 
   // Posicionando Predios
   predio1[0]
@@ -1227,5 +1239,20 @@ export function createCity(scene, LoadingManager) {
     cross2[2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
     cross2[0].position.set(px - t * 16 - t / 1.66, py + 0.1, pz + t * 12)
     cross2[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
+
+    var piso1 = new Array(3)
+    for (var i = 0; i < 3; i++) {
+      piso1[i] = createStreet(5, textureLoader)
+      scene.add(piso1[i])
+      piso1[i].position.set(px-(t*14), py, pz+(t*3)+(t*6*i))
+      piso1[i].rotateX(degreesToRadians(90))
+    }
+    var piso2 = new Array(3)
+    for (var i = 0; i < 3; i++) {
+      piso2[i] = createStreet(6, textureLoader)
+      scene.add(piso2[i])
+      piso2[i].position.set(px-(t*5), py, pz+(t*3)+(t*6*i))
+      piso2[i].rotateX(degreesToRadians(90)) 
+    }
   }
 }

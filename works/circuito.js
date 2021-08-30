@@ -6,7 +6,7 @@ import { degreesToRadians } from '../libs/util/util.js'
 var start = new THREE.Vector3()
 start.x = 1000
 start.y = 7
-start.z = -3600
+start.z = -3700
 
 //Inicializando  array e posições dos checkpoints
 var meta = new Array(15);
@@ -149,8 +149,8 @@ torus[9].rotateOnAxis(rotY, degreesToRadians(90));
 torus[10].rotateOnAxis(rotY, degreesToRadians(90));
 torus[11].rotateOnAxis(rotY, degreesToRadians(120));
 torus[12].rotateOnAxis(rotY, degreesToRadians(120));
-torus[13].rotateOnAxis(rotY, degreesToRadians(120));
-torus[14].rotateOnAxis(rotY, degreesToRadians(120));
+torus[13].rotateOnAxis(rotY, degreesToRadians(0));
+torus[14].rotateOnAxis(rotY, degreesToRadians(90));
 
 
 var aux = 0;
@@ -233,21 +233,8 @@ export function getDist() { return aux; }
 
 export function getStart () { return start; }
 
-/* function circuito (scene) { // funcao pra teste, add todos torus ao msm tempo
-    scene.add(meta0)
-    scene.add(meta1)
-    scene.add(meta2)
-    scene.add(meta3)
-    scene.add(meta4)
-    scene.add(meta5)
-    scene.add(meta6)
-    scene.add(meta7)
-    scene.add(meta8)
-    scene.add(meta9)
-    scene.add(meta10)
-    scene.add(meta11)
-    scene.add(meta12)
-    scene.add(meta13)
-    scene.add(meta14)
-} */
+export function circuitoFull(scene) { // funcao pra teste, add todos torus ao msm tempo
+    for(var i=0; i< 15; i++)
+        scene.add(torus[i]);
+} 
 
