@@ -41,8 +41,8 @@ function fixPosition(obj) {
   return obj
 }
 
-export function loadGLTFFile(modelPath, modelName, desiredScale, scene) {
-  var loader = new GLTFLoader()
+export function loadGLTFFile(modelPath, modelName, desiredScale, scene, LoadingManager) {
+  var loader = new GLTFLoader(LoadingManager)
   loader.load(
     modelPath + modelName + '.gltf',
     function (gltf) {

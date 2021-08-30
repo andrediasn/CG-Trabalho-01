@@ -47,6 +47,28 @@ var stats = new Stats() // To show FPS information
 var scene = new THREE.Scene() // Create main scene
 var renderer = initRenderer() // View function in util/utils
 
+// ---------------- LoadScreen ---------------- //
+
+
+var loader = document.getElementById("loader");
+var LoadingManager = new THREE.LoadingManager();
+
+var loadingScreen = {
+  scene: new THREE.Scene(),
+  camera: new THREE.PerspectiveCamera(90,1200/720,0.1,100),
+  box: new THREE.Mesh(new THREE.BoxGeometry(4, 0.8, 0.2))
+}
+
+
+var LOADING_MANAGER = null;
+var RESOURCES_LOADED = false;
+var textLoad = new THREE.TextureLoader()
+var textStart = textLoad.load('Images/Floor/Start.jpg')
+loadingScreen.box.position.set(0,0,5)
+loadingScreen.box.material.map = textStart 
+loadingScreen.camera.lookAt(loadingScreen.box.position)
+loadingScreen.scene.add(loadingScreen.box)
+
 // ---------------- Planos ---------------- //
 var plane = createGroundPlane(10000, 10000, 100, 100)
 plane.rotateX(degreesToRadians(-90))
@@ -56,7 +78,7 @@ var planeExt = createGroundPlane(90000, 90000, 100, 100, '#616161')
 scene.add(planeExt)
 planeExt.rotateX(degreesToRadians(90)).translateZ(30)
 
-var textureLoader = new THREE.TextureLoader()
+var textureLoader = new THREE.TextureLoader(LoadingManager)
 var planeText = textureLoader.load('Images/Floor/Text1.jpg')
 
 plane.material.map = planeText
@@ -107,11 +129,11 @@ inspectionLight.shadow.camera.far = 20.0
 inspectionLight.shadow.camera.near = 0.2
 
 // -------------- Objeto Externo ------------ //
-// loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
+loadGLTFFile('../works/Objects/', 'scene', 400.0, scene, LoadingManager)
 
 // ------------------ Cidade --------------- //
 
-createCity(scene)
+createCity(scene, LoadingManager)
 
 // Árvores
 //addArvores(scene)
@@ -506,7 +528,7 @@ function keyboardUpdate() {
 // Informacoes na tela
 var showControls = false
 var controls = new InfoBox()
-controls.show()
+
 switchControls()
 
 function switchControls() {
@@ -546,7 +568,49 @@ window.addEventListener(
 var timerMessage = new SecondaryBox('')
 var cont = 0
 render()
+
+
+const load = document.getElementById("load");
+
+function loading(){
+  LoadingManager.onProgress = function(item, loaded, total) {
+    load.innerHTML = "Loading<br/>" + (parseInt(loaded)*100/total).toFixed(2) + "%";
+    console.log("Gerando Texturas:",(parseInt(loaded)*100/total).toFixed(2),"%");
+  }
+
+  LoadingManager.onLoad = function() {
+    auxLoading();
+    requestAnimationFrame(auxLoading);
+    return;
+  }
+}
+
+function auxLoading(){
+  keyboard.update();
+  if(keyboard.down('space')) {
+    RESOURCES_LOADED = true
+    load.innerHTML = ""
+    console.log("Start")
+    controls.show()
+    RESOURCES_LOADED = true
+    requestAnimationFrame(render)
+  }
+  requestAnimationFrame(auxLoading);
+}
+
 function render() {
+  if(RESOURCES_LOADED == false) {
+    loading();
+    requestAnimationFrame(render);
+
+    loadingScreen.box.position.x -= 0.02;
+    if(loadingScreen.box.position.x <  -10) loadingScreen.box.position.x = 10;
+    loadingScreen.box.position.y = Math.sin(loadingScreen.box.position.x);
+    
+    renderer.render(loadingScreen.scene, loadingScreen.camera);
+    return;
+  }
+
   if (!modoCam)
     timerMessage.changeMessage(
       `Tempo: ${(duracao / 1000).toFixed(

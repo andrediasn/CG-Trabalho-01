@@ -11,11 +11,11 @@ function insertTexture(texture, object, repeatX, repeatY) {
   object.material.side = THREE.DoubleSide
 }
 
-var textureLoader = new THREE.TextureLoader()
+
 var c = 3.2 // Constante escalar
 
 // Função que cria modelo do prédio 1
-function createBuilding(modelo) {
+function createBuilding(modelo, textureLoader) {
   switch (modelo) {
     case 1:
       var glassWindow = textureLoader.load('Images/Predio4/GlassWindow.jpg')
@@ -577,7 +577,7 @@ function createBuilding(modelo) {
   }
 }
 
-function createBuilding2(modelo) {
+function createBuilding2(modelo, textureLoader) {
   var m = 192
   var n = 128
   var geoHolder = new THREE.PlaneGeometry(10, 10, 10, 10)
@@ -940,7 +940,7 @@ function createBuilding2(modelo) {
 
 var t = 100 // tamanho da rua 1x1
 
-function createStreet(modelo) {
+function createStreet(modelo, textureLoader) {
   switch (modelo) {
     case 1: {
       var streetText = textureLoader.load('Images/Floor/street1.jpg')
@@ -969,7 +969,9 @@ function createStreet(modelo) {
   }
 }
 
-export function createCity(scene) {
+export function createCity(scene, LoadingManager) {
+  var textureLoader = new THREE.TextureLoader(LoadingManager)
+
   // Criando predios
   var predio1 = new Array(5)
   var predio2 = new Array(5)
@@ -979,12 +981,12 @@ export function createCity(scene) {
   var predio6 = new Array(5)
 
   for (var i = 0; i < 5; i++) {
-    predio1[i] = createBuilding2(1)
-    predio2[i] = createBuilding2(2)
-    predio3[i] = createBuilding2(3)
-    predio4[i] = createBuilding(1)
-    predio5[i] = createBuilding(2)
-    predio6[i] = createBuilding(3)
+    predio1[i] = createBuilding2(1, textureLoader)
+    predio2[i] = createBuilding2(2, textureLoader)
+    predio3[i] = createBuilding2(3, textureLoader)
+    predio4[i] = createBuilding(1, textureLoader)
+    predio5[i] = createBuilding(2, textureLoader)
+    predio6[i] = createBuilding(3, textureLoader)
     scene.add(predio1[i])
     scene.add(predio2[i])
     scene.add(predio3[i])
@@ -1149,13 +1151,13 @@ export function createCity(scene) {
     var street4v = new Array(17)
 
     for (var i = 0; i < 17; i++) {
-      street1h[i] = createStreet(1)
-      street4h[i] = createStreet(1)
-      street1v[i] = createStreet(1)
-      street4v[i] = createStreet(1)
-      street2h[i] = createStreet(1)
-      street3h[i] = createStreet(1)
-      street3v[i] = createStreet(1)
+      street1h[i] = createStreet(1, textureLoader)
+      street4h[i] = createStreet(1, textureLoader)
+      street1v[i] = createStreet(1, textureLoader)
+      street4v[i] = createStreet(1, textureLoader)
+      street2h[i] = createStreet(1, textureLoader)
+      street3h[i] = createStreet(1, textureLoader)
+      street3v[i] = createStreet(1, textureLoader)
       scene.add(street1h[i])
       scene.add(street4h[i])
       scene.add(street1v[i])
@@ -1172,13 +1174,13 @@ export function createCity(scene) {
     var cross2 = new Array(6)
     for (var i = 0; i < 6; i++) {
       if (i < 4) {
-        cross1[i] = createStreet(3)
+        cross1[i] = createStreet(3, textureLoader)
         scene.add(cross1[i])
       } else {
-        cross1[i] = createStreet(4)
+        cross1[i] = createStreet(4, textureLoader)
         scene.add(cross1[i])
       }
-      cross2[i] = createStreet(2)
+      cross2[i] = createStreet(2, textureLoader)
       scene.add(cross2[i])
     }
 
