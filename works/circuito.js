@@ -4,9 +4,9 @@ import { degreesToRadians } from '../libs/util/util.js'
 
 // Posicao inicial
 var start = new THREE.Vector3()
-start.x = 3000
+start.x = 1000
 start.y = 7
-start.z = -3500
+start.z = -3600
 
 //Inicializando  array e posições dos checkpoints
 var meta = new Array(15);
@@ -14,79 +14,79 @@ for(var i=0; i<meta.length; i++)
     meta[i] = new THREE.Vector3()
 
 // Torus inicial
-meta[0].x= 3000
+meta[0].x= 1000
 meta[0].y = 60
-meta[0].z = -3000
+meta[0].z = -3030
 
 //Torus 1
-meta[1].x= 2800
-meta[1].y = 120
-meta[1].z = -2000
+meta[1].x= 900
+meta[1].y = 150
+meta[1].z = -2500
 
 //Torus2
-meta[2].x= 3100
-meta[2].y = 150
-meta[2].z = -1000
+meta[2].x= 920
+meta[2].y = 85
+meta[2].z = -1700
 
 //Torus3
-meta[3].x= 3800
-meta[3].y = 150
-meta[3].z = 0
+meta[3].x= 1200
+meta[3].y = 100
+meta[3].z = -1300
 
 //Torus4
-meta[4].x= 3200
-meta[4].y = 150
-meta[4].z = 1200
+meta[4].x= 1950
+meta[4].y = 130
+meta[4].z = -1300
 
 //Torus5
-meta[5].x= 2800
+meta[5].x= 2780
 meta[5].y = 200
-meta[5].z = 2000
+meta[5].z = -620
 
 //Torus6
-meta[6].x= 1000
-meta[6].y = 500
-meta[6].z = 1820
+meta[6].x= 2000
+meta[6].y = 400
+meta[6].z = 300
 
 //Torus7
-meta[7].x= 0
-meta[7].y = 200
-meta[7].z = 2000
+meta[7].x= 1080
+meta[7].y = 300
+meta[7].z = 680
 
 //Torus8
-meta[8].x= -1000
-meta[8].y = 180
-meta[8].z = 1000
+meta[8].x= 610
+meta[8].y = 230
+meta[8].z = -1130
 
 //Torus9
-meta[9].x= -2000
-meta[9].y = 190
-meta[9].z = 0
+meta[9].x= -680
+meta[9].y = 230
+meta[9].z = -1700
 
 //Torus10
-meta[10].x = -1500
-meta[10].y = 110
-meta[10].z = -1000
+meta[10].x = -100
+meta[10].y = 230
+meta[10].z = -930
 
 //Torus11
-meta[11].x = 0
-meta[11].y = 150
-meta[11].z = -1500
+meta[11].x = 840
+meta[11].y = 320
+meta[11].z = -1400
 
 //Torus12
-meta[12].x = 600;
-meta[12].y = 130;
-meta[12].z = -2200;
+meta[12].x = 1450
+meta[12].y = 320
+meta[12].z = -1900
 
 //Torus13
-meta[13].x = 600;
-meta[13].y = 130;
-meta[13].z = -2200;
+meta[13].x = 2780
+meta[13].y = 200
+meta[13].z = -620
 
 //Torus14
-meta[14].x = 2200;
-meta[14].y = 140;
-meta[14].z = -3000;
+meta[14].x = 760
+meta[14].y = 150
+meta[14].z = -172
 
 
 
@@ -139,14 +139,14 @@ var rotX = new THREE.Vector3(1,0,0);
 // Rotacionando alguns torus.
 torus[1].rotateOnAxis(rotY, degreesToRadians(-10));
 torus[2].rotateOnAxis(rotY, degreesToRadians(20));
-torus[3].rotateOnAxis(rotY, degreesToRadians(10));
-torus[4].rotateOnAxis(rotY, degreesToRadians(-30));
-torus[5].rotateOnAxis(rotY, degreesToRadians(-40));
-torus[6].rotateOnAxis(rotY, degreesToRadians(90));
-torus[7].rotateOnAxis(rotY, degreesToRadians(60));
-torus[8].rotateOnAxis(rotY, degreesToRadians(60));
-torus[9].rotateOnAxis(rotY, degreesToRadians(40));
-torus[10].rotateOnAxis(rotY, degreesToRadians(120));
+torus[3].rotateOnAxis(rotY, degreesToRadians(90));
+torus[4].rotateOnAxis(rotY, degreesToRadians(90));
+torus[5].rotateOnAxis(rotY, degreesToRadians(45));
+torus[6].rotateOnAxis(rotY, degreesToRadians(120));
+torus[7].rotateOnAxis(rotY, degreesToRadians(90));
+torus[8].rotateOnAxis(rotY, degreesToRadians(0));
+torus[9].rotateOnAxis(rotY, degreesToRadians(90));
+torus[10].rotateOnAxis(rotY, degreesToRadians(90));
 torus[11].rotateOnAxis(rotY, degreesToRadians(120));
 torus[12].rotateOnAxis(rotY, degreesToRadians(120));
 torus[13].rotateOnAxis(rotY, degreesToRadians(120));

@@ -54,18 +54,19 @@ var LoadingManager = new THREE.LoadingManager()
 
 var loadingScreen = {
   scene: new THREE.Scene(),
-  camera: new THREE.PerspectiveCamera(90, 1200 / 720, 0.1, 100),
-  box: new THREE.Mesh(new THREE.BoxGeometry(4, 0.8, 0.2)),
+  camera: new THREE.PerspectiveCamera(90,1200/720,0.1,100),
+  box: new THREE.Mesh(new THREE.BoxGeometry(4, 0.8, 0.1))
 }
 
-var LOADING_MANAGER = null
-var RESOURCES_LOADED = false
+
+var LOADING_MANAGER = null;
+var RESOURCES_LOADED = true; // trocar para n ter tela de load
 var textLoad = new THREE.TextureLoader()
 var textStart = textLoad.load('Images/Floor/Start.jpg')
 loadingScreen.box.position.set(0, 0, 5)
 loadingScreen.box.material.map = textStart
 loadingScreen.camera.lookAt(loadingScreen.box.position)
-loadingScreen.scene.add(loadingScreen.box)
+
 
 // ---------------- Planos ---------------- //
 var plane = createGroundPlane(10000, 10000, 100, 100)
@@ -156,6 +157,7 @@ loadGLTFFile(
 
 createCity(scene, LoadingManager)
 
+//addMontanhas(scene)
 // Árvores
 //addArvores(scene)
 
@@ -197,9 +199,9 @@ function getCircuito() {
 }
 
 // ----------------- Aviao ----------------- //
-var posX = 3000
+var posX = 1001
 var posY = 7
-var posZ = -3500
+var posZ = -3600
 criaAviao(scene, posX, posY, posZ)
 var esferaHelice = getEsferaHelice()
 var esferaMov = getEsferaMov()
@@ -251,6 +253,8 @@ function getPosition() {
   posY = position.y
   posZ = position.z
 }
+
+
 
 //Nivelamento
 var nivV = false
@@ -309,6 +313,8 @@ function switchCam() {
   if (modoCam) {
     auxTempoModoCam += auxduracao // Usado para calcular tempo a ser diminuido do modo inspecao
     scene.add(plane)
+    scene.add(planeExt)
+    scene.add(sunLight)
     scene.remove(axesHelper)
     trackballControls = new TrackballControls(clear, renderer.domElement) // Remove o trackball
     esferaHelice.position.set(posX, posY, posZ) // Posiciona na posicao anterior salva
@@ -337,6 +343,8 @@ function switchCam() {
     speed = 0 // Interrompe o movimento
     scene.add(axesHelper)
     scene.remove(plane)
+    scene.remove(planeExt)
+    scene.remove(sunLight)
     scene.add(inspectionLight)
     hideEnvironmentObjects(scene) // Esconde arvores da cena
     forceNiv(esferaHelice, esferaMov) // Forca nivelamento instantaneo
@@ -350,7 +358,6 @@ function switchCam() {
 
 // God Mode
 var godOn = true
-godMode()
 godMode()
 function godMode() {
   if (godOn) {
@@ -393,6 +400,17 @@ function godKeyUp() {
 
   if (keyboard.pressed('Q')) camera.translateY(-2)
   else if (keyboard.pressed('E')) camera.translateY(2)
+}
+
+function getPTeste() { // Para testes
+  var tx, ty, tz
+  var testP = new THREE.Vector3()
+  scene.updateMatrixWorld(true)
+  testP.setFromMatrixPosition(camera.matrixWorld) // Vetor posicao
+  tx = testP.x
+  ty = testP.y
+  tz = testP.z
+  console.log("x:",tx," y:",ty, " z:",tz)
 }
 
 // Cockpit
@@ -477,12 +495,6 @@ scene.add(skybox)
 
 // --------------------------- Keyboard---------------------------------- //
 
-function printP() {
-  console.log('x', pX)
-  console.log('y', pY)
-  console.log('z', pZ)
-}
-
 var vD = false
 var vU = false
 var vL = false
@@ -540,7 +552,7 @@ function keyboardUpdate() {
     if (keyboard.down('R')) document.location.reload(true)
     if (keyboard.down('H')) switchControls()
     if (keyboard.down('enter')) switchTrajeto()
-    if (keyboard.down('P')) printP() // usado para testes
+    if (keyboard.down('T')) getPTeste() // usado para testes
     if (keyboard.down('G')) godMode()
   }
   if (keyboard.down('space')) switchCam()
@@ -610,9 +622,10 @@ function loading() {
   }
 }
 
-function auxLoading() {
-  keyboard.update()
-  if (keyboard.down('space')) {
+function auxLoading(){
+  loadingScreen.scene.add(loadingScreen.box)
+  keyboard.update();
+  if(keyboard.down('space')) {
     RESOURCES_LOADED = true
     load.innerHTML = ''
     console.log('Start')
@@ -638,11 +651,9 @@ function render() {
 
   if (!modoCam) {
     timerMessage.changeMessage(
-      `Tempo: ${(duracao / 1000).toFixed(
-        2
-      )} - CheckPoint: ${contadorCP}/15 - Distancia até o próximo: ${distancia.toFixed(
-        0
-      )}`
+      `Tempo: ${(duracao / 1000).toFixed(2)}
+      - CheckPoint: ${contadorCP}/15 
+      - Distancia até o próximo: ${distancia.toFixed(0)}`
     )
     planeLight.position.copy(esferaHelice.position)
     planeLight.translateY(70).translateX(90)
