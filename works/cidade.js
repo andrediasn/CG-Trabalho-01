@@ -229,6 +229,8 @@ function createBuilding(modelo) {
       })
 
       var face1 = new THREE.Mesh(faceBotGeo, faceMatPure)
+      face1.castShadow = true
+      face1.receiveShadow = true
       face1
         .rotateX(degreesToRadians(90))
         .translateY(25 * c)
@@ -238,6 +240,8 @@ function createBuilding(modelo) {
       insertTexture(sideWall, face1, 3, 3)
 
       var face2 = new THREE.Mesh(faceBotGeo, faceMat)
+      face2.castShadow = true
+      face2.receiveShadow = true
       face2
         .rotateY(degreesToRadians(90))
         .translateX(25 * c)
@@ -245,12 +249,16 @@ function createBuilding(modelo) {
       insertTexture(window, face2, 3, 3)
 
       var face3 = new THREE.Mesh(faceBotGeo, faceMat)
+      face3.castShadow = true
+      face3.receiveShadow = true
       face3
         .rotateY(degreesToRadians(90))
         .translateX(25 * c)
         .translateZ(25 * c)
 
       var face4 = new THREE.Mesh(faceBotGeo, faceMatPure)
+      face4.castShadow = true
+      face4.receiveShadow = true
       face4.translateZ(-50 * c)
 
       var face5 = new THREE.Mesh(faceBotGeo, faceMat)
@@ -272,6 +280,8 @@ function createBuilding(modelo) {
       var convexGeometry = new ConvexGeometry(points)
       var ceilingMat = new THREE.MeshBasicMaterial({ color: 0x212121 })
       var ceiling1 = new THREE.Mesh(convexGeometry, ceilingMat)
+      ceiling1.castShadow = true
+      ceiling1.receiveShadow = true
       ceiling1.rotateX(degreesToRadians(-90)).translateZ(25 * c)
 
       var faceTopMat = new THREE.MeshBasicMaterial({
@@ -280,12 +290,16 @@ function createBuilding(modelo) {
       })
 
       var faceTop1 = new THREE.Mesh(faceTopGeo, faceMatPure)
+      faceTop1.castShadow = true
+      faceTop1.receiveShadow = true
       faceTop1
         .rotateX(degreesToRadians(90))
         .translateY(25 * c)
         .translateZ(-10 * c)
 
       var faceTop2 = new THREE.Mesh(faceTopGeo, faceTopMat)
+      faceTop2.castShadow = true
+      faceTop2.receiveShadow = true
       faceTop2
         .rotateY(degreesToRadians(90))
         .translateX(15 * c)
@@ -293,12 +307,16 @@ function createBuilding(modelo) {
       insertTexture(window2, faceTop2, 2, 2)
 
       var faceTop3 = new THREE.Mesh(faceTopGeo, faceTopMat)
+      faceTop3.castShadow = true
+      faceTop3.receiveShadow = true
       faceTop3
         .rotateY(degreesToRadians(90))
         .translateX(15 * c)
         .translateZ(15 * c)
 
       var faceTop4 = new THREE.Mesh(faceTopGeo, faceMatPure)
+      faceTop4.castShadow = true
+      faceTop4.receiveShadow = true
       faceTop4.translateZ(-30 * c)
 
       var faceTop5 = new THREE.Mesh(faceTopGeo, faceTopMat)
@@ -320,6 +338,8 @@ function createBuilding(modelo) {
 
       convexGeometry = new ConvexGeometry(points)
       var ceiling2 = new THREE.Mesh(convexGeometry, ceilingMat)
+      ceiling2.castShadow = true
+      ceiling2.receiveShadow = true
       ceiling2
         .rotateX(degreesToRadians(-90))
         .translateZ(15 * c)
@@ -398,6 +418,8 @@ function createBuilding(modelo) {
       })
 
       var face1 = new THREE.Mesh(faceBotGeo, faceMatPure)
+      face1.castShadow = true
+      face1.receiveShadow = true
       face1
         .rotateX(degreesToRadians(90))
         .translateY(15 * c)
@@ -407,6 +429,8 @@ function createBuilding(modelo) {
       insertTexture(sidewall, face1, 1.8, 0.8)
 
       var face2 = new THREE.Mesh(faceBotGeo2, faceMidMat)
+      face2.castShadow = true
+      face2.receiveShadow = true
       face2
         .rotateY(degreesToRadians(90))
         .translateX(20 * c)
@@ -414,6 +438,8 @@ function createBuilding(modelo) {
       insertTexture(window3, face2, 3, 1)
 
       var face3 = new THREE.Mesh(faceBotGeo2, faceMidMat)
+      face3.castShadow = true
+      face3.receiveShadow = true
       face3
         .rotateY(degreesToRadians(90))
         .translateX(20 * c)
@@ -421,24 +447,34 @@ function createBuilding(modelo) {
       insertTexture(window3, face3, 3, 2)
 
       var face4 = new THREE.Mesh(faceBotGeo, faceMatPure)
+      face4.castShadow = true
+      face4.receiveShadow = true
       face4.translateZ(-40 * c)
 
       var faceMid1 = new THREE.Mesh(faceBotGeo, faceMatPure)
+      faceMid1.castShadow = true
+      faceMid1.receiveShadow = true
       faceMid1.translateY(30 * c)
 
       var faceMid2 = new THREE.Mesh(faceBotGeo2, faceMidMat)
+      faceMid2.castShadow = true
+      faceMid2.receiveShadow = true
       faceMid2
         .rotateY(degreesToRadians(90))
         .translateX(20 * c)
         .translateZ(-25 * c)
 
       var faceMid3 = new THREE.Mesh(faceBotGeo2, faceMidMat)
+      faceMid3.castShadow = true
+      faceMid3.receiveShadow = true
       faceMid3
         .rotateY(degreesToRadians(90))
         .translateX(20 * c)
         .translateZ(25 * c)
 
       var faceMid4 = new THREE.Mesh(faceBotGeo, faceMatPure)
+      faceMid4.castShadow = true
+      faceMid4.receiveShadow = true
       faceMid4.translateZ(-40 * c)
 
       var roof1 = new THREE.Mesh(roof1Geo, roofMat)
@@ -449,6 +485,8 @@ function createBuilding(modelo) {
       insertTexture(roofFloor, roof1, 2, 2)
 
       var faceRoof1 = new THREE.Mesh(faceRoofGeo, faceRoofMat1)
+      faceRoof1.castShadow = true
+      faceRoof1.receiveShadow = true
       faceRoof1
         .rotateZ(degreesToRadians(90))
         .rotateY(degreesToRadians(90))
@@ -456,6 +494,8 @@ function createBuilding(modelo) {
         .translateX(7.5 * c)
 
       var faceRoof2 = new THREE.Mesh(faceRoofGeo, faceRoofMat1)
+      faceRoof2.castShadow = true
+      faceRoof2.receiveShadow = true
       faceRoof2
         .rotateZ(degreesToRadians(90))
         .rotateY(degreesToRadians(90))
@@ -465,6 +505,8 @@ function createBuilding(modelo) {
       insertTexture(brickWall, faceRoof2, 1, 2)
 
       var faceRoof3 = new THREE.Mesh(faceRoofGeo2, faceRoofMat2)
+      faceRoof3.castShadow = true
+      faceRoof3.receiveShadow = true
       faceRoof3
         .rotateY(degreesToRadians(90))
         .translateZ(-5 * c)
@@ -473,6 +515,8 @@ function createBuilding(modelo) {
       insertTexture(roofDoor, faceRoof3, 1, 1)
 
       var faceRoof4 = new THREE.Mesh(faceRoofGeo2, faceRoofMat1)
+      faceRoof4.castShadow = true
+      faceRoof4.receiveShadow = true
       faceRoof4
         .rotateY(degreesToRadians(90))
         .translateZ(25 * c)
@@ -480,6 +524,8 @@ function createBuilding(modelo) {
         .translateY(-10 * c)
 
       var roofBoxRoof = new THREE.Mesh(roofBoxRoofGeo, roofMat2)
+      roofBoxRoof.castShadow = true
+      roofBoxRoof.receiveShadow = true
       roofBoxRoof
         .rotateZ(degreesToRadians(90))
         .translateX(-10 * c)
@@ -488,10 +534,14 @@ function createBuilding(modelo) {
       insertTexture(roofFloor2, roofBoxRoof, 1, 1)
 
       var diagonalRoof = new THREE.Mesh(diagonalRoofGeo, roofTileMat)
+      diagonalRoof.castShadow = true
+      diagonalRoof.receiveShadow = true
       diagonalRoof.translateZ(7.5 * c).rotateY(degreesToRadians(45))
       insertTexture(brickRoofTile, diagonalRoof, 1.5, 2)
 
       var diagonalRoof2 = new THREE.Mesh(diagonalRoofGeo2, diagonalRoofMat)
+      diagonalRoof2.castShadow = true
+      diagonalRoof2.receiveShadow = true
       diagonalRoof2
         .rotateX(degreesToRadians(90))
         .translateZ(14 * c)
@@ -499,6 +549,8 @@ function createBuilding(modelo) {
       insertTexture(diagonalRoofMat3, diagonalRoof2, 2, 2)
 
       var diagonalRoof3 = new THREE.Mesh(diagonalRoofGeo2, diagonalRoofMat)
+      diagonalRoof3.castShadow = true
+      diagonalRoof3.receiveShadow = true
       diagonalRoof3
         .rotateX(degreesToRadians(90))
         .translateZ(-14 * c)
@@ -533,10 +585,14 @@ function createBuilding2(modelo) {
   switch (modelo) {
     case 1: {
       var predio1 = new THREE.Mesh(geoHolder, matHolder)
+      predio1.castShadow = true
+      predio1.receiveShadow = true
       predio1.translateY(0.5 * m)
 
       var p1Text3 = textureLoader.load('Images/Predio1/Janelas.jpg')
       var p1bk = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 2 * m))
+      p1bk.castShadow = true
+      p1bk.receiveShadow = true
       p1bk.translateY(0.5 * m).rotateY(degreesToRadians(180))
       insertTexture(p1Text3, p1bk, 1, 3)
 
@@ -553,16 +609,22 @@ function createBuilding2(modelo) {
           3.04
         )
       )
+      p1ft.castShadow = true
+      p1ft.receiveShadow = true
       p1ft.translateZ(0.47 * m).rotateY(degreesToRadians(160))
       insertTexture(p1Text1, p1ft, 1, 1.5)
 
       var p1Text4 = textureLoader.load('Images/Predio1/Janelas.jpg')
       var p1ft2 = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 1 * m))
+      p1ft2.castShadow = true
+      p1ft2.receiveShadow = true
       p1ft2.translateY(m).translateZ(0.5 * m)
       insertTexture(p1Text4, p1ft2, 1, 1.5)
 
       var p1Text2 = textureLoader.load('Images/Predio1/Tijolos2.jpg')
       var p1lf = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      p1lf.castShadow = true
+      p1lf.receiveShadow = true
       p1lf
         .rotateY(degreesToRadians(90))
         .translateZ(0.5 * m)
@@ -571,6 +633,8 @@ function createBuilding2(modelo) {
       insertTexture(p1Text2, p1lf, 3, 10)
 
       var p1rt = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      p1rt.castShadow = true
+      p1rt.receiveShadow = true
       p1rt
         .rotateY(degreesToRadians(-90))
         .translateZ(0.5 * m)
@@ -580,6 +644,8 @@ function createBuilding2(modelo) {
 
       var p1Text5 = textureLoader.load('Images/Predio1/Concreto2.jpg')
       var p1up1 = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 0.5 * m))
+      p1up1.castShadow = true
+      p1up1.receiveShadow = true
       p1up1
         .rotateX(degreesToRadians(-90))
         .translateZ(1.5 * m)
@@ -590,6 +656,8 @@ function createBuilding2(modelo) {
       var p1up2 = new THREE.Mesh(
         new THREE.CircleGeometry(0.5 * m, 90, 3.15, 3.1)
       )
+      p1up2.castShadow = true
+      p1up2.receiveShadow = true
       p1up2
         .rotateX(degreesToRadians(-90))
         .translateZ(0.5 * m)
@@ -609,29 +677,41 @@ function createBuilding2(modelo) {
     }
     case 2: {
       var predio2 = new THREE.Mesh(geoHolder, matHolder)
+      predio2.castShadow = true
+      predio2.receiveShadow = true
       predio2.translateY(1 * n)
 
       var p2Text1 = textureLoader.load('Images/Predio2/Tijolos.jpg')
       var p2rt = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 2 * n))
+      p2rt.castShadow = true
+      p2rt.receiveShadow = true
       p2rt.translateX(1 * n).rotateY(degreesToRadians(90))
       insertTexture(p2Text1, p2rt, 4, 5)
       var p2lf = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 2 * n))
+      p2lf.castShadow = true
+      p2lf.receiveShadow = true
       p2lf.translateX(-1 * n).rotateY(degreesToRadians(-90))
       insertTexture(p2Text1, p2lf, 4, 5)
 
       var p2Text2 = textureLoader.load('Images/Predio2/Janelas1.jpg')
       var p2bk = new THREE.Mesh(new THREE.PlaneGeometry(2 * n, 2 * n))
+      p2bk.castShadow = true
+      p2bk.receiveShadow = true
       p2bk.translateZ(-0.5 * n).rotateY(degreesToRadians(180))
       insertTexture(p2Text2, p2bk, 4, 3)
 
       var p2Text3 = textureLoader.load('Images/Predio2/Janelas.jpg')
       var p2ft1lf = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * n, 2 * n))
+      p2ft1lf.castShadow = true
+      p2ft1lf.receiveShadow = true
       p2ft1lf
         .translateX(-0.75 * n)
         .translateZ(-1 * n)
         .rotateY(degreesToRadians(180))
       insertTexture(p2Text3, p2ft1lf, 1, 5)
       var p2ft1rt = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * n, 2 * n))
+      p2ft1rt.castShadow = true
+      p2ft1rt.receiveShadow = true
       p2ft1rt
         .translateX(0.75 * n)
         .translateZ(-1 * n)
@@ -640,6 +720,8 @@ function createBuilding2(modelo) {
 
       var p2Text4 = textureLoader.load('Images/Predio2/Janelas1.jpg')
       var p2ft2 = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 2 * n))
+      p2ft2.castShadow = true
+      p2ft2.receiveShadow = true
       p2ft2
         .translateZ(0.25 * n)
         .translateZ(-1 * n)
@@ -648,12 +730,16 @@ function createBuilding2(modelo) {
 
       var p2Text5 = textureLoader.load('Images/Predio2/Tijolos.jpg')
       var p2ft3lf = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 2 * n))
+      p2ft3lf.castShadow = true
+      p2ft3lf.receiveShadow = true
       p2ft3lf
         .rotateY(degreesToRadians(-90))
         .translateX(-0.875 * n)
         .translateZ(-0.5 * n)
       insertTexture(p2Text5, p2ft3lf, 1, 5)
       var p2ft3rt = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 2 * n))
+      p2ft3rt.castShadow = true
+      p2ft3rt.receiveShadow = true
       p2ft3rt
         .rotateY(degreesToRadians(90))
         .translateX(0.875 * n)
@@ -662,6 +748,8 @@ function createBuilding2(modelo) {
 
       var p2Text6 = textureLoader.load('Images/Predio2/Teto.jpg')
       var p2up = new THREE.Mesh(new THREE.PlaneGeometry(0.75 * n, 2 * n))
+      p2up.castShadow = true
+      p2up.receiveShadow = true
       p2up
         .rotateZ(degreesToRadians(90))
         .rotateY(degreesToRadians(90))
@@ -670,6 +758,8 @@ function createBuilding2(modelo) {
       insertTexture(p2Text6, p2up, 10, 16)
       var p2Text7 = textureLoader.load('Images/Predio2/Teto.jpg')
       var p2up2 = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 0.5 * n))
+      p2up2.castShadow = true
+      p2up2.receiveShadow = true
       p2up2
         .rotateZ(degreesToRadians(90))
         .rotateY(degreesToRadians(90))
@@ -678,6 +768,8 @@ function createBuilding2(modelo) {
         .translateY(-0.75 * n)
       insertTexture(p2Text7, p2up2, 4, 4)
       var p2up3 = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 0.5 * n))
+      p2up3.castShadow = true
+      p2up3.receiveShadow = true
       p2up3
         .rotateZ(degreesToRadians(90))
         .rotateY(degreesToRadians(90))
@@ -688,6 +780,8 @@ function createBuilding2(modelo) {
 
       var p2Text8 = textureLoader.load('Images/Predio2/door.jpg')
       var p2ft4 = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 0.2 * n))
+      p2ft4.castShadow = true
+      p2ft4.receiveShadow = true
       p2ft4
         .translateY(-0.9 * n)
         .translateZ(-0.76 * n)
@@ -711,41 +805,61 @@ function createBuilding2(modelo) {
 
       var p3Text = textureLoader.load('Images/Predio3/Janelas2.jpg')
       var p3ft1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      p3ft1.castShadow = true
+      p3ft1.receiveShadow = true
       p3ft1.translateX(-0.5 * m).translateZ(0.5 * m)
       insertTexture(p3Text, p3ft1, 1, 7)
       var p3ft2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      p3ft2.castShadow = true
+      p3ft2.receiveShadow = true
       p3ft2.translateX(0.5 * m).translateZ(0.5 * m)
       insertTexture(p3Text, p3ft2, 1, 7)
 
       var p3bk1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      p3bk1.castShadow = true
+      p3bk1.receiveShadow = true
       p3bk1.translateX(-0.5 * m).translateZ(-0.5 * m)
       insertTexture(p3Text, p3bk1, 1, 7)
       var p3bk2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      p3bk2.castShadow = true
+      p3bk2.receiveShadow = true
       p3bk2.translateX(0.5 * m).translateZ(-0.5 * m)
       insertTexture(p3Text, p3bk2, 1, 5)
 
       var p3Text2 = textureLoader.load('Images/Predio3/Janelas3.jpg')
       var p3lf1 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      p3lf1.castShadow = true
+      p3lf1.receiveShadow = true
       p3lf1.translateX(-0.75 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3lf1, 2, 7)
       var p3lf2 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      p3lf2.castShadow = true
+      p3lf2.receiveShadow = true
       p3lf2.translateX(-0.25 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3lf2, 2, 7)
       var p3rt1 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      p3rt1.castShadow = true
+      p3rt1.receiveShadow = true
       p3rt1.translateX(0.75 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3rt1, 2, 7)
       var p3rt2 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      p3rt2.castShadow = true
+      p3rt2.receiveShadow = true
       p3rt2.translateX(0.25 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3rt2, 1, 2)
 
       var p3Text3 = textureLoader.load('Images/Predio3/Concreto.jpg')
       var p3up1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, m))
+      p3up1.castShadow = true
+      p3up1.receiveShadow = true
       p3up1
         .rotateX(degreesToRadians(-90))
         .translateZ(m)
         .translateX(-0.5 * m)
       insertTexture(p3Text3, p3up1, 1, 1)
       var p3up2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, m))
+      p3up2.castShadow = true
+      p3up2.receiveShadow = true
       p3up2
         .rotateX(degreesToRadians(-90))
         .translateZ(m)
@@ -754,32 +868,48 @@ function createBuilding2(modelo) {
 
       var p3Text4 = textureLoader.load('Images/Predio3/Janelas4.jpg')
       var p3c1ft = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      p3c1ft.castShadow = true
+      p3c1ft.receiveShadow = true
       p3c1ft.translateZ(0.2 * m).translateY(-0.5 * m)
       insertTexture(p3Text4, p3c1ft, 1, 1)
       var p3c1bk = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      p3c1bk.castShadow = true
+      p3c1bk.receiveShadow = true
       p3c1bk.translateZ(-0.2 * m).translateY(-0.5 * m)
       insertTexture(p3Text4, p3c1bk, 1, 1)
 
       var p3Text5 = textureLoader.load('Images/Predio3/Janelas5.jpg')
       var p3c1up = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      p3c1up.castShadow = true
+      p3c1up.receiveShadow = true
       p3c1up.translateY(-0.375 * m).rotateX(degreesToRadians(-90))
       insertTexture(p3Text5, p3c1up, 1, 1)
       var p3Text6 = textureLoader.load('Images/Predio3/Tijolos.jpg')
       var p3c1dn = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      p3c1dn.castShadow = true
+      p3c1dn.receiveShadow = true
       p3c1dn.translateY(-0.625 * m).rotateX(degreesToRadians(90))
       insertTexture(p3Text6, p3c1dn, 5, 5)
 
       var p3c2ft = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      p3c2ft.castShadow = true
+      p3c2ft.receiveShadow = true
       p3c2ft.translateZ(0.2 * m).translateY(0.5 * m)
       insertTexture(p3Text4, p3c2ft, 1, 1)
       var p3c2bk = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      p3c2bk.castShadow = true
+      p3c2bk.receiveShadow = true
       p3c2bk.translateZ(-0.2 * m).translateY(0.5 * m)
       insertTexture(p3Text4, p3c2bk, 1, 1)
 
       var p3c2up = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      p3c2up.castShadow = true
+      p3c2up.receiveShadow = true
       p3c2up.translateY(0.625 * m).rotateX(degreesToRadians(-90))
       insertTexture(p3Text5, p3c2up, 1, 1)
       var p3c2dn = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      p3c2dn.castShadow = true
+      p3c2dn.receiveShadow = true
       p3c2dn.translateY(0.375 * m).rotateX(degreesToRadians(90))
       insertTexture(p3Text6, p3c2dn, 5, 5)
 
