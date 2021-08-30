@@ -49,23 +49,21 @@ var renderer = initRenderer() // View function in util/utils
 
 // ---------------- LoadScreen ---------------- //
 
-
-var loader = document.getElementById("loader");
-var LoadingManager = new THREE.LoadingManager();
+var loader = document.getElementById('loader')
+var LoadingManager = new THREE.LoadingManager()
 
 var loadingScreen = {
   scene: new THREE.Scene(),
-  camera: new THREE.PerspectiveCamera(90,1200/720,0.1,100),
-  box: new THREE.Mesh(new THREE.BoxGeometry(4, 0.8, 0.2))
+  camera: new THREE.PerspectiveCamera(90, 1200 / 720, 0.1, 100),
+  box: new THREE.Mesh(new THREE.BoxGeometry(4, 0.8, 0.2)),
 }
 
-
-var LOADING_MANAGER = null;
-var RESOURCES_LOADED = false;
+var LOADING_MANAGER = null
+var RESOURCES_LOADED = false
 var textLoad = new THREE.TextureLoader()
 var textStart = textLoad.load('Images/Floor/Start.jpg')
-loadingScreen.box.position.set(0,0,5)
-loadingScreen.box.material.map = textStart 
+loadingScreen.box.position.set(0, 0, 5)
+loadingScreen.box.material.map = textStart
 loadingScreen.camera.lookAt(loadingScreen.box.position)
 loadingScreen.scene.add(loadingScreen.box)
 
@@ -82,7 +80,7 @@ var textureLoader = new THREE.TextureLoader(LoadingManager)
 var planeText = textureLoader.load('Images/Floor/Text1.jpg')
 
 plane.material.map = planeText
-plane.material.map.repeat.set(50,50)
+plane.material.map.repeat.set(50, 50)
 plane.material.map.wrapS = THREE.RepeatWrapping
 plane.material.map.wrapT = THREE.RepeatWrapping
 plane.material.map.minFilter = THREE.LinearFilter
@@ -94,7 +92,7 @@ const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
 scene.add(ambientLight)
 
 // Sol
-const sunPosition = new THREE.Vector3(0, 2000, 0)
+const sunPosition = new THREE.Vector3(1000, 2000, 0)
 
 // Criando o spotLight do sol
 var sunLight = new THREE.SpotLight('rgb(255,136,0)')
@@ -113,6 +111,21 @@ sunLight.shadow.camera.near = 0.2
 
 scene.add(sunLight)
 
+// Criando o spotLight dinâmico para o avião
+var planeLight = new THREE.SpotLight('rgb(255,136,0)')
+planeLight.intensity = 0.2
+planeLight.position.set(new THREE.Vector3(0, 0, 0))
+planeLight.castShadow = true
+planeLight.angle = degreesToRadians(120)
+planeLight.shadow.mapSize.width = 2000
+planeLight.shadow.mapSize.height = 2000
+planeLight.shadow.camera.fov = radiansToDegrees(planeLight.angle)
+planeLight.shadow.camera.far = 300.0
+planeLight.shadow.camera.near = 0.01
+planeLight.shadow.autoUpdate = true
+
+scene.add(planeLight)
+
 //Luz para a câmera de inspeção
 var inspectionLight = new THREE.SpotLight('rgb(255,136,0)')
 inspectionLight.intensity = 1
@@ -129,7 +142,15 @@ inspectionLight.shadow.camera.far = 20.0
 inspectionLight.shadow.camera.near = 0.2
 
 // -------------- Objeto Externo ------------ //
-loadGLTFFile('../works/Objects/', 'scene', 400.0, scene, LoadingManager)
+loadGLTFFile(
+  '../works/Objects/',
+  'scene',
+  320.0,
+  1090,
+  1500,
+  scene,
+  LoadingManager
+)
 
 // ------------------ Cidade --------------- //
 
@@ -330,7 +351,7 @@ function switchCam() {
 // God Mode
 var godOn = true
 godMode()
-godMode();
+godMode()
 function godMode() {
   if (godOn) {
     camera = cameraSimulation
@@ -569,49 +590,53 @@ var timerMessage = new SecondaryBox('')
 var cont = 0
 render()
 
+const load = document.getElementById('load')
 
-const load = document.getElementById("load");
-
-function loading(){
-  LoadingManager.onProgress = function(item, loaded, total) {
-    load.innerHTML = "Loading<br/>" + (parseInt(loaded)*100/total).toFixed(2) + "%";
-    console.log("Gerando Texturas:",(parseInt(loaded)*100/total).toFixed(2),"%");
+function loading() {
+  LoadingManager.onProgress = function (item, loaded, total) {
+    load.innerHTML =
+      'Loading<br/>' + ((parseInt(loaded) * 100) / total).toFixed(2) + '%'
+    console.log(
+      'Gerando Texturas:',
+      ((parseInt(loaded) * 100) / total).toFixed(2),
+      '%'
+    )
   }
 
-  LoadingManager.onLoad = function() {
-    auxLoading();
-    requestAnimationFrame(auxLoading);
-    return;
+  LoadingManager.onLoad = function () {
+    auxLoading()
+    requestAnimationFrame(auxLoading)
+    return
   }
 }
 
-function auxLoading(){
-  keyboard.update();
-  if(keyboard.down('space')) {
+function auxLoading() {
+  keyboard.update()
+  if (keyboard.down('space')) {
     RESOURCES_LOADED = true
-    load.innerHTML = ""
-    console.log("Start")
+    load.innerHTML = ''
+    console.log('Start')
     controls.show()
     RESOURCES_LOADED = true
     requestAnimationFrame(render)
   }
-  requestAnimationFrame(auxLoading);
+  requestAnimationFrame(auxLoading)
 }
 
 function render() {
-  if(RESOURCES_LOADED == false) {
-    loading();
-    requestAnimationFrame(render);
+  if (RESOURCES_LOADED == false) {
+    loading()
+    requestAnimationFrame(render)
 
-    loadingScreen.box.position.x -= 0.02;
-    if(loadingScreen.box.position.x <  -10) loadingScreen.box.position.x = 10;
-    loadingScreen.box.position.y = Math.sin(loadingScreen.box.position.x);
-    
-    renderer.render(loadingScreen.scene, loadingScreen.camera);
-    return;
+    loadingScreen.box.position.x -= 0.02
+    if (loadingScreen.box.position.x < -10) loadingScreen.box.position.x = 10
+    loadingScreen.box.position.y = Math.sin(loadingScreen.box.position.x)
+
+    renderer.render(loadingScreen.scene, loadingScreen.camera)
+    return
   }
 
-  if (!modoCam)
+  if (!modoCam) {
     timerMessage.changeMessage(
       `Tempo: ${(duracao / 1000).toFixed(
         2
@@ -619,13 +644,16 @@ function render() {
         0
       )}`
     )
-  else timerMessage.changeMessage('')
+    planeLight.position.copy(esferaHelice.position)
+    planeLight.translateY(70).translateX(90)
+  } else timerMessage.changeMessage('')
   if (cont > 50) {
     sunLight.shadow.autoUpdate = false
     cont = 2
   } else {
     cont += 1
   }
+  scene.add(planeLight.target)
   stats.update()
   trackballControls.update()
   switchKeyboardUpdate()

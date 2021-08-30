@@ -11,7 +11,6 @@ function insertTexture(texture, object, repeatX, repeatY) {
   object.material.side = THREE.DoubleSide
 }
 
-
 var c = 3.2 // Constante escalar
 
 // Função que cria modelo do prédio 1
