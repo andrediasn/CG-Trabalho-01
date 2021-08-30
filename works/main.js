@@ -73,7 +73,7 @@ plane.material.map.magFilter = THREE.LinearFilter
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
 scene.add(ambientLight)
 
-/* // Sol
+// Sol
 const sunPosition = new THREE.Vector3(0, 2000, 0)
 
 // Criando o spotLight do sol
@@ -91,7 +91,7 @@ sunLight.shadow.camera.fov = radiansToDegrees(sunLight.angle)
 sunLight.shadow.camera.far = 7000.0
 sunLight.shadow.camera.near = 0.2
 
-scene.add(sunLight) */
+scene.add(sunLight)
 
 //Luz para a câmera de inspeção
 var inspectionLight = new THREE.SpotLight('rgb(255,136,0)')
@@ -109,7 +109,7 @@ inspectionLight.shadow.camera.far = 20.0
 inspectionLight.shadow.camera.near = 0.2
 
 // -------------- Objeto Externo ------------ //
-loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
+// loadGLTFFile('../works/Objects/', 'scene', 400.0, scene)
 
 // ------------------ Cidade --------------- //
 
@@ -309,13 +309,13 @@ function switchCam() {
 
 // God Mode
 var godOn = true
-godMode();
+godMode()
 //godMode();
-function godMode(){
-  if(godOn){
+function godMode() {
+  if (godOn) {
     camera = cameraSimulation
     godOn = false
-  } else{
+  } else {
     var camGod = new THREE.PerspectiveCamera(
       45,
       window.innerWidth / window.innerHeight,
@@ -329,44 +329,30 @@ function godMode(){
   }
 }
 
-function switchKeyboardUpdate(){
-  if(!godOn)
-    keyboardUpdate()
-  else
-    godKeyUp()
+function switchKeyboardUpdate() {
+  if (!godOn) keyboardUpdate()
+  else godKeyUp()
 }
 
-function godKeyUp(){
-  keyboard.update();
+function godKeyUp() {
+  keyboard.update()
   if (keyboard.down('G')) godMode()
-  
-  if(keyboard.pressed('W'))
-    camera.translateZ(-3);
-  else if(keyboard.pressed('S'))
-    camera.translateZ(3);
-  else if(keyboard.pressed('space'))
-    camera.translateZ(-10);
-  
-  if(keyboard.pressed('A'))
-    camera.translateX(-3);
-  else if(keyboard.pressed('D'))
-    camera.translateX(3);
-  if(keyboard.pressed('up'))
-    camera.rotateX(degreesToRadians(0.5));
-  else if(keyboard.pressed('down'))
-    camera.rotateX(degreesToRadians(-0.5));
-  
-  if(keyboard.pressed('left'))
-    camera.rotateY(degreesToRadians(0.5));
-  else if(keyboard.pressed('right'))
-    camera.rotateY(degreesToRadians(-0.5));
 
-  if(keyboard.pressed('Q'))
-    camera.translateY(-2);
-  else if(keyboard.pressed('E'))
-    camera.translateY(2);
+  if (keyboard.pressed('W')) camera.translateZ(-3)
+  else if (keyboard.pressed('S')) camera.translateZ(3)
+  else if (keyboard.pressed('space')) camera.translateZ(-10)
+
+  if (keyboard.pressed('A')) camera.translateX(-3)
+  else if (keyboard.pressed('D')) camera.translateX(3)
+  if (keyboard.pressed('up')) camera.rotateX(degreesToRadians(0.5))
+  else if (keyboard.pressed('down')) camera.rotateX(degreesToRadians(-0.5))
+
+  if (keyboard.pressed('left')) camera.rotateY(degreesToRadians(0.5))
+  else if (keyboard.pressed('right')) camera.rotateY(degreesToRadians(-0.5))
+
+  if (keyboard.pressed('Q')) camera.translateY(-2)
+  else if (keyboard.pressed('E')) camera.translateY(2)
 }
-
 
 // Cockpit
 var cockpit = new THREE.Mesh(holderGeo, holderMat)
@@ -396,7 +382,6 @@ function switchCockpit() {
 
 switchCam()
 // --------------------------- Audio---------------------------------- //
-
 var listener = new THREE.AudioListener()
 esferaCam.add(listener)
 var listener2 = new THREE.AudioListener()
@@ -561,7 +546,7 @@ window.addEventListener(
 )
 
 var timerMessage = new SecondaryBox('')
-
+var cont = 0
 render()
 function render() {
   if (!modoCam)
@@ -573,6 +558,12 @@ function render() {
       )}`
     )
   else timerMessage.changeMessage('')
+  if (cont > 50) {
+    sunLight.shadow.autoUpdate = false
+    cont = 2
+  } else {
+    cont += 1
+  }
   stats.update()
   trackballControls.update()
   switchKeyboardUpdate()

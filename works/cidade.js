@@ -12,7 +12,7 @@ function insertTexture(texture, object, repeatX, repeatY) {
 }
 
 var textureLoader = new THREE.TextureLoader()
-var c = 5 // Constante escalar
+var c = 3.2 // Constante escalar
 
 // Função que cria modelo do prédio 1
 function createBuilding(modelo) {
@@ -52,6 +52,8 @@ function createBuilding(modelo) {
       var cylMat = new THREE.MeshPhongMaterial({ color: 0x888888 })
 
       var face1 = new THREE.Mesh(faceBotGeo, faceMat)
+      face1.castShadow = true
+      face1.receiveShadow = true
       face1
         .rotateX(degreesToRadians(90))
         .translateY(30 * c)
@@ -61,18 +63,24 @@ function createBuilding(modelo) {
       insertTexture(glassWindow, face1, 1.5, 1)
 
       var face2 = new THREE.Mesh(faceBotGeo, faceMat)
+      face2.castShadow = true
+      face2.receiveShadow = true
       face2
         .rotateY(degreesToRadians(90))
         .translateX(25 * c)
         .translateZ(-25 * c)
 
       var face3 = new THREE.Mesh(faceBotGeo, faceMat)
+      face3.castShadow = true
+      face3.receiveShadow = true
       face3
         .rotateY(degreesToRadians(90))
         .translateX(25 * c)
         .translateZ(25 * c)
 
       var face4 = new THREE.Mesh(faceBotGeo, faceMat)
+      face4.castShadow = true
+      face4.receiveShadow = true
       face4.translateZ(-50 * c)
 
       var roof1 = new THREE.Mesh(roofGeo, roofMat)
@@ -83,6 +91,8 @@ function createBuilding(modelo) {
       insertTexture(roofTexture, roof1, 2, 2)
 
       var faceMid1 = new THREE.Mesh(faceMidGeo, face2Mat)
+      faceMid1.castShadow = true
+      faceMid1.receiveShadow = true
       faceMid1
         .rotateX(degreesToRadians(90))
         .translateZ(20 * c)
@@ -90,18 +100,24 @@ function createBuilding(modelo) {
       insertTexture(glassWindow2, faceMid1, 1.2, 0.7)
 
       var faceMid2 = new THREE.Mesh(faceMidGeo, face2Mat)
+      faceMid2.castShadow = true
+      faceMid2.receiveShadow = true
       faceMid2
         .rotateY(degreesToRadians(90))
         .translateX(20 * c)
         .translateZ(-20 * c)
 
       var faceMid3 = new THREE.Mesh(faceMidGeo, face2Mat)
+      faceMid3.castShadow = true
+      faceMid3.receiveShadow = true
       faceMid3
         .rotateY(degreesToRadians(90))
         .translateX(20 * c)
         .translateZ(20 * c)
 
       var faceMid4 = new THREE.Mesh(faceMidGeo, face2Mat)
+      faceMid4.castShadow = true
+      faceMid4.receiveShadow = true
       faceMid4.translateZ(-40 * c)
 
       var roof2 = new THREE.Mesh(roof2Geo, roofMat)
@@ -111,6 +127,8 @@ function createBuilding(modelo) {
         .translateY(-20 * c)
 
       var faceTop1 = new THREE.Mesh(faceTopGeo, face3Mat)
+      faceTop1.castShadow = true
+      faceTop1.receiveShadow = true
       faceTop1
         .rotateX(degreesToRadians(90))
         .translateZ(15 * c)
@@ -118,18 +136,24 @@ function createBuilding(modelo) {
       insertTexture(glassWindow3, faceTop1, 0.9, 0.5)
 
       var faceTop2 = new THREE.Mesh(faceTopGeo, face3Mat)
+      faceTop2.castShadow = true
+      faceTop2.receiveShadow = true
       faceTop2
         .rotateY(degreesToRadians(90))
         .translateX(15 * c)
         .translateZ(-15 * c)
 
       var faceTop3 = new THREE.Mesh(faceTopGeo, face3Mat)
+      faceTop3.castShadow = true
+      faceTop3.receiveShadow = true
       faceTop3
         .rotateY(degreesToRadians(90))
         .translateX(15 * c)
         .translateZ(15 * c)
 
       var faceTop4 = new THREE.Mesh(faceTopGeo, face3Mat)
+      faceTop4.castShadow = true
+      faceTop4.receiveShadow = true
       faceTop4.translateZ(-30 * c)
 
       var roof3 = new THREE.Mesh(roof3Geo, roofMat)
@@ -502,8 +526,8 @@ function createBuilding(modelo) {
 }
 
 function createBuilding2(modelo) {
-  var m = 300
-  var n = 200
+  var m = 192
+  var n = 128
   var geoHolder = new THREE.PlaneGeometry(10, 10, 10, 10)
   var matHolder = new THREE.MeshPhongMaterial({ opacity: 0, transparent: true })
   switch (modelo) {
@@ -784,31 +808,31 @@ function createBuilding2(modelo) {
   }
 }
 
-var t = 50; // tamanho da rua 1x1
+var t = 50 // tamanho da rua 1x1
 
-function createStreet(modelo){
+function createStreet(modelo) {
   switch (modelo) {
     case 1: {
       var streetText = textureLoader.load('Images/Floor/street1.jpg')
-      var street =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
+      var street = new THREE.Mesh(new THREE.PlaneGeometry(t, t))
       insertTexture(streetText, street, 1, 1)
       return street
     }
     case 2: {
       var crossText = textureLoader.load('Images/Floor/Cross3.jpg')
-      var cross =  new THREE.Mesh(new THREE.PlaneGeometry(t,t/5))
+      var cross = new THREE.Mesh(new THREE.PlaneGeometry(t, t / 5))
       insertTexture(crossText, cross, 1, 1)
       return cross
     }
-    case 3:{
+    case 3: {
       var crossText = textureLoader.load('Images/Floor/Cross1.jpg')
-      var cross =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
+      var cross = new THREE.Mesh(new THREE.PlaneGeometry(t, t))
       insertTexture(crossText, cross, 1, 1)
       return cross
     }
-    case 4:{
+    case 4: {
       var crossText = textureLoader.load('Images/Floor/Cross2.jpg')
-      var cross =  new THREE.Mesh(new THREE.PlaneGeometry(t,t))
+      var cross = new THREE.Mesh(new THREE.PlaneGeometry(t, t))
       insertTexture(crossText, cross, 1, 1)
       return cross
     }
@@ -831,124 +855,172 @@ export function createCity(scene) {
     predio4[i] = createBuilding(1)
     predio5[i] = createBuilding(2)
     predio6[i] = createBuilding(3)
-/*     scene.add(predio1[i])
+    scene.add(predio1[i])
     scene.add(predio2[i])
     scene.add(predio3[i])
     scene.add(predio4[i])
     scene.add(predio5[i])
-    scene.add(predio6[i]) */
+    scene.add(predio6[i])
   }
 
-  //Posicionando Predios
-  predio1[0].translateZ(-1800).translateX(2700).rotateY(degreesToRadians(180))
+  // Posições para os blocos da cidade
+  var posA = [3000, 5, -3500]
+  var posB = [3000, 5, -2500]
 
-  predio2[0].translateZ(-1800).translateX(3150).rotateY(degreesToRadians(180))
+  // Prédios já postos
+  // Predio1 = 1
+  // Predio2 = 1
+  // Predio3 = 3
+  // Predio4 = 3
+  // Predio5 = 1
+  // Predio6 = 2
 
-  predio3[0].translateZ(-1800).translateX(3700)
+  // Posicionando Predios
+  // Primeira leva de prédios
+  predio1[0]
+    .translateZ(posA[2] + 260)
+    .translateX(posA[0] - 100)
+    .rotateY(degreesToRadians(180))
+
+  predio2[0]
+    .translateZ(posA[2] + 150)
+    .translateX(posA[0] - 350)
+    .rotateY(degreesToRadians(180))
+
+  predio3[0].translateZ(posA[2] + 450).translateX(posA[0] - 290)
 
   predio4[0]
-    .translateZ(2300)
-    .translateY(-2200)
-    .translateX(25)
+    .translateZ(posA[0] - 700)
+    .translateY(posA[2] + 50)
+    .translateX(15)
     .rotateZ(degreesToRadians(-90))
 
-  predio5[0].translateZ(1900).translateY(-2200).rotateZ(degreesToRadians(-90))
+  predio5[0]
+    .translateZ(posA[0] - 700)
+    .translateY(posA[2] + 370)
+    .rotateZ(degreesToRadians(-90))
 
   predio6[0]
-    .translateZ(1300)
-    .translateY(-2200)
+    .translateZ(posA[0] - 700)
+    .translateY(posA[2] + 700)
     .translateX(-50)
     .rotateZ(degreesToRadians(-90))
 
+  predio3[1].translateZ(posA[2] + 760).translateX(posA[0] - 350)
+
+  predio4[1]
+    .translateZ(posA[0] - 100)
+    .translateY(posA[2] + 640)
+    .translateX(15)
+    .rotateZ(degreesToRadians(-90))
+
+  // Segunda leva de prédios
+
+  predio6[1]
+    .translateZ(posB[0] - 70)
+    .translateY(posB[2] + 100)
+    .translateX(-30)
+    .rotateZ(degreesToRadians(-90))
+
+  predio3[2].translateZ(posB[2] + 150).translateX(posB[0] - 310)
+
+  predio4[2]
+    .translateZ(posB[0] - 100)
+    .translateY(posB[2] + 640)
+    .translateX(15)
+    .rotateZ(degreesToRadians(-90))
+
   //Criando Ruas
-  var street1h = new Array(17)
-  var street2h = new Array(17)
-  var street3h = new Array(17)
-  var street4h = new Array(17)
-  var street1v = new Array(17)
-  var street3v = new Array(17)
-  var street4v = new Array(17)
-  
-  for(var i = 0; i < 17; i++){
-    street1h[i] = createStreet(1)
-    street4h[i] = createStreet(1)
-    street1v[i] = createStreet(1)
-    street4v[i] = createStreet(1)
-    street2h[i] = createStreet(1)
-    street3h[i] = createStreet(1)
-    street3v[i] = createStreet(1)
-    scene.add(street1h[i]) 
-    scene.add(street4h[i]) 
-    scene.add(street1v[i]) 
-    scene.add(street4v[i])  
-    if(i!=11){
-      scene.add(street2h[i]) 
-      scene.add(street3h[i]) 
-      scene.add(street3v[i])
-    } 
-  }
-  scene.remove(street3v[5])
 
-  var cross1 = new Array(6)
-  var cross2 = new Array(6)
-  for(var i = 0; i < 6; i++){
-    if(i<4){
-      cross1[i] = createStreet(3)
-      scene.add(cross1[i])
-    } else{
-      cross1[i] = createStreet(4)
-      scene.add(cross1[i])
+  createBlockOfStreets(3000, 5, -3500)
+  //createBlockOfStreets(3000, -5, -2500)
+
+  function createBlockOfStreets(px, py, pz) {
+    var street1h = new Array(17)
+    var street2h = new Array(17)
+    var street3h = new Array(17)
+    var street4h = new Array(17)
+    var street1v = new Array(17)
+    var street3v = new Array(17)
+    var street4v = new Array(17)
+
+    for (var i = 0; i < 17; i++) {
+      street1h[i] = createStreet(1)
+      street4h[i] = createStreet(1)
+      street1v[i] = createStreet(1)
+      street4v[i] = createStreet(1)
+      street2h[i] = createStreet(1)
+      street3h[i] = createStreet(1)
+      street3v[i] = createStreet(1)
+      scene.add(street1h[i])
+      scene.add(street4h[i])
+      scene.add(street1v[i])
+      scene.add(street4v[i])
+      if (i != 11) {
+        scene.add(street2h[i])
+        scene.add(street3h[i])
+        scene.add(street3v[i])
+      }
     }
-    cross2[i] = createStreet(2)
-    scene.add(cross2[i])
+    scene.remove(street3v[5])
+
+    var cross1 = new Array(6)
+    var cross2 = new Array(6)
+    for (var i = 0; i < 6; i++) {
+      if (i < 4) {
+        cross1[i] = createStreet(3)
+        scene.add(cross1[i])
+      } else {
+        cross1[i] = createStreet(4)
+        scene.add(cross1[i])
+      }
+      cross2[i] = createStreet(2)
+      scene.add(cross2[i])
+    }
+
+    //Posicionando Ruas
+
+    for (var i = 0; i < 17; i++) {
+      street1h[i].position.set(px - i * t, py, pz)
+      street1h[i].rotateX(degreesToRadians(90))
+      street2h[i].position.set(px - i * t, py, 6 * t + pz)
+      street2h[i].rotateX(degreesToRadians(90))
+      street3h[i].position.set(px - i * t, py, 12 * t + pz)
+      street3h[i].rotateX(degreesToRadians(90))
+      street4h[i].position.set(px - i * t, py, 18 * t + pz)
+      street4h[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(180))
+      street1v[i].position.set(px + t, py, pz + t + i * t)
+      street1v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+      street3v[i].position.set(px - 11 * t, py, pz + t + i * t)
+      street3v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+      street4v[i].position.set(px - 17 * t, py, pz + t + i * t)
+      street4v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
+    }
+
+    //Cruzamentos
+    cross1[0].position.set(px + t, py, pz)
+    cross1[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+    cross1[1].position.set(px + t, py, pz + t * 18)
+    cross1[1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(180))
+    cross1[2].position.set(px - t * 17, py, pz)
+    cross1[2].rotateX(degreesToRadians(90))
+    cross1[3].position.set(px - t * 17, py, pz + t * 18)
+    cross1[3].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
+    cross1[4].position.set(px - t * 11, py, pz + t * 6)
+    cross1[4].rotateX(degreesToRadians(90))
+    cross1[5].position.set(px - t * 11, py, pz + t * 12)
+    cross1[5].rotateX(degreesToRadians(90))
+    cross2[1].position.set(px - t * 11, py + 0.1, pz + t / 2.5)
+    cross2[1].rotateX(degreesToRadians(90))
+    cross2[3].position.set(px - t * 11, py + 0.1, pz + t * 18 - t / 2.5)
+    cross2[3].rotateX(degreesToRadians(90))
+    cross2[4].position.set(px + t / 1.66, py + 0.1, pz + t * 6)
+    cross2[4].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+    cross2[5].position.set(px + t / 1.66, py + 0.1, pz + t * 12)
+    cross2[5].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
+    cross2[2].position.set(px - t * 16 - t / 1.66, py + 0.1, pz + t * 6)
+    cross2[2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
+    cross2[0].position.set(px - t * 16 - t / 1.66, py + 0.1, pz + t * 12)
+    cross2[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
   }
-
-  //Posicionando Ruas
-  var px = 3000 
-  var py = 5 
-  var pz = -3500 
-
-  for (var i = 0; i < 17; i++){ 
-    street1h[i].position.set((px-(i*t)), py, pz)
-    street1h[i].rotateX(degreesToRadians(90))
-    street2h[i].position.set((px-(i*t)), py, (6*t+pz))
-    street2h[i].rotateX(degreesToRadians(90))
-    street3h[i].position.set((px-(i*t)), py, (12*t+pz))
-    street3h[i].rotateX(degreesToRadians(90))
-    street4h[i].position.set((px-(i*t)), py, (18*t+pz))
-    street4h[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(180))
-    street1v[i].position.set((px+t), py, (pz+t+(i*t)))
-    street1v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-    street3v[i].position.set((px-11*t), py, (pz+t+(i*t)))
-    street3v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-    street4v[i].position.set((px-17*t), py, (pz+t+(i*t)))
-    street4v[i].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
-  }
-
-  //Cruzamentos
-  cross1[0].position.set(px+t, py, pz)
-  cross1[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  cross1[1].position.set(px+t, py, pz+(t*18))
-  cross1[1].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(180))
-  cross1[2].position.set(px-(t*17), py, pz)
-  cross1[2].rotateX(degreesToRadians(90))
-  cross1[3].position.set(px-(t*17), py, pz+(t*18))
-  cross1[3].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
-  cross1[4].position.set(px-(t*11), py, pz+(t*6))
-  cross1[4].rotateX(degreesToRadians(90))
-  cross1[5].position.set(px-(t*11), py, pz+(t*12))
-  cross1[5].rotateX(degreesToRadians(90))
-  cross2[1].position.set(px-(t*11), py+0.1, pz+(t/2.5))
-  cross2[1].rotateX(degreesToRadians(90))
-  cross2[3].position.set(px-(t*11), py+0.1, pz+(t*18)-(t/2.5))
-  cross2[3].rotateX(degreesToRadians(90))
-  cross2[4].position.set(px+(t/1.66), py+0.1, pz+(t*6))
-  cross2[4].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  cross2[5].position.set(px+(t/1.66), py+0.1, pz+(t*12))
-  cross2[5].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(90))
-  cross2[2].position.set(px-(t*16)-(t/1.66), py+0.1, pz+(t*6))
-  cross2[2].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90))
-  cross2[0].position.set(px-(t*16)-(t/1.66), py+0.1, pz+(t*12))
-  cross2[0].rotateX(degreesToRadians(90)).rotateZ(degreesToRadians(-90)) 
-
 }
