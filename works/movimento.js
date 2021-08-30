@@ -14,8 +14,8 @@ var speedVertB = 0;
 
 
 // Movimento direcional
-export function esquerda(esferaMov, esferaHelice, esferaCam, speed) {
-  if(speed > 1) {  // Movimento somente se houver aceleracao
+export function esquerda(esferaMov, esferaHelice, esferaCam, speed, subiu) {
+  if(subiu && speed > 0.01) {  // Movimento somente se houver aceleracao
     if (auxRotHorizontal < 80 && auxRotHorizontal >= 0) {
       esferaMov.rotation.z -= angleRotHori; // Rotaciona o aviao para os lados
       auxRotHorizontal++; // Auxiliar para nivelamento
@@ -33,8 +33,8 @@ export function esquerda(esferaMov, esferaHelice, esferaCam, speed) {
     }
   }   
 }
-export function direita(esferaMov, esferaHelice, esferaCam, speed) {
-  if (speed > 1) {
+export function direita(esferaMov, esferaHelice, esferaCam, speed, subiu) {
+  if (subiu && speed > 0.01) {
     if (auxRotHorizontal > -80 && auxRotHorizontal <= 0) {
       esferaMov.rotation.z += angleRotHori;
       auxRotHorizontal--;
@@ -52,8 +52,8 @@ export function direita(esferaMov, esferaHelice, esferaCam, speed) {
     }
   }
 }
-export function cima(esferaHelice, esferaMov, speed) {
-  if(speed > 1) {  
+export function cima(esferaHelice, esferaMov, speed, subiu) {
+  if(subiu && speed > 0.01) {  
     if (auxRotVertical > -60 && auxRotVertical <= 0) {
       esferaMov.rotation.x += angleVert; // Movimenta para cima com a rotação
       auxRotVertical--; // Auxiliar para nivelamento
@@ -68,8 +68,8 @@ export function cima(esferaHelice, esferaMov, speed) {
     }
   }
 }
-export function baixo(esferaHelice, esferaMov, speed){ 
-  if (speed > 1) {
+export function baixo(esferaHelice, esferaMov, speed, subiu){ 
+  if (subiu && speed > 0.01) {
     if (auxRotVertical < 60 && auxRotVertical >= 0) {
       esferaMov.rotation.x -= angleVert;
       auxRotVertical++;

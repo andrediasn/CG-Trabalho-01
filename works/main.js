@@ -177,7 +177,7 @@ function switchTrajeto() {
 }
 switchTrajeto()
 
-circuitoFull(scene)
+//circuitoFull(scene)
 
 // Tempo
 var contadorCP = 0
@@ -213,9 +213,7 @@ var esferaMov = getEsferaMov()
 var speed = 0
 var auxSpeed = 0
 var position = new THREE.Vector3()
-// Auxiliares na recursividade:
-var auxAce
-var auxDes
+var subiu = false
 var mAce = false
 
 // Movimento de aceleracao
@@ -226,26 +224,17 @@ function aceleracao() {
   }
 }
 function acelera() {
-  clearTimeout(auxDes) // Interrompe desaceleracao
   if (!modoCam) {
-    // Previne continuacao de movimento na troca de camera 
-    mAce = true
-    if (speed < 2) {
-      // Velocidade maxima
-      speed += 0.04 // Valor da aceleracao
-      auxAce = setTimeout(acelera, 100) // Recursividade para simular aceleracao
-    }
+    if (speed < 3) 
+      speed += 0.001 
+    if (speed > 0.5)
+      subiu = true
   }
 }
 function desacelera() {
-  clearTimeout(auxAce)
-  if (!modoCam) {
-    mAce = false
-    if (speed > 0) {
-      speed -= 0.4
-      auxDes = setTimeout(desacelera, 100)
-    }
-  }
+  if (!modoCam) 
+    if (speed > 0) 
+      speed -= 0.001
 }
 
 function getPosition() {
@@ -508,7 +497,7 @@ var keyboard = new KeyboardState()
 function keyboardUpdate() {
   keyboard.update()
   if (!modoCam) {
-    if (keyboard.pressed('down')) baixo(esferaHelice, esferaMov, speed)
+    if (keyboard.pressed('down')) baixo(esferaHelice, esferaMov, speed, subiu)
     if (keyboard.down('down')) {
       vD = true
       nivV = false
@@ -518,7 +507,7 @@ function keyboardUpdate() {
       if (!vU) nivV = true
     }
 
-    if (keyboard.pressed('up')) cima(esferaHelice, esferaMov, speed)
+    if (keyboard.pressed('up')) cima(esferaHelice, esferaMov, speed, subiu)
     if (keyboard.down('up')) {
       vU = true
       nivV = false
@@ -529,7 +518,7 @@ function keyboardUpdate() {
     }
 
     if (keyboard.pressed('left'))
-      esquerda(esferaMov, esferaHelice, esferaCam, speed)
+      esquerda(esferaMov, esferaHelice, esferaCam, speed, subiu)
     if (keyboard.down('left')) {
       vL = true
       nivH = false
@@ -540,7 +529,7 @@ function keyboardUpdate() {
     }
 
     if (keyboard.pressed('right'))
-      direita(esferaMov, esferaHelice, esferaCam, speed)
+      direita(esferaMov, esferaHelice, esferaCam, speed, subiu)
     if (keyboard.down('right')) {
       vR = true
       nivH = false
@@ -549,8 +538,8 @@ function keyboardUpdate() {
       vR = false
       if (!vL) nivH = true
     }
-    if (keyboard.down('Q')) acelera()
-    if (keyboard.down('A')) desacelera()
+    if (keyboard.pressed('Q')) acelera()
+    else if (keyboard.pressed('A')) desacelera()
     if (keyboard.down('C')) switchCockpit()
     if (keyboard.down('R')) document.location.reload(true)
     if (keyboard.down('H')) switchControls()
@@ -580,8 +569,8 @@ function switchControls() {
     Use R para reiniciar<br/>
     <br/>
     Modo 1: Simulador<br/>
-    * Q para acelerar<br/>
-    * A para desacelerar<br/>
+    * Segure Q para acelerar<br/>
+    * Segure A para desacelerar<br/>
     * Setas para direcionar<br/>
     * C para modo cockpit<br/>
     * ENTER para trajeto on/off<br/>
