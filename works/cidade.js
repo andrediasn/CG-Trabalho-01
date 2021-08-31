@@ -32,19 +32,19 @@ function createBuilding(modelo, textureLoader) {
       var cylGeo2 = new THREE.CylinderGeometry(0.8 * c, 0.2 * c, 10 * c, 28, 28)
       var sphereGeo = new THREE.SphereGeometry(3.5 * c, 50, 50)
 
-      var faceMat = new THREE.MeshBasicMaterial({
+      var faceMat = new THREE.MeshPhongMaterial({
         color: 'rgba(255, 255, 255)',
         side: THREE.DoubleSide,
       })
-      var face2Mat = new THREE.MeshBasicMaterial({
+      var face2Mat = new THREE.MeshPhongMaterial({
         color: 'rgba(255, 255, 255)',
         side: THREE.DoubleSide,
       })
-      var face3Mat = new THREE.MeshBasicMaterial({
+      var face3Mat = new THREE.MeshPhongMaterial({
         color: 'rgba(255, 255, 255)',
         side: THREE.DoubleSide,
       })
-      var roofMat = new THREE.MeshBasicMaterial({
+      var roofMat = new THREE.MeshPhongMaterial({
         color: 0xababab,
         side: THREE.DoubleSide,
       })
@@ -218,11 +218,11 @@ function createBuilding(modelo, textureLoader) {
       var faceTopGeo = new THREE.PlaneGeometry(30 * c, 30 * c)
       var faceBotGeo = new THREE.PlaneGeometry(50 * c, 50 * c)
 
-      var faceMat = new THREE.MeshBasicMaterial({
+      var faceMat = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
       })
-      var faceMatPure = new THREE.MeshBasicMaterial({
+      var faceMatPure = new THREE.MeshPhongMaterial({
         color: 0xffffec,
         side: THREE.DoubleSide,
       })
@@ -277,13 +277,13 @@ function createBuilding(modelo, textureLoader) {
         new THREE.Vector3(15 * c, 40 * c, 10 * c),
       ]
       var convexGeometry = new ConvexGeometry(points)
-      var ceilingMat = new THREE.MeshBasicMaterial({ color: 0x212121 })
+      var ceilingMat = new THREE.MeshPhongMaterial({ color: 0x212121 })
       var ceiling1 = new THREE.Mesh(convexGeometry, ceilingMat)
       ceiling1.castShadow = true
       ceiling1.receiveShadow = true
       ceiling1.rotateX(degreesToRadians(-90)).translateZ(25 * c)
 
-      var faceTopMat = new THREE.MeshBasicMaterial({
+      var faceTopMat = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
       })
@@ -379,39 +379,39 @@ function createBuilding(modelo, textureLoader) {
       var diagonalRoofGeo = new THREE.PlaneGeometry(21 * c, 30 * c)
       var diagonalRoofGeo2 = new THREE.PlaneGeometry(21 * c, 28 * c)
 
-      var faceMat = new THREE.MeshBasicMaterial({
+      var faceMat = new THREE.MeshPhongMaterial({
         color: 0xeecaba,
         side: THREE.DoubleSide,
       })
-      var faceMatPure = new THREE.MeshBasicMaterial({
+      var faceMatPure = new THREE.MeshPhongMaterial({
         color: 0xf3e2d3,
         side: THREE.DoubleSide,
       })
-      var faceMidMat = new THREE.MeshBasicMaterial({
+      var faceMidMat = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
       })
-      var faceRoofMat1 = new THREE.MeshBasicMaterial({
+      var faceRoofMat1 = new THREE.MeshPhongMaterial({
         color: 0xdddddd,
         side: THREE.DoubleSide,
       })
-      var faceRoofMat2 = new THREE.MeshBasicMaterial({
+      var faceRoofMat2 = new THREE.MeshPhongMaterial({
         color: 0xf7e8b1,
         side: THREE.DoubleSide,
       })
-      var roofMat = new THREE.MeshBasicMaterial({
+      var roofMat = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
       })
-      var roofMat2 = new THREE.MeshBasicMaterial({
+      var roofMat2 = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         side: THREE.DoubleSide,
       })
-      var roofTileMat = new THREE.MeshBasicMaterial({
+      var roofTileMat = new THREE.MeshPhongMaterial({
         color: 0xafafaf,
         side: THREE.DoubleSide,
       })
-      var diagonalRoofMat = new THREE.MeshBasicMaterial({
+      var diagonalRoofMat = new THREE.MeshPhongMaterial({
         color: 0xeec8b8,
         side: THREE.DoubleSide,
       })
@@ -581,6 +581,10 @@ function createBuilding2(modelo, textureLoader) {
   var n = 128
   var geoHolder = new THREE.PlaneGeometry(10, 10, 10, 10)
   var matHolder = new THREE.MeshPhongMaterial({ opacity: 0, transparent: true })
+  var mat = new THREE.MeshPhongMaterial({
+    color: 'rgba(255, 255, 255)',
+    side: THREE.DoubleSide,
+  })
   switch (modelo) {
     case 1: {
       var predio1 = new THREE.Mesh(geoHolder, matHolder)
@@ -589,7 +593,13 @@ function createBuilding2(modelo, textureLoader) {
       predio1.translateY(0.5 * m)
 
       var p1Text3 = textureLoader.load('Images/Predio1/Janelas.jpg')
-      var p1bk = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 2 * m))
+      var p1bk = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p1bk.castShadow = true
       p1bk.receiveShadow = true
       p1bk.translateY(0.5 * m).rotateY(degreesToRadians(180))
@@ -606,7 +616,11 @@ function createBuilding2(modelo, textureLoader) {
           true,
           1.97,
           3.04
-        )
+        ),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
       )
       p1ft.castShadow = true
       p1ft.receiveShadow = true
@@ -614,14 +628,26 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p1Text1, p1ft, 1, 1.5)
 
       var p1Text4 = textureLoader.load('Images/Predio1/Janelas.jpg')
-      var p1ft2 = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 1 * m))
+      var p1ft2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * m, 1 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p1ft2.castShadow = true
       p1ft2.receiveShadow = true
       p1ft2.translateY(m).translateZ(0.5 * m)
       insertTexture(p1Text4, p1ft2, 1, 1.5)
 
       var p1Text2 = textureLoader.load('Images/Predio1/Tijolos2.jpg')
-      var p1lf = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      var p1lf = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p1lf.castShadow = true
       p1lf.receiveShadow = true
       p1lf
@@ -631,7 +657,13 @@ function createBuilding2(modelo, textureLoader) {
         .translateY(0.5 * m)
       insertTexture(p1Text2, p1lf, 3, 10)
 
-      var p1rt = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      var p1rt = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p1rt.castShadow = true
       p1rt.receiveShadow = true
       p1rt
@@ -642,7 +674,13 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p1Text2, p1rt, 3, 10)
 
       var p1Text5 = textureLoader.load('Images/Predio1/Concreto2.jpg')
-      var p1up1 = new THREE.Mesh(new THREE.PlaneGeometry(1 * m, 0.5 * m))
+      var p1up1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * m, 0.5 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p1up1.castShadow = true
       p1up1.receiveShadow = true
       p1up1
@@ -653,7 +691,11 @@ function createBuilding2(modelo, textureLoader) {
 
       var p1Text6 = textureLoader.load('Images/Predio1/Concreto3.jpg')
       var p1up2 = new THREE.Mesh(
-        new THREE.CircleGeometry(0.5 * m, 90, 3.15, 3.1)
+        new THREE.CircleGeometry(0.5 * m, 90, 3.15, 3.1),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
       )
       p1up2.castShadow = true
       p1up2.receiveShadow = true
@@ -681,26 +723,50 @@ function createBuilding2(modelo, textureLoader) {
       predio2.translateY(1 * n)
 
       var p2Text1 = textureLoader.load('Images/Predio2/Tijolos.jpg')
-      var p2rt = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 2 * n))
+      var p2rt = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2rt.castShadow = true
       p2rt.receiveShadow = true
       p2rt.translateX(1 * n).rotateY(degreesToRadians(90))
       insertTexture(p2Text1, p2rt, 4, 5)
-      var p2lf = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 2 * n))
+      var p2lf = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2lf.castShadow = true
       p2lf.receiveShadow = true
       p2lf.translateX(-1 * n).rotateY(degreesToRadians(-90))
       insertTexture(p2Text1, p2lf, 4, 5)
 
       var p2Text2 = textureLoader.load('Images/Predio2/Janelas1.jpg')
-      var p2bk = new THREE.Mesh(new THREE.PlaneGeometry(2 * n, 2 * n))
+      var p2bk = new THREE.Mesh(
+        new THREE.PlaneGeometry(2 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2bk.castShadow = true
       p2bk.receiveShadow = true
       p2bk.translateZ(-0.5 * n).rotateY(degreesToRadians(180))
       insertTexture(p2Text2, p2bk, 4, 3)
 
       var p2Text3 = textureLoader.load('Images/Predio2/Janelas.jpg')
-      var p2ft1lf = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * n, 2 * n))
+      var p2ft1lf = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2ft1lf.castShadow = true
       p2ft1lf.receiveShadow = true
       p2ft1lf
@@ -708,7 +774,13 @@ function createBuilding2(modelo, textureLoader) {
         .translateZ(-1 * n)
         .rotateY(degreesToRadians(180))
       insertTexture(p2Text3, p2ft1lf, 1, 5)
-      var p2ft1rt = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * n, 2 * n))
+      var p2ft1rt = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2ft1rt.castShadow = true
       p2ft1rt.receiveShadow = true
       p2ft1rt
@@ -718,7 +790,13 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p2Text3, p2ft1rt, 1, 5)
 
       var p2Text4 = textureLoader.load('Images/Predio2/Janelas1.jpg')
-      var p2ft2 = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 2 * n))
+      var p2ft2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2ft2.castShadow = true
       p2ft2.receiveShadow = true
       p2ft2
@@ -728,7 +806,13 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p2Text4, p2ft2, 2, 4)
 
       var p2Text5 = textureLoader.load('Images/Predio2/Tijolos.jpg')
-      var p2ft3lf = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 2 * n))
+      var p2ft3lf = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.25 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2ft3lf.castShadow = true
       p2ft3lf.receiveShadow = true
       p2ft3lf
@@ -736,7 +820,13 @@ function createBuilding2(modelo, textureLoader) {
         .translateX(-0.875 * n)
         .translateZ(-0.5 * n)
       insertTexture(p2Text5, p2ft3lf, 1, 5)
-      var p2ft3rt = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 2 * n))
+      var p2ft3rt = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.25 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2ft3rt.castShadow = true
       p2ft3rt.receiveShadow = true
       p2ft3rt
@@ -746,7 +836,13 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p2Text5, p2ft3rt, 1, 5)
 
       var p2Text6 = textureLoader.load('Images/Predio2/Teto.jpg')
-      var p2up = new THREE.Mesh(new THREE.PlaneGeometry(0.75 * n, 2 * n))
+      var p2up = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.75 * n, 2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2up.castShadow = true
       p2up.receiveShadow = true
       p2up
@@ -756,7 +852,13 @@ function createBuilding2(modelo, textureLoader) {
         .translateX(0.125 * n)
       insertTexture(p2Text6, p2up, 10, 16)
       var p2Text7 = textureLoader.load('Images/Predio2/Teto.jpg')
-      var p2up2 = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 0.5 * n))
+      var p2up2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.25 * n, 0.5 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2up2.castShadow = true
       p2up2.receiveShadow = true
       p2up2
@@ -766,7 +868,13 @@ function createBuilding2(modelo, textureLoader) {
         .translateX(-0.375 * n)
         .translateY(-0.75 * n)
       insertTexture(p2Text7, p2up2, 4, 4)
-      var p2up3 = new THREE.Mesh(new THREE.PlaneGeometry(0.25 * n, 0.5 * n))
+      var p2up3 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.25 * n, 0.5 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2up3.castShadow = true
       p2up3.receiveShadow = true
       p2up3
@@ -778,7 +886,13 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p2Text7, p2up3, 4, 4)
 
       var p2Text8 = textureLoader.load('Images/Predio2/door.jpg')
-      var p2ft4 = new THREE.Mesh(new THREE.PlaneGeometry(1 * n, 0.2 * n))
+      var p2ft4 = new THREE.Mesh(
+        new THREE.PlaneGeometry(1 * n, 0.2 * n),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p2ft4.castShadow = true
       p2ft4.receiveShadow = true
       p2ft4
@@ -803,52 +917,106 @@ function createBuilding2(modelo, textureLoader) {
       predio3.translateY(m)
 
       var p3Text = textureLoader.load('Images/Predio3/Janelas2.jpg')
-      var p3ft1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      var p3ft1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3ft1.castShadow = true
       p3ft1.receiveShadow = true
       p3ft1.translateX(-0.5 * m).translateZ(0.5 * m)
       insertTexture(p3Text, p3ft1, 1, 7)
-      var p3ft2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      var p3ft2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3ft2.castShadow = true
       p3ft2.receiveShadow = true
       p3ft2.translateX(0.5 * m).translateZ(0.5 * m)
       insertTexture(p3Text, p3ft2, 1, 7)
 
-      var p3bk1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      var p3bk1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3bk1.castShadow = true
       p3bk1.receiveShadow = true
       p3bk1.translateX(-0.5 * m).translateZ(-0.5 * m)
       insertTexture(p3Text, p3bk1, 1, 7)
-      var p3bk2 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 2 * m))
+      var p3bk2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3bk2.castShadow = true
       p3bk2.receiveShadow = true
       p3bk2.translateX(0.5 * m).translateZ(-0.5 * m)
       insertTexture(p3Text, p3bk2, 1, 5)
 
       var p3Text2 = textureLoader.load('Images/Predio3/Janelas3.jpg')
-      var p3lf1 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      var p3lf1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3lf1.castShadow = true
       p3lf1.receiveShadow = true
       p3lf1.translateX(-0.75 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3lf1, 2, 7)
-      var p3lf2 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      var p3lf2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3lf2.castShadow = true
       p3lf2.receiveShadow = true
       p3lf2.translateX(-0.25 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3lf2, 2, 7)
-      var p3rt1 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      var p3rt1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3rt1.castShadow = true
       p3rt1.receiveShadow = true
       p3rt1.translateX(0.75 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3rt1, 2, 7)
-      var p3rt2 = new THREE.Mesh(new THREE.PlaneGeometry(m, 2 * m))
+      var p3rt2 = new THREE.Mesh(
+        new THREE.PlaneGeometry(m, 2 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3rt2.castShadow = true
       p3rt2.receiveShadow = true
       p3rt2.translateX(0.25 * m).rotateY(degreesToRadians(90))
       insertTexture(p3Text2, p3rt2, 1, 2)
 
       var p3Text3 = textureLoader.load('Images/Predio3/Concreto.jpg')
-      var p3up1 = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, m))
+      var p3up1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3up1.castShadow = true
       p3up1.receiveShadow = true
       p3up1
@@ -866,47 +1034,95 @@ function createBuilding2(modelo, textureLoader) {
       insertTexture(p3Text3, p3up2, 2, 4)
 
       var p3Text4 = textureLoader.load('Images/Predio3/Janelas4.jpg')
-      var p3c1ft = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      var p3c1ft = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.25 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c1ft.castShadow = true
       p3c1ft.receiveShadow = true
       p3c1ft.translateZ(0.2 * m).translateY(-0.5 * m)
       insertTexture(p3Text4, p3c1ft, 1, 1)
-      var p3c1bk = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      var p3c1bk = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.25 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c1bk.castShadow = true
       p3c1bk.receiveShadow = true
       p3c1bk.translateZ(-0.2 * m).translateY(-0.5 * m)
       insertTexture(p3Text4, p3c1bk, 1, 1)
 
       var p3Text5 = textureLoader.load('Images/Predio3/Janelas5.jpg')
-      var p3c1up = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      var p3c1up = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.4 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c1up.castShadow = true
       p3c1up.receiveShadow = true
       p3c1up.translateY(-0.375 * m).rotateX(degreesToRadians(-90))
       insertTexture(p3Text5, p3c1up, 1, 1)
       var p3Text6 = textureLoader.load('Images/Predio3/Tijolos.jpg')
-      var p3c1dn = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      var p3c1dn = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.4 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c1dn.castShadow = true
       p3c1dn.receiveShadow = true
       p3c1dn.translateY(-0.625 * m).rotateX(degreesToRadians(90))
       insertTexture(p3Text6, p3c1dn, 5, 5)
 
-      var p3c2ft = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      var p3c2ft = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.25 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c2ft.castShadow = true
       p3c2ft.receiveShadow = true
       p3c2ft.translateZ(0.2 * m).translateY(0.5 * m)
       insertTexture(p3Text4, p3c2ft, 1, 1)
-      var p3c2bk = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.25 * m))
+      var p3c2bk = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.25 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c2bk.castShadow = true
       p3c2bk.receiveShadow = true
       p3c2bk.translateZ(-0.2 * m).translateY(0.5 * m)
       insertTexture(p3Text4, p3c2bk, 1, 1)
 
-      var p3c2up = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      var p3c2up = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.4 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c2up.castShadow = true
       p3c2up.receiveShadow = true
       p3c2up.translateY(0.625 * m).rotateX(degreesToRadians(-90))
       insertTexture(p3Text5, p3c2up, 1, 1)
-      var p3c2dn = new THREE.Mesh(new THREE.PlaneGeometry(0.5 * m, 0.4 * m))
+      var p3c2dn = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.5 * m, 0.4 * m),
+        new THREE.MeshPhongMaterial({
+          color: 'rgba(255, 255, 255)',
+          side: THREE.DoubleSide,
+        })
+      )
       p3c2dn.castShadow = true
       p3c2dn.receiveShadow = true
       p3c2dn.translateY(0.375 * m).rotateX(degreesToRadians(90))
@@ -965,15 +1181,15 @@ function createStreet(modelo, textureLoader) {
       insertTexture(crossText, cross, 1, 1)
       return cross
     }
-    case 5:{
+    case 5: {
       var pisoText = textureLoader.load('Images/Floor/Piso.jpg')
-      var piso = new THREE.Mesh(new THREE.PlaneGeometry(t*5, t*5))
+      var piso = new THREE.Mesh(new THREE.PlaneGeometry(t * 5, t * 5))
       insertTexture(pisoText, piso, 20, 20)
       return piso
     }
-    case 6:{
+    case 6: {
       var pisoText = textureLoader.load('Images/Floor/Piso.jpg')
-      var piso = new THREE.Mesh(new THREE.PlaneGeometry(t*11, t*5))
+      var piso = new THREE.Mesh(new THREE.PlaneGeometry(t * 11, t * 5))
       insertTexture(pisoText, piso, 40, 20)
       return piso
     }
@@ -1244,15 +1460,15 @@ export function createCity(scene, LoadingManager) {
     for (var i = 0; i < 3; i++) {
       piso1[i] = createStreet(5, textureLoader)
       scene.add(piso1[i])
-      piso1[i].position.set(px-(t*14), py, pz+(t*3)+(t*6*i))
+      piso1[i].position.set(px - t * 14, py, pz + t * 3 + t * 6 * i)
       piso1[i].rotateX(degreesToRadians(90))
     }
     var piso2 = new Array(3)
     for (var i = 0; i < 3; i++) {
       piso2[i] = createStreet(6, textureLoader)
       scene.add(piso2[i])
-      piso2[i].position.set(px-(t*5), py, pz+(t*3)+(t*6*i))
-      piso2[i].rotateX(degreesToRadians(90)) 
+      piso2[i].position.set(px - t * 5, py, pz + t * 3 + t * 6 * i)
+      piso2[i].rotateX(degreesToRadians(90))
     }
   }
 }
