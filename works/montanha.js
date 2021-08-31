@@ -249,7 +249,7 @@ export function addMontanhas(scene) {
   montanhaAlta.map((montanha) => {
     scene.add(montanha)
     montanha.matrixAutoUpdate = false
-    montanha.matrix.multiply(mat4.makeTranslation(-1000, 0, -1390))
+    montanha.matrix.multiply(mat4.makeTranslation(-1000, 0, -2300))
   })
 
   // Montanha da Esquerda
@@ -260,7 +260,7 @@ export function addMontanhas(scene) {
   montanhaEsquerda.map((montanha) => {
     scene.add(montanha)
     montanha.matrixAutoUpdate = false
-    montanha.matrix.multiply(mat4.makeTranslation(-2300, 0, -600))
+    montanha.matrix.multiply(mat4.makeTranslation(-2300, 0, -2000))
     montanha.matrix.multiply(mat4.makeRotationY(degreesToRadians(20)))
   })
 

@@ -94,11 +94,11 @@ const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x111111, 0.7)
 scene.add(ambientLight)
 
 // Sol
-const sunPosition = new THREE.Vector3(1000, 2000, 0)
+const sunPosition = new THREE.Vector3(0, 2000, -2000)
 
 // Criando o spotLight do sol
-var sunLight = new THREE.SpotLight('rgb(255,136,0)')
-sunLight.intensity = 3
+var sunLight = new THREE.SpotLight('rgb(255,200,100)')
+sunLight.intensity = 1.5
 sunLight.position.copy(sunPosition)
 sunLight.distance = 0
 sunLight.castShadow = true
@@ -114,7 +114,7 @@ sunLight.shadow.camera.near = 0.2
 scene.add(sunLight)
 
 // Criando o spotLight dinâmico para o avião
-var planeLight = new THREE.SpotLight('rgb(255,136,0)')
+var planeLight = new THREE.SpotLight('rgb(255,200,100)')
 planeLight.intensity = 0.2
 planeLight.position.set(new THREE.Vector3(0, 0, 0))
 planeLight.castShadow = true
@@ -204,7 +204,7 @@ function getCircuito() {
 
 // ----------------- Aviao ----------------- //
 var posX = 1001
-var posY = 7
+var posY = 10
 var posZ = -3700
 criaAviao(scene, posX, posY, posZ)
 var esferaHelice = getEsferaHelice()
@@ -222,13 +222,12 @@ var mAce = false
 function aceleracao() {
   if (!modoCam) {
     if (speed > 0) esferaHelice.translateZ(speed) // Movimento para frente
-    console.log(speed)
   }
 }
 function acelera() {
   if (!modoCam) {
     if (speed < 3) 
-      speed += 0.001 
+      speed += 0.005 
     if (speed > 0.5)
       subiu = true
   }
@@ -236,7 +235,7 @@ function acelera() {
 function desacelera() {
   if (!modoCam) 
     if (speed > 0) 
-      speed -= 0.001
+      speed -= 0.005
 }
 
 function getPosition() {
@@ -545,8 +544,8 @@ function keyboardUpdate() {
     if (keyboard.down('R')) document.location.reload(true)
     if (keyboard.down('H')) switchControls()
     if (keyboard.down('enter')) switchTrajeto()
-    if (keyboard.down('T')) getPTeste() // usado para testes
-    if (keyboard.down('G')) godMode()
+    //if (keyboard.down('T')) getPTeste() // usado para testes
+    //if (keyboard.down('G')) godMode()
   }
   if (keyboard.down('space')) switchCam()
 }
