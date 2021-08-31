@@ -110,19 +110,51 @@ var createTree = function () {
 
 var mat4 = new THREE.Matrix4()
 var arvores = []
-export function addArvores(scene){
-
-
-  for (let i = 0; i < 300; i++) {
+var arvores2 = []
+var arvores3 = []
+export function addArvores(scene) {
+  for (let i = 0; i < 150; i++) {
     arvores.push(createTree())
   }
 
-  arvores.map((arvore, index) => {
+  arvores.map((arvore) => {
     scene.add(arvore)
     arvore.matrix.multiply(
       mat4.makeTranslation(
-        (Math.random() - 0.35) * 6500,
-        (Math.random() - 0.35) * 5000,
+        (Math.random() * 0.13 - 0.2) * 11900,
+        (Math.random() * 1.5 - 1.5) * -1500,
+        1.8
+      )
+    )
+    arvore.matrix.multiply(mat4.makeRotationX(degreesToRadians(-90)))
+  })
+
+  for (let i = 0; i < 150; i++) {
+    arvores2.push(createTree())
+  }
+
+  arvores2.map((arvore) => {
+    scene.add(arvore)
+    arvore.matrix.multiply(
+      mat4.makeTranslation(
+        (Math.random() * 0.07 - 0.2) * -21900,
+        (Math.random() * 1.5 - 1.5) * -1500,
+        1.8
+      )
+    )
+    arvore.matrix.multiply(mat4.makeRotationX(degreesToRadians(-90)))
+  })
+
+  for (let i = 0; i < 150; i++) {
+    arvores3.push(createTree())
+  }
+
+  arvores3.map((arvore) => {
+    scene.add(arvore)
+    arvore.matrix.multiply(
+      mat4.makeTranslation(
+        (Math.random() * 0.28 - 0.2) * -18500,
+        (Math.random() * 0.9 - 1) * 1000,
         1.8
       )
     )
@@ -131,9 +163,13 @@ export function addArvores(scene){
 }
 
 export function showEnvironmentObjects(scene) {
-  arvores.map((arvore) => { arvore.visible = true })
+  arvores.map((arvore) => {
+    arvore.visible = true
+  })
 }
 
 export function hideEnvironmentObjects(scene) {
-  arvores.map((arvore) => { arvore.visible = false })
+  arvores.map((arvore) => {
+    arvore.visible = false
+  })
 }
