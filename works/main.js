@@ -43,6 +43,7 @@ import {
 } from './arvore.js'
 import { loadGLTFFile } from './externalObject.js'
 import { createCity } from './cidade.js'
+import { createPeriferia } from './periferia.js'
 
 var stats = new Stats() // To show FPS information
 var scene = new THREE.Scene() // Create main scene
@@ -156,6 +157,7 @@ loadGLTFFile(
 // ------------------ Cidade --------------- //
 
 createCity(scene, LoadingManager)
+createPeriferia(scene, LoadingManager)
 
 //addMontanhas(scene)
 // Árvores
@@ -483,7 +485,6 @@ for (let i = 0; i < 6; i++) textSky[i].side = THREE.BackSide
 let skyboxGeo = new THREE.BoxGeometry(90000, 90000, 90000)
 let skybox = new THREE.Mesh(skyboxGeo, textSky)
 scene.add(skybox)
-//skybox.translateY(2000);
 
 // --------------------------- Keyboard---------------------------------- //
 
