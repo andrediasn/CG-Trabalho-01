@@ -159,9 +159,9 @@ loadGLTFFile(
 createCity(scene, LoadingManager)
 createPeriferia(scene, LoadingManager)
 
-//addMontanhas(scene)
+addMontanhas(scene)
 // Árvores
-//addArvores(scene)
+addArvores(scene)
 
 // ----------------- Circuito --------------- //
 
