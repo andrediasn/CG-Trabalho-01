@@ -28,9 +28,9 @@ function createBuilding(modelo, textureLoader) {
       var roofGeo = new THREE.PlaneGeometry(50 * c, 50 * c)
       var roof2Geo = new THREE.PlaneGeometry(40 * c, 40 * c)
       var roof3Geo = new THREE.PlaneGeometry(30 * c, 30 * c)
-      var cylGeo = new THREE.CylinderGeometry(1 * c, 1 * c, 14 * c, 30, 30)
-      var cylGeo2 = new THREE.CylinderGeometry(0.8 * c, 0.2 * c, 10 * c, 28, 28)
-      var sphereGeo = new THREE.SphereGeometry(3.5 * c, 50, 50)
+      var cylGeo = new THREE.CylinderGeometry(1 * c, 1 * c, 14 * c, 8, 1)
+      var cylGeo2 = new THREE.CylinderGeometry(0.8 * c, 0.2 * c, 10 * c, 8, 1)
+      var sphereGeo = new THREE.SphereGeometry(3.5 * c, 8, 6)
 
       var faceMat = new THREE.MeshPhongMaterial({
         color: 'rgba(255, 255, 255)',
@@ -579,7 +579,7 @@ function createBuilding(modelo, textureLoader) {
 function createBuilding2(modelo, textureLoader) {
   var m = 192
   var n = 128
-  var geoHolder = new THREE.PlaneGeometry(10, 10, 10, 10)
+  var geoHolder = new THREE.PlaneGeometry(10, 10)
   var matHolder = new THREE.MeshPhongMaterial({ opacity: 0, transparent: true })
   switch (modelo) {
     case 1: {
@@ -604,8 +604,8 @@ function createBuilding2(modelo, textureLoader) {
           0.5 * m,
           0.5 * m,
           1 * m,
-          60,
-          60,
+          8,
+          1,
           true,
           1.97,
           3.04
@@ -669,7 +669,7 @@ function createBuilding2(modelo, textureLoader) {
 
       var p1Text6 = textureLoader.load('Images/Predio1/Concreto3.jpg')
       var p1up2 = new THREE.Mesh(
-        new THREE.CircleGeometry(0.5 * m, 90, 3.15, 3.1),
+        new THREE.CircleGeometry(0.5 * m, 8, 3.15, 3.1),
         new THREE.MeshPhongMaterial()
       )
       p1up2.castShadow = true

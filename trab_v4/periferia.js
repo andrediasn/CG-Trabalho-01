@@ -12,7 +12,7 @@ function insertTexture(texture, object, repeatX, repeatY) {
 
 export function createPeriferia(scene, LoadingManager) {
   var textureLoader = new THREE.TextureLoader(LoadingManager)
-  var text1 = textureLoader.load('Images/Floor/Sand.jpg')
+  var text1 = textureLoader.load('Images/Floor/sand.jpg')
   var text2 = textureLoader.load('Images/Floor/Text4.jpg')
   var text3 = textureLoader.load('Images/Floor/Jardim.jpg')
   var text4 = textureLoader.load('Images/Floor/Mud.jpeg')

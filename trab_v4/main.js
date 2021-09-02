@@ -45,9 +45,20 @@ import { loadGLTFFile } from './externalObject.js'
 import { createCity } from './cidade.js'
 import { createPeriferia } from './periferia.js'
 
-var stats = new Stats() // To show FPS information
 var scene = new THREE.Scene() // Create main scene
 var renderer = initRenderer() // View function in util/utils
+
+function createStats() {
+  var stats = new Stats();
+  stats.setMode(0);
+
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0';
+  stats.domElement.style.top = '0';
+  return stats;
+}
+var stats = createStats();
+document.body.appendChild( stats.domElement );
 
 // ---------------- LoadScreen ---------------- //
 
@@ -115,7 +126,7 @@ scene.add(sunLight)
 
 // Criando o spotLight dinâmico para o avião
 var planeLight = new THREE.SpotLight('rgb(255,200,100)')
-planeLight.intensity = 0.2
+planeLight.intensity = 0
 planeLight.position.set(new THREE.Vector3(0, 0, 0))
 planeLight.castShadow = true
 planeLight.angle = degreesToRadians(120)
@@ -145,7 +156,7 @@ inspectionLight.shadow.camera.near = 0.2
 
 // -------------- Objeto Externo ------------ //
 loadGLTFFile(
-  '../works/Objects/',
+  './Objects/',
   'scene',
   320.0,
   1090,
@@ -465,12 +476,12 @@ function airplaneAudio() {
 // --------------------------- Skybox ---------------------------------- //
 
 let textSky = []
-let texture_ft = new THREE.TextureLoader().load('Images/SkyBox/sw_ft.png')
-let texture_bk = new THREE.TextureLoader().load('Images/SkyBox/sw_bk.png')
-let texture_up = new THREE.TextureLoader().load('Images/SkyBox/sw_up.png')
-let texture_dn = new THREE.TextureLoader().load('Images/SkyBox/sw_dn.png')
-let texture_rt = new THREE.TextureLoader().load('Images/SkyBox/sw_rt.png')
-let texture_lf = new THREE.TextureLoader().load('Images/SkyBox/sw_lf.png')
+let texture_ft = new THREE.TextureLoader().load('Images/Skybox/sw_ft.png')
+let texture_bk = new THREE.TextureLoader().load('Images/Skybox/sw_bk.png')
+let texture_up = new THREE.TextureLoader().load('Images/Skybox/sw_up.png')
+let texture_dn = new THREE.TextureLoader().load('Images/Skybox/sw_dn.png')
+let texture_rt = new THREE.TextureLoader().load('Images/Skybox/sw_rt.png')
+let texture_lf = new THREE.TextureLoader().load('Images/Skybox/sw_lf.png')
 
 textSky.push(new THREE.MeshBasicMaterial({ map: texture_ft }))
 textSky.push(new THREE.MeshBasicMaterial({ map: texture_bk }))
@@ -648,7 +659,7 @@ function render() {
     sunLight.shadow.autoUpdate = false
     cont = 2
   } else {
-    cont += 1
+    cont += 1 
   }
   scene.add(planeLight.target)
   stats.update()
